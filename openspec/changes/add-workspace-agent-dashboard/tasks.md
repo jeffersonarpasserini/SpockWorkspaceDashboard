@@ -35,7 +35,7 @@
 - [x] 5.5 Run `openspec validate add-workspace-agent-dashboard --strict` and correct all errors.
 - [ ] 5.6 Generate or update Graphify and cross-check project relationships when Graphify supports this new root.
 - [x] 5.7 Review the complete diff, repository state and exclude generated/private data.
-- [x] 5.8 Commit locally and attempt publication readiness; GitHub push/check monitoring remains externally blocked by the absent remote and authentication.
+- [x] 5.8 Create the private GitHub repository, push `main`, verify the immutable remote commit and inspect GitHub Actions, checks and branch protection; none are configured in this initial repository.
 
 ## 6. Independent-review corrections
 
