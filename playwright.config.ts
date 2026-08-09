@@ -12,9 +12,9 @@ export default defineConfig({
     trace: "retain-on-failure"
   },
   webServer: {
-    command: "npm start -- --port 3101",
+    command: "DASHBOARD_HOSTNAME=127.0.0.1 PORT=3101 npm start",
     url: "http://127.0.0.1:3101",
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120_000
   },
   projects: [

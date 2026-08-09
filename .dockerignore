@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+coverage
+playwright-report
+test-results
+.git
+.github
+.hermes
+.env
+.env.*
+*.log
+*.tsbuildinfo
+graphify-out
+README.md
+openspec
