@@ -1,0 +1,33 @@
+schema: spec-driven
+
+context: |
+  Spock Workspace Dashboard is a local-first web application for supervising software projects
+  and Hermes Agent work. The runtime uses TypeScript, Next.js App Router, React and Node.js.
+  It scans a configured workspace root without traversing outside it, reads Git and OpenSpec
+  as local evidence, consumes Hermes Kanban through its documented CLI JSON surface, and sends
+  chat requests through the documented OpenAI-compatible Hermes API server.
+
+  The application must remain useful when Hermes, Git, OpenSpec or a project board is unavailable.
+  Secrets remain server-side and must never be returned to the browser or written to logs.
+  Project status must distinguish observed source, checked OpenSpec tasks, live Kanban work,
+  local Git state and unavailable evidence; it must never infer completion from file presence.
+
+rules:
+  proposal:
+    - Include explicit goals, non-goals, operational risks and affected data sources.
+  specs:
+    - Use MUST or SHALL for normative behavior and at least one WHEN/THEN scenario per requirement.
+    - Include degraded-mode, path-containment, secret-handling and accessibility requirements.
+  design:
+    - Describe trust boundaries, adapters, status derivation, testing and failure behavior.
+  tasks:
+    - Use test-first vertical slices and include exact validation, build and runtime checks.
+
+operations:
+  apply:
+    guidance:
+      - Follow RED-GREEN-REFACTOR for every production behavior.
+      - Keep workspace and Hermes integrations behind typed adapters.
+  archive:
+    guidance:
+      - Archive only after tests, build, OpenSpec validation and documentation are current.
