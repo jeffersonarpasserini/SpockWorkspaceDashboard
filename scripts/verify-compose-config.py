@@ -84,7 +84,7 @@ def main():
     require(svc.get("entrypoint") is None, "Compose entrypoint override is forbidden")
     require(svc.get("command") is None, "Compose command override is forbidden")
     require(svc.get("read_only") is True, "read_only must be true")
-    require(svc.get("privileged") is False, "privileged must be explicitly false")
+    require("privileged" not in svc or svc["privileged"] is False, "privileged must be false when present")
     require(svc.get("deploy") is None, "deploy is forbidden")
     for field in ("devices", "device_cgroup_rules", "device_requests", "pid", "ipc"):
         empty_collection(svc.get(field), field)

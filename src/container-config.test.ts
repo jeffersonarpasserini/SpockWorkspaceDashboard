@@ -145,7 +145,7 @@ describe("container deployment configuration", () => {
     const effectiveVerifier = readProjectFile("scripts/verify-container-inspect.py");
 
     expect(compose).toMatch(/privileged:\s*false/);
-    expect(declaredVerifier).toContain('svc.get("privileged") is False');
+    expect(declaredVerifier).toContain('"privileged" not in svc or svc["privileged"] is False');
     expect(declaredVerifier).toContain('set(security_opt) == {"no-new-privileges:true"}');
     for (const field of ["devices", "device_cgroup_rules", "device_requests"]) {
       expect(declaredVerifier).toContain(`"${field}"`);

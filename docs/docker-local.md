@@ -43,7 +43,7 @@ Isto fecha o início de serviço sobre uma substituição não verificada, mas n
 ./scripts/deploy.sh down
 ```
 
-O CLI executa `scripts/verify-compose-config.py` sobre a configuração declarada e `scripts/verify-container-inspect.py` sobre a projeção efetiva. O verifier declarado rejeita serviços, portas, mounts, privilégios, recursos e opções de log extras. O verifier efetivo rejeita escapes equivalentes no estado do contêiner. O health Docker tem timeout e é validado separadamente do payload HTTP exato `{ "status": "ok" }`.
+O CLI executa `scripts/verify-compose-config.py` sobre a configuração declarada e `scripts/verify-container-inspect.py` sobre a projeção efetiva. O verifier declarado aceita `privileged` ausente porque Compose v5 pode omitir o valor padrão `false` ao renderizar JSON; quando presente, somente o booleano literal `false` é aceito. Ele continua rejeitando serviços, portas, mounts, privilégios, recursos e opções de log extras. O verifier efetivo exige `Privileged=false` e rejeita escapes equivalentes no estado do contêiner. O health Docker tem timeout e é validado separadamente do payload HTTP exato `{ "status": "ok" }`.
 
 O Compose não possui volume persistente; o workspace é read-only. `down` remove somente a stack fixa do dashboard. Para retornar exatamente ao Node local em loopback, execute cada comando como processo filho (não use `source` e não altere opções do shell):
 

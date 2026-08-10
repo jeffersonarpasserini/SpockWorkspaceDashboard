@@ -120,6 +120,27 @@ describe("container hardening verifier fixtures", () => {
     }
   });
 
+  it("accepts Compose v5 omission of default-false privileged and rejects explicit non-false values", () => {
+    for (const mode of pythonModes) {
+      const normalizedByComposeV5 = clone(safeDeclared);
+      delete (normalizedByComposeV5.services.dashboard as Partial<typeof safeDeclared.services.dashboard>).privileged;
+      expect(
+        verify("scripts/verify-compose-config.py", normalizedByComposeV5, mode.options).status,
+        mode.label,
+      ).toBe(0);
+
+      for (const privileged of [true, null, 0, "false", {}, []]) {
+        const fixture = clone(safeDeclared) as {
+          services: { dashboard: Omit<typeof safeDeclared.services.dashboard, "privileged"> & { privileged: unknown } };
+        };
+        fixture.services.dashboard.privileged = privileged;
+        const result = verify("scripts/verify-compose-config.py", fixture, mode.options);
+        expect(result.status, `${mode.label}: privileged=${JSON.stringify(privileged)}`).not.toBe(0);
+        expect(result.stderr).toMatch(/^verify-compose-config: /);
+      }
+    }
+  });
+
   it("accepts a Docker-shaped safe fixture and rejects effective privilege escapes", () => {
     const mutations: Array<(fixture: typeof safeEffective) => void> = [
       (fixture) => { fixture.Privileged = true; },
