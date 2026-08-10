@@ -55,6 +55,7 @@ function fixtureHarness(health = "healthy") {
   } } });
   const effective = JSON.stringify({
     Entrypoint: ["/usr/local/bin/workspace-startup-gate"], Cmd: ["node", "server.js"],
+    User: "node", ReadonlyRootfs: true,
     Privileged: false, Devices: [], DeviceRequests: [], DeviceCgroupRules: [],
     PidMode: "", IpcMode: "private", AppArmorProfile: "docker-default",
     SecurityOpt: ["no-new-privileges:true"], Memory: 512 * 1024 * 1024,
@@ -65,14 +66,14 @@ function fixtureHarness(health = "healthy") {
     Mounts: [{ Type: "bind", Source: workspace, Destination: "/workspace", RW: false }],
     Tmpfs: { "/tmp": "size=64m,mode=1777" },
   });
-  const docker = `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s docker %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nif [[ "$*" == *"config --format json"* ]]; then printf '%s\\n' "$DECLARED"; if [[ "\${MUTATE_WORKSPACE_AFTER_CONFIG:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; exit 0; fi\nif [[ "$*" == *" up --no-start"* ]]; then if [[ "\${MUTATE_WORKSPACE_DURING_UP:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; /usr/bin/stat -Lc '%d:%i' -- "$DASHBOARD_WORKSPACE_PATH" >"$MOCK_LOG.mount-identity"; exit 0; fi\nif [[ "$*" == *"ps -q dashboard"* || "$*" == *"ps -aq dashboard"* ]]; then echo cid123; exit 0; fi\nif [[ "$*" == "inspect --format {{if .State.Health}}"* ]]; then mounted="$(/usr/bin/cat "$MOCK_LOG.mount-identity" 2>/dev/null || true)"; if [[ -n "$mounted" && "$mounted" != "$DASHBOARD_WORKSPACE_IDENTITY" ]]; then echo unhealthy; else echo "$HEALTH"; fi; exit 0; fi\nif [[ "$*" == "inspect --format {"* ]]; then printf '%s\\n' "$EFFECTIVE"; exit 0; fi\nexit 0\n`;
+  const docker = `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s docker %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nif [[ "$1" == "exec" ]]; then [ "\${RUNTIME_VERIFY_HANG:-}" != 1 ] || /usr/bin/sleep 30; exit "\${RUNTIME_VERIFY_RC:-0}"; fi\nif [[ "$*" == *"config --format json"* ]]; then printf '%s\\n' "$DECLARED"; if [[ "\${MUTATE_WORKSPACE_AFTER_CONFIG:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; exit 0; fi\nif [[ "$*" == *" up --no-start"* ]]; then if [[ "\${MUTATE_WORKSPACE_DURING_UP:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; /usr/bin/stat -Lc '%d:%i' -- "$DASHBOARD_WORKSPACE_PATH" >"$MOCK_LOG.mount-identity"; exit 0; fi\nif [[ "$*" == *"ps -q dashboard"* || "$*" == *"ps -aq dashboard"* ]]; then echo cid123; exit 0; fi\nif [[ "$*" == "inspect --format {{if .State.Health}}"* ]]; then mounted="$(/usr/bin/cat "$MOCK_LOG.mount-identity" 2>/dev/null || true)"; if [[ -n "$mounted" && "$mounted" != "$DASHBOARD_WORKSPACE_IDENTITY" ]]; then echo unhealthy; else echo "$HEALTH"; fi; exit 0; fi\nif [[ "$*" == "inspect --format {"* ]]; then printf '%s\\n' "$EFFECTIVE"; exit 0; fi\nexit 0\n`;
   writeFileSync(join(bin, "docker"), docker);
   writeFileSync(join(bin, "curl"), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s curl %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nprintf '{"status":"ok"}\\n'\n`);
   writeFileSync(join(bin, "gh"), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s gh %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nif [[ "$1" == version && "$#" -eq 1 ]]; then printf 'gh version %s (2026-01-01)\\nhttps://github.com/cli/cli/releases/tag/v%s\\n' "\${GH_VERSION:-2.68.0}" "\${GH_VERSION:-2.68.0}"; exit 0; fi\nif [[ "$*" == "attestation verify --help" ]]; then printf '%s\\n' '      --source-ref string' '      --source-digest string' "\${GH_HELP_BUNDLE_FLAG:---bundle-from-oci}"; exit 0; fi\nif [[ "$*" == "api repos/jeffersonarpasserini/SpockWorkspaceDashboard/commits/v1.2.3 --jq .sha" ]]; then printf '%s\\n' "${"b".repeat(40)}"; exit 0; fi\nif [[ "$1" == attestation && "$2" == verify ]]; then exit "\${GH_ATTEST_RC:-0}"; fi\nexit 1\n`);
   for (const [name, target] of Object.entries({
     git: "/usr/bin/git", stat: "/usr/bin/stat", mktemp: "/usr/bin/mktemp",
     mkdir: "/usr/bin/mkdir", chmod: "/usr/bin/chmod", mv: "/usr/bin/mv",
-    rm: "/usr/bin/rm", python3: "/usr/local/bin/python3",
+    rm: "/usr/bin/rm", python3: "/usr/local/bin/python3", timeout: "/usr/bin/timeout",
   })) {
     writeFileSync(join(bin, name), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s ${name} %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nexec ${target} "$@"\n`);
     chmodSync(join(bin, name), 0o755);
@@ -269,6 +270,63 @@ describe("versioned deployment export", () => {
     expect(inspectIndex).toBeLessThan(calls.indexOf(" start dashboard"));
     expect(calls).not.toContain("curl ");
     expect(result.stdout).not.toContain("deployed by digest");
+  });
+
+  it("checks the fixed running CID for non-root and non-writable root/workspace without exposing secrets", () => {
+    const harness = fixtureHarness();
+    const local = run(["local"], { ...harness.env, HERMES_API_KEY: "runtime-secret" });
+    expect(local.status, local.stderr).toBe(0);
+    const verified = run(["verify"], { ...harness.env, HERMES_API_KEY: "runtime-secret" });
+    expect(verified.status, verified.stderr).toBe(0);
+    const calls = readFileSync(harness.log, "utf8");
+    const runtimeLines = calls.split("\n").filter((line) => line.includes("env=EMPTY docker exec cid123"));
+    expect(runtimeLines).toHaveLength(2);
+    for (const line of runtimeLines) {
+      expect(line).toContain("env=EMPTY");
+      expect(line).toContain('uid="$(id -u)"');
+      expect(line).toContain('[ "$uid" -ne 0 ]');
+      expect(line).toContain("[ ! -w / ]");
+      expect(line).toContain("[ ! -w /workspace ]");
+      expect(line).not.toContain("runtime-secret");
+      expect(line).not.toContain("env | ");
+      expect(line).not.toContain("touch ");
+    }
+    const firstInspect = calls.indexOf('inspect --format {"Entrypoint"');
+    const firstStart = calls.indexOf(" start dashboard");
+    const firstHealth = calls.indexOf("inspect --format {{if .State.Health}}", firstStart);
+    const firstRuntime = calls.indexOf("docker exec cid123");
+    expect(firstInspect).toBeLessThan(firstStart);
+    expect(firstStart).toBeLessThan(firstHealth);
+    expect(firstHealth).toBeLessThan(firstRuntime);
+    expect(firstRuntime).toBeLessThan(calls.indexOf("curl "));
+    const cli = readFileSync(deploy, "utf8");
+    expect(cli).toContain('"User":{{json .Config.User}}');
+    expect(cli).toContain('"ReadonlyRootfs":{{json .HostConfig.ReadonlyRootfs}}');
+  });
+
+  it("fails closed and boundedly when the runtime UID or writability probe fails", () => {
+    const harness = fixtureHarness();
+    const failed = run(["verify"], { ...harness.env, RUNTIME_VERIFY_RC: "1" });
+    expect(failed.status).not.toBe(0);
+    expect(failed.stderr).toContain("runtime isolation verification failed");
+    expect(failed.stderr).not.toContain("HERMES_API_KEY");
+    expect(readFileSync(harness.log, "utf8")).not.toContain("curl ");
+
+    const invalidTimeout = run(["verify"], { ...harness.env, DEPLOY_RUNTIME_TIMEOUT: "0" });
+    expect(invalidTimeout.status).not.toBe(0);
+    expect(invalidTimeout.stderr).toContain("runtime verification timeout must be a positive integer");
+
+    const startedAt = Date.now();
+    const hanging = run(["verify"], {
+      ...harness.env,
+      DEPLOY_RUNTIME_TIMEOUT: "1",
+      RUNTIME_VERIFY_HANG: "1",
+    });
+    const elapsedMs = Date.now() - startedAt;
+    expect(hanging.status).not.toBe(0);
+    expect(hanging.stderr).toContain("runtime isolation verification failed");
+    expect(elapsedMs).toBeGreaterThanOrEqual(900);
+    expect(elapsedMs).toBeLessThan(5_000);
   });
 
   it("fails boundedly on unhealthy Docker health without claiming success", () => {

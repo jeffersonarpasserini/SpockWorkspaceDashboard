@@ -42,7 +42,7 @@ O operador MUST executar `scripts/deploy.sh` como processo filho. O executável 
 
 ### Requirement: Deploy é pull-only e sucesso é comprovado
 
-Deploy e rollback versionados MUST executar `pull`, `up --no-start --no-build`, inspeção efetiva parada e `start` para target explícito. Timeout e intervalo de health MUST ser inteiros positivos. Sucesso MUST exigir health Docker, verifier efetivo e payload HTTP; somente após isso estado restrito sem secrets MUST identificar versão/referência imutável. Falha ou sinal MUST limpar temporários e MUST NOT registrar/alegar sucesso. `down` MUST permanecer limitado à stack fixa.
+Deploy e rollback versionados MUST executar `pull`, `up --no-start --no-build`, inspeção efetiva parada e `start` para target explícito. Timeouts e intervalo de health MUST ser inteiros positivos. Sucesso MUST exigir health Docker, verifier efetivo com usuário `node` e rootfs read-only, probe comportamental limitado no mesmo CID para UID não-root e `/`/`/workspace` não graváveis sem tentar escrita, e payload HTTP; somente após isso estado restrito sem secrets MUST identificar versão/referência imutável. Falha ou sinal MUST limpar temporários e MUST NOT registrar/alegar sucesso. `down` MUST permanecer limitado à stack fixa.
 
 #### Scenario: Health fica unhealthy ou expira
 - **WHEN** a verificação não conclui

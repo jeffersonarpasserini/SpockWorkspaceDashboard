@@ -9,6 +9,7 @@
 - [x] 2.2 Fixar três stages Docker no digest manifest-list aprovado e atualizar Compose com `DASHBOARD_IMAGE` e fallback/build local
 - [x] 2.3 Implementar manifest estável/seguro, verificação autoritativa gh/attestation e CLI executável autocontido
 - [x] 2.4 Remover efeitos de opções shell globais do helper legado e registrar estado somente após sucesso
+- [x] 2.5 RED/GREEN: exigir usuário/rootfs na inspeção efetiva e probe comportamental limitado no CID fixo após health, sem secret, dump de ambiente ou tentativa de escrita
 
 ## 3. Operação e documentação
 

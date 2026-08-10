@@ -67,6 +67,8 @@ const safeDeclared = {
 const safeEffective = {
   Entrypoint: ["/usr/local/bin/workspace-startup-gate"],
   Cmd: ["node", "server.js"],
+  User: "node",
+  ReadonlyRootfs: true,
   Privileged: false,
   Devices: [],
   DeviceRequests: [],
@@ -171,6 +173,26 @@ describe("container hardening verifier fixtures", () => {
       }
     }
   }, 20_000);
+
+  it("rejects missing or root effective users and requires a literal read-only root filesystem", () => {
+    for (const mode of pythonModes) {
+      const mutations: Array<[string, (fixture: Record<string, unknown>) => void]> = [
+        ["empty user", (fixture) => { fixture.User = ""; }],
+        ["root name", (fixture) => { fixture.User = "root"; }],
+        ["root uid", (fixture) => { fixture.User = "0"; }],
+        ["missing user", (fixture) => { delete fixture.User; }],
+        ["writable rootfs", (fixture) => { fixture.ReadonlyRootfs = false; }],
+        ["missing rootfs flag", (fixture) => { delete fixture.ReadonlyRootfs; }],
+      ];
+      for (const [label, mutate] of mutations) {
+        const fixture = clone(safeEffective) as unknown as Record<string, unknown>;
+        mutate(fixture);
+        const result = verify("scripts/verify-container-inspect.py", fixture, mode.options);
+        expect(result.status, `${mode.label}: ${label}`).not.toBe(0);
+        expect(result.stderr).toMatch(/^verify-container-inspect: /);
+      }
+    }
+  });
 
   it("does not use optimization-removable assertions in either verifier", () => {
     for (const script of [

@@ -215,11 +215,19 @@ verify_effective() {
   local cid="$1" json
   new_temp effective.json
   json="$LAST_TEMP"
-  HERMES_API_KEY= docker inspect --format '{"Entrypoint":{{json .Config.Entrypoint}},"Cmd":{{json .Config.Cmd}},"Privileged":{{json .HostConfig.Privileged}},"Devices":{{json .HostConfig.Devices}},"DeviceRequests":{{json .HostConfig.DeviceRequests}},"DeviceCgroupRules":{{json .HostConfig.DeviceCgroupRules}},"PidMode":{{json .HostConfig.PidMode}},"IpcMode":{{json .HostConfig.IpcMode}},"AppArmorProfile":{{json .AppArmorProfile}},"SecurityOpt":{{json .HostConfig.SecurityOpt}},"CapAdd":{{json .HostConfig.CapAdd}},"CapDrop":{{json .HostConfig.CapDrop}},"PortBindings":{{json .HostConfig.PortBindings}},"Mounts":{{json .Mounts}},"Tmpfs":{{json .HostConfig.Tmpfs}},"Memory":{{json .HostConfig.Memory}},"NanoCpus":{{json .HostConfig.NanoCpus}},"PidsLimit":{{json .HostConfig.PidsLimit}},"LogConfig":{{json .HostConfig.LogConfig}}}' "$cid" > "$json" || die "effective inspection failed"
+  HERMES_API_KEY= docker inspect --format '{"Entrypoint":{{json .Config.Entrypoint}},"Cmd":{{json .Config.Cmd}},"User":{{json .Config.User}},"ReadonlyRootfs":{{json .HostConfig.ReadonlyRootfs}},"Privileged":{{json .HostConfig.Privileged}},"Devices":{{json .HostConfig.Devices}},"DeviceRequests":{{json .HostConfig.DeviceRequests}},"DeviceCgroupRules":{{json .HostConfig.DeviceCgroupRules}},"PidMode":{{json .HostConfig.PidMode}},"IpcMode":{{json .HostConfig.IpcMode}},"AppArmorProfile":{{json .AppArmorProfile}},"SecurityOpt":{{json .HostConfig.SecurityOpt}},"CapAdd":{{json .HostConfig.CapAdd}},"CapDrop":{{json .HostConfig.CapDrop}},"PortBindings":{{json .HostConfig.PortBindings}},"Mounts":{{json .Mounts}},"Tmpfs":{{json .HostConfig.Tmpfs}},"Memory":{{json .HostConfig.Memory}},"NanoCpus":{{json .HostConfig.NanoCpus}},"PidsLimit":{{json .HostConfig.PidsLimit}},"LogConfig":{{json .HostConfig.LogConfig}}}' "$cid" > "$json" || die "effective inspection failed"
   HERMES_API_KEY= python3 "$SCRIPT_DIR/verify-container-inspect.py" "$json" "$DASHBOARD_WORKSPACE_PATH" \
     "${DASHBOARD_PORT:-3011}" "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
     "${DASHBOARD_PIDS_LIMIT:-128}" "${DASHBOARD_LOG_MAX_SIZE:-10m}" "${DASHBOARD_LOG_MAX_FILE:-3}" \
     || die "effective container verification failed"
+}
+
+verify_runtime_isolation() {
+  local cid="$1" timeout="${DEPLOY_RUNTIME_TIMEOUT:-10}"
+  [[ "$timeout" =~ ^[1-9][0-9]*$ ]] || die "runtime verification timeout must be a positive integer"
+  HERMES_API_KEY= timeout --kill-after=2s "$timeout" \
+    docker exec "$cid" /bin/sh -c 'uid="$(id -u)" && [ "$uid" -ne 0 ] && [ ! -w / ] && [ ! -w /workspace ]' \
+    || die "runtime isolation verification failed"
 }
 
 verify_liveness() {
@@ -235,6 +243,7 @@ run_verify() {
   cid="$(container_id)"
   wait_healthy "$cid"
   verify_effective "$cid"
+  verify_runtime_isolation "$cid"
   verify_liveness
   log "verification passed"
 }
@@ -251,6 +260,7 @@ stage_and_start() {
   verify_effective "$cid"
   compose_existing_no_secret start dashboard || die "staged startup failed"
   wait_healthy "$cid"
+  verify_runtime_isolation "$cid"
   verify_liveness
   STAGED_CONTAINER=0
 }

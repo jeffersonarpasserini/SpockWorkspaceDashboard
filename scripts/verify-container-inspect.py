@@ -69,6 +69,8 @@ def main():
     require(isinstance(state, dict), "invalid container inspection")
     require(state.get("Entrypoint") == ["/usr/local/bin/workspace-startup-gate"], "workspace startup gate entrypoint mismatch")
     require(state.get("Cmd") == ["node", "server.js"], "dashboard command mismatch")
+    require(state.get("User") == "node", "effective image user must be node")
+    require(state.get("ReadonlyRootfs") is True, "ReadonlyRootfs must be true")
     expected_workspace = os.path.realpath(sys.argv[2])
     expected_port = require_int(sys.argv[3], "DASHBOARD_PORT")
     expected_memory = require_bytes(sys.argv[4], "DASHBOARD_MEMORY_LIMIT")

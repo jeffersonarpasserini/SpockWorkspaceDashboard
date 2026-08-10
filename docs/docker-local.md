@@ -12,6 +12,8 @@ Esta configuração prepara e verifica somente o dashboard. Ela não altera Home
 
 ## Um comando executável, nunca um helper sourced
 
+O host suportado é Linux com Docker/Compose, `curl`, Python 3 e GNU coreutils `timeout` com a opção `--kill-after`; implementação incompatível de `timeout` falha fechado no probe de isolamento. O probe não usa `--foreground`, permitindo que o timeout encerre o grupo de processos completo caso o cliente Docker ou seu filho fique bloqueado.
+
 Defina um workspace absoluto existente e execute o CLI como processo filho:
 
 ```bash
@@ -23,11 +25,11 @@ export DASHBOARD_WORKSPACE_PATH=/caminho/absoluto/do/workspace
 
 Não execute `source scripts/compose-safe.sh`, `. scripts/compose-safe.sh` nem habilite `set -euo pipefail` no shell remoto. Se uma validação falhar, somente `deploy.sh` termina com status não zero; a sessão chamadora permanece aberta e com as mesmas opções.
 
-`build` valida o Compose sem secret e constrói a imagem local. `local` repete essa preparação, inicia o runtime e exige health Docker, verifier efetivo e liveness HTTP. O primeiro uso sempre exige `DASHBOARD_WORKSPACE_PATH`; o CLI não tenta adivinhar onde estão os projetos.
+`build` valida o Compose sem secret e constrói a imagem local. `local` repete essa preparação, inicia o runtime e exige health Docker, verifier efetivo, probe comportamental de isolamento e liveness HTTP. O primeiro uso sempre exige `DASHBOARD_WORKSPACE_PATH`; o CLI não tenta adivinhar onde estão os projetos.
 
 ## Configuração e segredos
 
-Defaults configuráveis: `DASHBOARD_PORT=3011`, `DASHBOARD_MEMORY_LIMIT=512m`, `DASHBOARD_CPUS=1.0`, `DASHBOARD_PIDS_LIMIT=128`, `DASHBOARD_LOG_MAX_SIZE=10m` e `DASHBOARD_LOG_MAX_FILE=3`.
+Defaults configuráveis: `DASHBOARD_PORT=3011`, `DASHBOARD_MEMORY_LIMIT=512m`, `DASHBOARD_CPUS=1.0`, `DASHBOARD_PIDS_LIMIT=128`, `DASHBOARD_LOG_MAX_SIZE=10m`, `DASHBOARD_LOG_MAX_FILE=3` e `DEPLOY_RUNTIME_TIMEOUT=10` segundos para o probe comportamental.
 
 `HERMES_API_URL` e `HERMES_API_KEY` são opcionais. O executável usa o interpretador fixo `/bin/bash -p`, desativa tracing e remove `BASH_ENV`/`ENV` antes de ler a chave, impedindo hooks de startup, funções/opções importadas e resolução de interpretador por `PATH`. Em seguida, o CLI captura a chave em variável shell não exportada e exporta globalmente `HERMES_API_KEY=`. Assim, Git, `stat`, temporários, verifiers, `gh`, inspect, health, estado e todas as operações Compose exceto uma recebem chave vazia. Somente o processo exato `docker compose ... up --no-start` recebe a chave salva para criar o ambiente de runtime; o CLI nunca a imprime. Não imprima configuração expandida, ambiente, inspect amplo, logs ou bundles de debug quando houver secrets.
 
@@ -43,7 +45,9 @@ Isto fecha o início de serviço sobre uma substituição não verificada, mas n
 ./scripts/deploy.sh down
 ```
 
-O CLI executa `scripts/verify-compose-config.py` sobre a configuração declarada e `scripts/verify-container-inspect.py` sobre a projeção efetiva. O verifier declarado aceita `privileged` ausente porque Compose v5 pode omitir o valor padrão `false` ao renderizar JSON; quando presente, somente o booleano literal `false` é aceito. Ele continua rejeitando serviços, portas, mounts, privilégios, recursos e opções de log extras. O verifier efetivo exige `Privileged=false` e rejeita escapes equivalentes no estado do contêiner. O health Docker tem timeout e é validado separadamente do payload HTTP exato `{ "status": "ok" }`.
+O CLI executa `scripts/verify-compose-config.py` sobre a configuração declarada e `scripts/verify-container-inspect.py` sobre uma projeção efetiva restrita. O verifier declarado aceita `privileged` ausente porque Compose v5 pode omitir o valor padrão `false` ao renderizar JSON; quando presente, somente o booleano literal `false` é aceito. Ele continua rejeitando serviços, portas, mounts, privilégios, recursos e opções de log extras. O verifier efetivo exige `Privileged=false`, `.Config.User` literalmente `node` (o contrato do Dockerfile) e `.HostConfig.ReadonlyRootfs` literalmente `true`, além de rejeitar escapes equivalentes no estado do contêiner.
+
+Depois de start e health, e também em `deploy.sh verify`, o CLI usa o mesmo CID já capturado para executar um probe com timeout no host e `HERMES_API_KEY` vazia. O probe não imprime ambiente e não tenta criar arquivos: captura somente `id -u`, exige UID diferente de zero e usa `test ! -w /` e `test ! -w /workspace`. Falha ou timeout encerram a verificação antes do `curl`. O health Docker continua validado separadamente do payload HTTP exato `{ "status": "ok" }`.
 
 O Compose não possui volume persistente; o workspace é read-only. `down` remove somente a stack fixa do dashboard. Para retornar exatamente ao Node local em loopback, execute cada comando como processo filho (não use `source` e não altere opções do shell):
 

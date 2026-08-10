@@ -24,7 +24,7 @@ Actions são pins SHA revisados. Todas as stages Node compartilham digest manife
 
 ### Deploy verificado
 
-Manifest estável e seguro fixa tag/SHA/digest. `gh >= 2.68.0`, com probe fail-closed das flags `--source-ref`, `--source-digest` e `--bundle-from-oci`, confirma a tag no repositório autoritativo e verifica attestation antes de Docker pull. Deploy captura a chave sem exportá-la, mantém todos os filhos em chave vazia e a injeta somente no processo exato `up --no-start --no-build`; inspeção parada e `start` seguem sem chave.
+Manifest estável e seguro fixa tag/SHA/digest. `gh >= 2.68.0`, com probe fail-closed das flags `--source-ref`, `--source-digest` e `--bundle-from-oci`, confirma a tag no repositório autoritativo e verifica attestation antes de Docker pull. Deploy captura a chave sem exportá-la, mantém todos os filhos em chave vazia e a injeta somente no processo exato `up --no-start --no-build`; inspeção parada, `start`, health e probe comportamental limitado no CID fixo seguem sem chave. A projeção exige o usuário de imagem literal `node` e rootfs read-only; após health, o probe exige UID não-zero e `/`/`/workspace` não graváveis sem tentar escrita.
 
 ### Robustez operacional
 

@@ -23,12 +23,13 @@
 - [x] 3.7 Fixar toda operação e rollback Compose à raiz/arquivo/nome de projeto validados, neutralizar variáveis Compose herdadas e extrair verificadores versionados com sandbox fail-closed para privilégio, devices e perfis/modos host-like.
 - [x] 3.8 Adicionar `prepare:standalone` para assets estáticos/public em todo start, remover cópia duplicada do Playwright e proibir reutilização do servidor E2E.
 - [x] 3.9 Tornar verificadores e payload de health fail-closed sem `assert`, cobrir Python normal/otimizado e separar config/build sem segredo de `up` com chave opcional de runtime.
+- [x] 3.10 RED/GREEN: rejeitar `User` efetivo vazio/root e `ReadonlyRootfs` falso/ausente, projetar ambos no inspect e executar no CID fixo um probe comportamental limitado, sem escrita nem dump de ambiente, para UID não-zero e `/`/`/workspace` não graváveis após start/health e em `verify`.
 
 ## 4. Verificação
 
 - [x] 4.1 Executar `npm test`, `npm run typecheck`, `npm run lint` e `npm run build`; confirmar que `.next/standalone/server.js` foi gerado e exercitar `/api/health` no servidor standalone local.
 - [x] 4.2 Executar `npx -y @fission-ai/openspec@1.8.0 validate prepare-containerized-local-deployment --strict` e corrigir erros.
-- [ ] 4.3 Em ambiente futuro com Docker, executar os comandos fixados do runbook com chave vazia em config/build e chave opcional preservada no `up`: Compose expandido, build/up/ps/exec/CID, health do Docker separado do `curl`, UID não-root, root e workspace não graváveis, `Privileged=false`, devices ausentes, perfis/modos seguros, rootfs, `no-new-privileges` e whitelists efetivas de portas, `CapAdd`/`CapDrop` e mounts; permanece pendente porque Docker não está instalado neste ambiente.
+- [ ] 4.3 No host Docker, repetir os comandos fixados do runbook na versão corrigida com chave vazia em config/build e chave opcional preservada no `up`: Compose expandido, build/up/ps/CID, health do Docker separado do `curl`, projeção `User=node` e `ReadonlyRootfs=true`, probe comportamental de UID não-root e `/`/`/workspace` não graváveis, `Privileged=false`, devices ausentes, perfis/modos seguros, `no-new-privileges` e whitelists efetivas de portas, `CapAdd`/`CapDrop` e mounts. A execução anterior confirmou build/start/health e `deploy.sh verify` do verifier antigo, mas não pode concluir as novas assertions; permanece pendente até o rerun corrigido.
 - [ ] 4.4 Consultar Graphify e cruzar relações quando `graphify-out/graph.json` existir para este root; permanece pendente sem inventar resultados.
 - [x] 4.5 Revisar `git diff`/`git status`, manter `next-env.d.ts` fora do diff e deixar commit/push fora da preparação técnica até a aprovação final integrada.
 - [x] 4.6 Executar o gate real `npm run test:e2e` contra um standalone novo em `127.0.0.1:3101`, com `reuseExistingServer: false` e assets preparados pelo próprio start; confirmar 3 testes aprovados e 1 skip esperado do cenário exclusivamente mobile.
