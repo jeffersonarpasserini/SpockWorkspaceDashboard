@@ -1,11 +1,13 @@
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 
 const workspace = resolve(process.cwd());
-const verifierArgs = [workspace, "3011", "512m", "1.0", "128", "10m", "3"];
+const workspaceStat = statSync(workspace);
+const workspaceIdentity = `${workspaceStat.dev}:${workspaceStat.ino}`;
+const verifierArgs = [workspace, "3011", "512m", "1.0", "128", "10m", "3", workspaceIdentity];
 
 function verify(
   script: string,
@@ -19,7 +21,7 @@ function verify(
     ...(options.optimizedFlag ? ["-O"] : []),
     resolve(script),
     fixturePath,
-    ...verifierArgs,
+    ...(script.includes("verify-compose-config") ? verifierArgs : verifierArgs.slice(0, -1)),
   ], {
     cwd: workspace,
     encoding: "utf8",
@@ -39,7 +41,7 @@ function clone<T>(value: T): T {
 const safeDeclared = {
   services: {
     dashboard: {
-      environment: { HERMES_API_KEY: "" },
+      environment: { HERMES_API_KEY: "", WORKSPACE_IDENTITY: workspaceIdentity },
       read_only: true,
       privileged: false,
       mem_limit: "512m",
@@ -63,6 +65,8 @@ const safeDeclared = {
 };
 
 const safeEffective = {
+  Entrypoint: ["/usr/local/bin/workspace-startup-gate"],
+  Cmd: ["node", "server.js"],
   Privileged: false,
   Devices: [],
   DeviceRequests: [],
@@ -97,6 +101,8 @@ describe("container hardening verifier fixtures", () => {
       (fixture) => { Object.assign(fixture.services.dashboard, { device_requests: [{ capabilities: [["gpu"]]}] }); },
       (fixture) => { Object.assign(fixture.services.dashboard, { pid: "host" }); },
       (fixture) => { Object.assign(fixture.services.dashboard, { ipc: "host" }); },
+      (fixture) => { Object.assign(fixture.services.dashboard, { entrypoint: ["node", "server.js"] }); },
+      (fixture) => { Object.assign(fixture.services.dashboard, { command: ["sh", "-c", "node server.js"] }); },
       (fixture) => { fixture.services.dashboard.security_opt.push("seccomp=unconfined"); },
       (fixture) => { fixture.services.dashboard.security_opt.push("apparmor=unconfined"); },
       (fixture) => { fixture.services.dashboard.ports.push({ host_ip: "0.0.0.0", published: "3012", target: 3000, protocol: "tcp" }); },
@@ -123,6 +129,8 @@ describe("container hardening verifier fixtures", () => {
       (fixture) => { fixture.PidMode = "host"; },
       (fixture) => { fixture.IpcMode = "host"; },
       (fixture) => { fixture.AppArmorProfile = "unconfined"; },
+      (fixture) => { fixture.Entrypoint = ["node", "server.js"]; },
+      (fixture) => { fixture.Cmd = ["sh", "-c", "node server.js"]; },
       (fixture) => { fixture.SecurityOpt.push("seccomp=unconfined"); },
       (fixture) => { fixture.SecurityOpt.push("apparmor=unconfined"); },
       (fixture) => { fixture.Mounts.push({ Type: "bind", Source: "/var/run/docker.sock", Destination: "/var/run/docker.sock", RW: true }); },

@@ -103,11 +103,13 @@ The browser calls `/api/chat`; the API key remains server-side. CORS is therefor
 
 Project scope in chat is conversational context, not an operating-system sandbox. Run the Hermes API as a trusted local process with filesystem and tool permissions restricted appropriately. The dashboard redacts the selected project and workspace roots if Hermes echoes either in a response; do not expose this initial local-only dashboard through a public reverse proxy.
 
-## Docker local (preparação)
+## Docker local e deploy versionado
 
-Os arquivos `Dockerfile` e `compose.yaml` preparam um runtime futuro sem executar ou alterar o homelab. O Compose exige `DASHBOARD_WORKSPACE_PATH`, monta esse workspace como somente leitura, declara `privileged: false` e publica somente em `127.0.0.1` por padrão. Defaults conservadores limitam o serviço a `512m`, `1.0` CPU e `128` PIDs, com driver de log `local` rotacionado em `10m` x 3; são defaults de preparação/merge configuráveis, não dimensionamento final do host. A imagem não inclui Hermes CLI nem monta Docker socket, devices, home Hermes ou credenciais do host; o Kanban pode degradar como projetado. O runbook usa um helper versionado que fixa raiz, arquivo e nome do projeto Compose e neutraliza variáveis Compose herdadas, inclusive durante rollback. Configuração expandida e build usam a variante sem segredo; somente `up` preserva uma `HERMES_API_KEY` opcional fornecida para o runtime.
+Os arquivos `Dockerfile` e `compose.yaml` suportam preparação local e releases imutáveis sem alterar Homepage, proxy ou Tailscale. O Compose exige `DASHBOARD_WORKSPACE_PATH`, monta esse workspace como somente leitura, declara `privileged: false` e publica somente em `127.0.0.1` por padrão. Defaults conservadores limitam o serviço a `512m`, `1.0` CPU e `128` PIDs, com logs rotacionados. A imagem não inclui Hermes CLI nem monta Docker socket, devices, home Hermes ou credenciais do host.
 
-Consulte [`docs/docker-local.md`](docs/docker-local.md) antes de testar em um host com Docker. `GET /api/health` é somente liveness mínimo e não é autenticação nem readiness das integrações. Exposição além do loopback exige proxy autenticado/Tailscale e revisão OpenSpec quando o comportamento da aplicação mudar.
+O operador executa somente `./scripts/deploy.sh <comando>` como processo filho; nunca faz source de helper nem altera opções no terminal remoto. `build`/`local` são o fluxo local. Uma versão estável exata `MAJOR.MINOR.PATCH` usa manifest GHCR por digest, faz verificação de proveniência, `pull`, `up --no-start --no-build`, inspeção parada e `start`; prerelease, metadata e zeros à esquerda são rejeitados. A chave Hermes é herdada somente pelo processo exato de `up --no-start`; o entrypoint Linux valida device/inode do bind efetivo antes de Node. Ainda não existe tag, versão ou release publicada por esta mudança.
+
+Consulte [`docs/docker-local.md`](docs/docker-local.md) para preparação e [`docs/versioned-deployment.md`](docs/versioned-deployment.md) para produção de release, deploy, rollback, secrets e comandos exatos. `GET /api/health` é somente liveness mínimo e não é autenticação nem readiness das integrações.
 
 ## Security model
 
@@ -125,11 +127,13 @@ Consulte [`docs/docker-local.md`](docs/docker-local.md) antes de testar em um ho
 As mudanças ativas são:
 
 - `add-workspace-agent-dashboard`: implementação local-first original;
-- `prepare-containerized-local-deployment`: preparação Docker local/homelab, sem deploy.
+- `prepare-containerized-local-deployment`: preparação Docker local/homelab;
+- `add-versioned-deployment-export`: exportação de release imutável e CLI terminal-safe.
 
 ```bash
 npx -y @fission-ai/openspec@1.8.0 validate add-workspace-agent-dashboard --strict
 npx -y @fission-ai/openspec@1.8.0 validate prepare-containerized-local-deployment --strict
+npx -y @fission-ai/openspec@1.8.0 validate add-versioned-deployment-export --strict
 ```
 
 A consulta Graphify da nova raiz continua pendente porque `graphify-out/graph.json` não existe; nenhum resultado foi presumido.

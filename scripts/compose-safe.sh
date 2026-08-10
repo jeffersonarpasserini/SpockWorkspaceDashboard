@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# Source this file from any directory, then call compose_safe or compose_safe_no_secret.
-# The script location, not the caller's cwd or inherited Compose environment,
-# selects the only repository and Compose stack this helper can operate on.
-set -eu
+# Compatibility library only. Prefer executing scripts/deploy.sh as a child process.
+# This file intentionally does not mutate shell options when loaded by legacy callers.
+# Its own location, not the caller's cwd or inherited Compose environment, selects the stack.
 
-SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+case "${BASH_SOURCE[0]}" in */*) _COMPOSE_SAFE_DIR="${BASH_SOURCE[0]%/*}" ;; *) _COMPOSE_SAFE_DIR=. ;; esac
+SCRIPT_DIR="$(CDPATH= cd -- "$_COMPOSE_SAFE_DIR" && pwd -P)"
 REPO_ROOT="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd -P)"
-EXPECTED_ROOT="$(git -C "$REPO_ROOT" rev-parse --show-toplevel)"
+EXPECTED_ROOT="$(HERMES_API_KEY= git -C "$REPO_ROOT" rev-parse --show-toplevel)"
+unset _COMPOSE_SAFE_DIR
 [ "$EXPECTED_ROOT" = "$REPO_ROOT" ] || {
   echo "compose-safe: script is not inside the validated repository root" >&2
   return 1 2>/dev/null || exit 1
@@ -32,9 +33,10 @@ _compose_safe() {
       "$@"
 }
 
-# Lifecycle/runtime operations preserve a caller-provided HERMES_API_KEY.
+# Legacy helper operations never carry a runtime key. Deployment with a key is
+# available only through the dedicated executable deploy.sh path.
 compose_safe() {
-  _compose_safe "$@"
+  HERMES_API_KEY= _compose_safe "$@"
 }
 
 # Config rendering and builds do not need a runtime key and must not receive one.

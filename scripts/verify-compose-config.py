@@ -58,7 +58,7 @@ def empty_collection(value, name):
 
 
 def main():
-    require(len(sys.argv) == 9, "usage: verify-compose-config.py JSON WORKSPACE PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES")
+    require(len(sys.argv) == 10, "usage: verify-compose-config.py JSON WORKSPACE PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES WORKSPACE_IDENTITY")
     with open(sys.argv[1], encoding="utf-8") as stream:
         cfg = json.load(stream)
     require(isinstance(cfg, dict), "invalid Compose configuration")
@@ -73,12 +73,16 @@ def main():
     expected_pids = require_int(sys.argv[6], "DASHBOARD_PIDS_LIMIT")
     expected_log_size = sys.argv[7]
     expected_log_files = require_int(sys.argv[8], "DASHBOARD_LOG_MAX_FILE")
+    expected_identity = sys.argv[9]
     require(expected_pids > 0, "DASHBOARD_PIDS_LIMIT must be positive")
     require(expected_log_files > 0, "DASHBOARD_LOG_MAX_FILE must be positive")
     require_bytes(expected_log_size, "DASHBOARD_LOG_MAX_SIZE")
 
     environment = svc.get("environment")
     require(isinstance(environment, dict) and environment.get("HERMES_API_KEY") == "", "inspection key must be empty")
+    require(environment.get("WORKSPACE_IDENTITY") == expected_identity, "workspace startup identity mismatch")
+    require(svc.get("entrypoint") is None, "Compose entrypoint override is forbidden")
+    require(svc.get("command") is None, "Compose command override is forbidden")
     require(svc.get("read_only") is True, "read_only must be true")
     require(svc.get("privileged") is False, "privileged must be explicitly false")
     require(svc.get("deploy") is None, "deploy is forbidden")

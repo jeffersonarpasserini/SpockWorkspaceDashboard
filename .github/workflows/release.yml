@@ -1,0 +1,158 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+# Release environment approval and tag immutability are external repository gates.
+# This job fails closed if it cannot verify required-reviewer protection.
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE: ghcr.io/jeffersonarpasserini/spock-workspace-dashboard
+  SOURCE_REPOSITORY: jeffersonarpasserini/SpockWorkspaceDashboard
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Check out the tagged commit with complete history
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate approval, ancestry, version, and build-once preconditions
+        id: version
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          fail() { printf 'release preflight: %s\n' "$*" >&2; exit 1; }
+
+          [[ "$GITHUB_REF_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || \
+            fail "tag must be an exact stable vMAJOR.MINOR.PATCH without leading zeroes"
+          version="${GITHUB_REF_NAME#v}"
+          [[ "$GITHUB_RUN_ATTEMPT" = 1 ]] || \
+            fail "release workflow reruns are forbidden; publish a new version"
+
+          git fetch --force --prune origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main || \
+            fail "tagged commit is not contained in origin/main"
+          local_tag_sha="$(git rev-parse "${GITHUB_REF_NAME}^{commit}")"
+          [[ "$local_tag_sha" = "$GITHUB_SHA" ]] || fail "checked-out tag does not resolve to GITHUB_SHA"
+          remote_tag_sha="$(gh api "repos/${SOURCE_REPOSITORY}/commits/${GITHUB_REF_NAME}" --jq .sha)" || \
+            fail "could not resolve the authoritative source tag through the GitHub API"
+          [[ "$remote_tag_sha" = "$GITHUB_SHA" ]] || fail "authoritative source tag does not resolve to GITHUB_SHA"
+
+          environment_json="$(gh api "repos/${SOURCE_REPOSITORY}/environments/release")" || \
+            fail "cannot verify the release environment; configure required reviewers and grant API visibility before tagging"
+          jq -e '.protection_rules | any(.type == "required_reviewers" and (.prevent_self_review == true) and ((.reviewers // []) | length > 0))' \
+            <<<"$environment_json" >/dev/null || \
+            fail "release environment must prevent self-review and have nonempty required reviewers; release is blocked"
+
+          artifact_json="$(gh api "repos/${SOURCE_REPOSITORY}/actions/artifacts?name=release-manifest-${version}")" || \
+            fail "could not prove that the release workflow artifact is absent"
+          jq -e '.total_count == 0' <<<"$artifact_json" >/dev/null || \
+            fail "release workflow artifact already exists for ${version}; publish a new version"
+
+          error_file="$(mktemp)"
+          trap 'rm -f "$error_file"' EXIT HUP INT TERM
+          if gh api "repos/${SOURCE_REPOSITORY}/releases/tags/${GITHUB_REF_NAME}" >/dev/null 2>"$error_file"; then
+            fail "GitHub Release already exists for ${GITHUB_REF_NAME}; publish a new version"
+          elif ! grep -q 'HTTP 404' "$error_file"; then
+            fail "could not prove that the GitHub Release/version asset is absent"
+          fi
+
+          package_names="$(gh api --paginate "/users/jeffersonarpasserini/packages?package_type=container&per_page=100" --jq '.[].name')" || \
+            fail "could not establish authenticated GHCR package-list visibility"
+          collection_has_package=false
+          grep -Fxq 'spock-workspace-dashboard' <<<"$package_names" && collection_has_package=true
+
+          : >"$error_file"
+          if gh api "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard" >/dev/null 2>"$error_file"; then
+            [[ "$collection_has_package" = true ]] || \
+              fail "GHCR package collection and package endpoint disagree; absence cannot be proven"
+            package_tags="$(gh api --paginate "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard/versions?per_page=100" --jq '.[] | .metadata.container.tags[]?')" || \
+              fail "could not enumerate every visible GHCR package version"
+            if grep -Fxq "$version" <<<"$package_tags"; then
+              fail "GHCR image version ${version} already exists; partially published versions must never be rebuilt"
+            fi
+          elif grep -q 'HTTP 404' "$error_file"; then
+            [[ "$collection_has_package" = false ]] || \
+              fail "GHCR package collection and package endpoint disagree; absence cannot be proven"
+          else
+            fail "could not prove that the GHCR version image is absent"
+          fi
+
+          echo "version=$version" >>"$GITHUB_OUTPUT"
+          echo "image=$IMAGE" >>"$GITHUB_OUTPUT"
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push immutable version
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.version.outputs.image }}:${{ steps.version.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Attest OCI image provenance
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-name: ${{ steps.version.outputs.image }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: Export release manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+          mkdir -p releases
+          output="releases/${version}.env"
+          umask 077
+          {
+            echo "RELEASE=${version}"
+            echo "GIT_TAG=${GITHUB_REF_NAME}"
+            echo "GIT_SHA=${GITHUB_SHA}"
+            echo "BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "DASHBOARD_IMAGE=${{ steps.version.outputs.image }}:${version}@${{ steps.build.outputs.digest }}"
+          } >"$output"
+
+      - name: Upload manifest workflow artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-manifest-${{ steps.version.outputs.version }}
+          path: releases/${{ steps.version.outputs.version }}.env
+          if-no-files-found: error
+
+      - name: Create GitHub Release with manifest
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: releases/${{ steps.version.outputs.version }}.env
+          generate_release_notes: true
+          fail_on_unmatched_files: true

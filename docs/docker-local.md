@@ -1,160 +1,61 @@
-# Execução Docker local (preparação)
+# Execução Docker local
 
-Esta configuração prepara um runtime de produção para teste futuro. Ela **não executa nem altera** Docker, Homepage, proxy reverso, Tailscale ou serviços do homelab atual. A integração com Homepage continua adiada até uma validação real em host Docker.
+Esta configuração prepara e verifica somente o dashboard. Ela não altera Homepage, proxy reverso, Tailscale ou outros serviços do homelab.
 
-## Limites de segurança
+## Limites
 
-- A publicação padrão é `127.0.0.1:3011`; a aplicação não possui autenticação para LAN/Internet.
-- O workspace é o único mount e entra como somente leitura em `/workspace`.
-- Não monte `/var/run/docker.sock`, `~/.hermes`, arquivos `.env`, devices ou credenciais do host.
-- O serviço declara `privileged: false`, remove todas as capabilities, aplica somente `no-new-privileges` em `security_opt`, rejeita modos PID/IPC host-like e usa filesystem raiz somente leitura.
-- `GET /api/health` é apenas liveness não autenticado. Ele retorna somente `{ "status": "ok" }`; não comprova disponibilidade de integrações e não autoriza exposição remota.
+- Publicação padrão em `127.0.0.1:3011`; não exponha diretamente em LAN/Internet.
+- Único mount: workspace explícito e read-only em `/workspace`.
+- Sem Docker socket, devices, home Hermes ou credenciais do host.
+- Root filesystem read-only, usuário não-root, `cap_drop: ALL`, `no-new-privileges`, recursos e logs limitados.
+- `/api/health` é liveness, não autenticação nem readiness das integrações.
 
-Se acesso além do loopback for necessário, use proxy reverso autenticado ou Tailscale com política restritiva. Não publique diretamente em `0.0.0.0`.
+## Um comando executável, nunca um helper sourced
 
-## Configuração
+Defina um workspace absoluto existente e execute o CLI como processo filho:
 
 ```bash
 export DASHBOARD_WORKSPACE_PATH=/caminho/absoluto/do/workspace
-export DASHBOARD_PORT=3011
-export DASHBOARD_MEMORY_LIMIT=512m
-export DASHBOARD_CPUS=1.0
-export DASHBOARD_PIDS_LIMIT=128
-export DASHBOARD_LOG_MAX_SIZE=10m
-export DASHBOARD_LOG_MAX_FILE=3
-# Opcionais somente se a API for alcançável de dentro do contêiner:
-export HERMES_API_URL=http://endereco-protegido:8642
-# Defina HERMES_API_KEY somente no runtime, nunca durante a inspeção abaixo.
+./scripts/deploy.sh validate
+./scripts/deploy.sh build
+./scripts/deploy.sh local
 ```
 
-Os limites são defaults conservadores de preparação, não uma recomendação universal. O operador deve medir o host antes de alterá-los. `127.0.0.1` dentro do contêiner é o próprio contêiner, não o host. A Hermes CLI e o diretório Hermes do host não são incluídos; Kanban pode degradar como projetado.
+Não execute `source scripts/compose-safe.sh`, `. scripts/compose-safe.sh` nem habilite `set -euo pipefail` no shell remoto. Se uma validação falhar, somente `deploy.sh` termina com status não zero; a sessão chamadora permanece aberta e com as mesmas opções.
 
-## Seleção imutável da stack
+`build` valida o Compose sem secret e constrói a imagem local. `local` repete essa preparação, inicia o runtime e exige health Docker, verifier efetivo e liveness HTTP. O primeiro uso sempre exige `DASHBOARD_WORKSPACE_PATH`; o CLI não tenta adivinhar onde estão os projetos.
 
-Cada bloco independente carrega `scripts/compose-safe.sh`. O helper resolve sua própria localização física, exige que ela pertença à raiz Git validada e que `compose.yaml` exista nessa raiz. Toda chamada usa simultaneamente `--project-directory "$REPO_ROOT"`, `--file "$REPO_ROOT/compose.yaml"` e `--project-name spock-workspace-dashboard`.
+## Configuração e segredos
 
-O helper remove do processo filho `COMPOSE_FILE`, `COMPOSE_PROJECT_NAME`, `COMPOSE_PATH_SEPARATOR`, `COMPOSE_ENV_FILES`, `COMPOSE_PROFILES` e `COMPOSE_CONVERT_WINDOWS_PATHS`. Assim, estado herdado do shell não pode trocar arquivo, diretório, separador de caminhos, profiles ou projeto. `compose_safe` preserva uma `HERMES_API_KEY` fornecida pelo chamador para operações de runtime; `compose_safe_no_secret` a sobrescreve com vazio para inspeção/build. Não substitua os helpers por uma chamada Compose ambiente-dependente.
+Defaults configuráveis: `DASHBOARD_PORT=3011`, `DASHBOARD_MEMORY_LIMIT=512m`, `DASHBOARD_CPUS=1.0`, `DASHBOARD_PIDS_LIMIT=128`, `DASHBOARD_LOG_MAX_SIZE=10m` e `DASHBOARD_LOG_MAX_FILE=3`.
 
-## Verificação futura em host com Docker
+`HERMES_API_URL` e `HERMES_API_KEY` são opcionais. O executável usa o interpretador fixo `/bin/bash -p`, desativa tracing e remove `BASH_ENV`/`ENV` antes de ler a chave, impedindo hooks de startup, funções/opções importadas e resolução de interpretador por `PATH`. Em seguida, o CLI captura a chave em variável shell não exportada e exporta globalmente `HERMES_API_KEY=`. Assim, Git, `stat`, temporários, verifiers, `gh`, inspect, health, estado e todas as operações Compose exceto uma recebem chave vazia. Somente o processo exato `docker compose ... up --no-start` recebe a chave salva para criar o ambiente de runtime; o CLI nunca a imprime. Não imprima configuração expandida, ambiente, inspect amplo, logs ou bundles de debug quando houver secrets.
 
-Os comandos falham quando uma invariante não vale e não escrevem no workspace. **Nunca** renderize a configuração com uma chave Hermes real exportada: configuração expandida pode interpolar e imprimir o valor. `compose_safe_no_secret` fornece `HERMES_API_KEY=` somente a `config` e `build`, que não precisam do segredo. `compose_safe up` preserva a chave opcional para injeção no runtime. `ps`, o `exec` limitado abaixo e `down` não imprimem o ambiente; ainda assim, `docker inspect` amplo, `compose config`, comandos `exec env` e logs/debug bundles podem revelar valores de runtime e devem ser tratados como saída sensível.
+Toda chamada do CLI deriva e valida sua raiz física, fixa `--project-directory`, o caminho absoluto de `compose.yaml` e `--project-name spock-workspace-dashboard`, e remove seletores Compose herdados. Depois de canonicalizar o workspace, o CLI retém device/inode. Startup usa `up --no-start`, inspeciona o contêiner criado ainda parado e só então executa `start`. O entrypoint compara device/inode de `/workspace` com a identidade capturada antes de executar Node; mismatch impede o serviço e remove o contêiner staged. Em Linux Docker com bind mount local, o mount fixa o objeto montado, portanto troca posterior do pathname não troca o mount já criado.
 
-### 1. Compose expandido, sem segredo
+Isto fecha o início de serviço sobre uma substituição não verificada, mas não afirma atomicidade impossível entre o último `stat` do host e o consumo do bind pelo daemon: a proteção dessa janela é o gate dentro do mount efetivo. A igualdade device/inode é um requisito de compatibilidade Linux; daemon remoto, Docker Desktop ou filesystem que remapeie esses valores falha fechado e não é suportado sem um mecanismo de identidade equivalente validado. Alterações de conteúdo dentro do mesmo diretório continuam dentro do modelo de workspace local não confiável e read-only para o contêiner. JSON temporário fica em `${TMPDIR:-/tmp}` e é removido por trap.
+
+## Estado, verificação e teardown
 
 ```bash
-set -eu
-SAFE_COMPOSE_HELPER="$(git rev-parse --show-toplevel)/scripts/compose-safe.sh"
-. "$SAFE_COMPOSE_HELPER"
-: "${DASHBOARD_WORKSPACE_PATH:?defina o caminho absoluto do workspace}"
-case "$DASHBOARD_WORKSPACE_PATH" in /*) ;; *) echo "DASHBOARD_WORKSPACE_PATH deve ser absoluto" >&2; exit 1;; esac
-[ -d "$DASHBOARD_WORKSPACE_PATH" ]
-CONFIG_JSON="$(mktemp "${TMPDIR:-/tmp}/spock-compose-config.XXXXXX.json")"
-trap 'rm -f "$CONFIG_JSON"' EXIT HUP INT TERM
-compose_safe_no_secret config --format json >"$CONFIG_JSON"
-python3 "$REPO_ROOT/scripts/verify-compose-config.py" \
-  "$CONFIG_JSON" "$DASHBOARD_WORKSPACE_PATH" "${DASHBOARD_PORT:-3011}" \
-  "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
-  "${DASHBOARD_PIDS_LIMIT:-128}" "${DASHBOARD_LOG_MAX_SIZE:-10m}" \
-  "${DASHBOARD_LOG_MAX_FILE:-3}"
-rm -f "$CONFIG_JSON"
-trap - EXIT HUP INT TERM
+./scripts/deploy.sh status
+./scripts/deploy.sh verify
+./scripts/deploy.sh down
 ```
 
-O verifier exige exatamente um serviço, publicação e mount; `privileged: false`; `cap_drop: [ALL]`; coleção `security_opt` exata contendo somente `no-new-privileges`; e ausência de `devices`, `device_cgroup_rules`, `device_requests`, PID/IPC host-like, capabilities adicionais, mounts/configs/secrets extras, recursos concorrentes e opções extras de log.
+O CLI executa `scripts/verify-compose-config.py` sobre a configuração declarada e `scripts/verify-container-inspect.py` sobre a projeção efetiva. O verifier declarado rejeita serviços, portas, mounts, privilégios, recursos e opções de log extras. O verifier efetivo rejeita escapes equivalentes no estado do contêiner. O health Docker tem timeout e é validado separadamente do payload HTTP exato `{ "status": "ok" }`.
 
-### 2. Build, inicialização e estado
-
-```bash
-set -eu
-SAFE_COMPOSE_HELPER="$(git rev-parse --show-toplevel)/scripts/compose-safe.sh"
-. "$SAFE_COMPOSE_HELPER"
-compose_safe_no_secret build
-compose_safe up -d
-compose_safe ps
-CID="$(compose_safe ps -q dashboard)"
-[ -n "$CID" ]
-[ "$(docker inspect --format '{{.State.Running}}' "$CID")" = "true" ]
-```
-
-### 3. Health Docker e liveness HTTP separados
+O Compose não possui volume persistente; o workspace é read-only. `down` remove somente a stack fixa do dashboard. Para retornar exatamente ao Node local em loopback, execute cada comando como processo filho (não use `source` e não altere opções do shell):
 
 ```bash
-set -eu
-SAFE_COMPOSE_HELPER="$(git rev-parse --show-toplevel)/scripts/compose-safe.sh"
-. "$SAFE_COMPOSE_HELPER"
-CID="$(compose_safe ps -q dashboard)"
-[ -n "$CID" ]
-health=""
-for _ in $(seq 1 60); do
-  health="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}' "$CID")"
-  [ "$health" = "healthy" ] && break
-  [ "$health" = "unhealthy" ] && { echo "healthcheck Docker ficou unhealthy" >&2; exit 1; }
-  sleep 2
-done
-[ "$health" = "healthy" ]
-body="$(curl --fail --silent --show-error "http://127.0.0.1:${DASHBOARD_PORT:-3011}/api/health")"
-python3 - "$body" <<'PY'
-import json, sys
-if json.loads(sys.argv[1]) != {"status": "ok"}:
-    print("health payload inesperado", file=sys.stderr)
-    raise SystemExit(1)
-PY
-```
-
-### 4. Usuário, escrita e sandbox efetivo
-
-Os testes de escrita consultam permissões e não criam arquivos no workspace. A projeção seleciona somente campos necessários; não imprime ambiente ou secrets.
-
-```bash
-set -eu
-SAFE_COMPOSE_HELPER="$(git rev-parse --show-toplevel)/scripts/compose-safe.sh"
-. "$SAFE_COMPOSE_HELPER"
-CID="$(compose_safe ps -q dashboard)"
-[ -n "$CID" ]
-compose_safe exec -T dashboard sh -eu -c '
-  [ "$(id -u)" -ne 0 ]
-  [ ! -w / ]
-  [ ! -w /workspace ]
-'
-[ "$(docker inspect --format '{{.HostConfig.ReadonlyRootfs}}' "$CID")" = "true" ]
-EFFECTIVE_JSON="$(mktemp "${TMPDIR:-/tmp}/spock-container-effective.XXXXXX.json")"
-trap 'rm -f "$EFFECTIVE_JSON"' EXIT HUP INT TERM
-docker inspect --format '{"Privileged":{{json .HostConfig.Privileged}},"Devices":{{json .HostConfig.Devices}},"DeviceRequests":{{json .HostConfig.DeviceRequests}},"DeviceCgroupRules":{{json .HostConfig.DeviceCgroupRules}},"PidMode":{{json .HostConfig.PidMode}},"IpcMode":{{json .HostConfig.IpcMode}},"AppArmorProfile":{{json .AppArmorProfile}},"SecurityOpt":{{json .HostConfig.SecurityOpt}},"CapAdd":{{json .HostConfig.CapAdd}},"CapDrop":{{json .HostConfig.CapDrop}},"PortBindings":{{json .HostConfig.PortBindings}},"Mounts":{{json .Mounts}},"Tmpfs":{{json .HostConfig.Tmpfs}},"Memory":{{json .HostConfig.Memory}},"NanoCpus":{{json .HostConfig.NanoCpus}},"PidsLimit":{{json .HostConfig.PidsLimit}},"LogConfig":{{json .HostConfig.LogConfig}}}' "$CID" >"$EFFECTIVE_JSON"
-python3 "$REPO_ROOT/scripts/verify-container-inspect.py" \
-  "$EFFECTIVE_JSON" "$DASHBOARD_WORKSPACE_PATH" "${DASHBOARD_PORT:-3011}" \
-  "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
-  "${DASHBOARD_PIDS_LIMIT:-128}" "${DASHBOARD_LOG_MAX_SIZE:-10m}" \
-  "${DASHBOARD_LOG_MAX_FILE:-3}"
-rm -f "$EFFECTIVE_JSON"
-trap - EXIT HUP INT TERM
-```
-
-O verifier efetivo rejeita `Privileged`, `Devices`, `DeviceRequests`, `DeviceCgroupRules`, PID/IPC host-like, `CapAdd`, mounts e tmpfs extras. Também rejeita explicitamente AppArmor ou seccomp `unconfined`, exige `no-new-privileges`, `CapDrop: [ALL]`, a publicação loopback única e os recursos/logs esperados. A validação de fixtures adversariais não substitui esta execução posterior contra um daemon.
-
-## Rollback e retorno ao Node local
-
-Este Compose não declara volumes persistentes. O único mount é o workspace read-only. O teardown abaixo só pode alcançar o projeto fixo `spock-workspace-dashboard` e o `compose.yaml` desta raiz validada; ele não pode selecionar outra stack por variáveis herdadas.
-
-```bash
-set -eu
-SAFE_COMPOSE_HELPER="$(git rev-parse --show-toplevel)/scripts/compose-safe.sh"
-. "$SAFE_COMPOSE_HELPER"
-compose_safe down
-unset DASHBOARD_WORKSPACE_PATH DASHBOARD_PORT DASHBOARD_MEMORY_LIMIT DASHBOARD_CPUS
-unset DASHBOARD_PIDS_LIMIT DASHBOARD_LOG_MAX_SIZE DASHBOARD_LOG_MAX_FILE
-unset HERMES_API_URL HERMES_API_KEY
-unset DASHBOARD_HOSTNAME PORT HOSTNAME
-export WORKSPACE_ROOT=/caminho/absoluto/do/diretorio-pai-dos-projetos
-case "$WORKSPACE_ROOT" in /*) ;; *) echo "WORKSPACE_ROOT deve ser absoluto" >&2; exit 1;; esac
-[ -d "$WORKSPACE_ROOT" ]
+./scripts/deploy.sh down
 npm ci
 npm run build
-# O start prepara .next/static e public no runtime standalone; não refaz o build.
-DASHBOARD_HOSTNAME=127.0.0.1 PORT=3011 npm start
+env -u HOSTNAME -u PORT DASHBOARD_HOSTNAME=127.0.0.1 PORT=3011 npm start
 ```
 
-`npm start` delega a `start:standalone`, que sempre executa `prepare:standalone` antes do servidor. Esse preparo copia `.next/static` e, quando presente, `public`; não executa build implicitamente. Homepage, proxy e Tailscale permanecem fora do rollback.
+O último comando fica em primeiro plano, prepara os assets standalone pelo script de `npm start` e fixa `127.0.0.1:3011`, neutralizando valores herdados. Para releases imutáveis e rollback por versão/digest, consulte [`versioned-deployment.md`](versioned-deployment.md).
 
 ## Graphify
 
-A consulta Graphify continua pendente porque `graphify-out/graph.json` não existe neste root. Nenhum resultado foi inventado.
+A consulta Graphify deste repositório segue pendente porque `graphify-out/graph.json` não existe. Nenhum resultado foi presumido.

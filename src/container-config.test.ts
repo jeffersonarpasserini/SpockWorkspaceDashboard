@@ -41,6 +41,18 @@ describe("container deployment configuration", () => {
     expect(compose).not.toMatch(/\.hermes(?:\/|\b)/);
   });
 
+  it("gates startup on the inode of the bind mount captured before Compose", () => {
+    const dockerfile = readProjectFile("Dockerfile");
+    const compose = readProjectFile("compose.yaml");
+    const gate = readProjectFile("scripts/workspace-startup-gate.sh");
+
+    expect(dockerfile).toContain("workspace-startup-gate.sh");
+    expect(dockerfile).toContain('ENTRYPOINT ["/usr/local/bin/workspace-startup-gate"]');
+    expect(compose).toContain('WORKSPACE_IDENTITY: "${DASHBOARD_WORKSPACE_IDENTITY:?');
+    expect(gate).toContain("stat -Lc '%d:%i' -- /workspace");
+    expect(gate).toContain('exec "$@"');
+  });
+
   it("starts the standalone server on loopback while preserving caller overrides", () => {
     const packageJson = JSON.parse(readProjectFile("package.json")) as {
       scripts?: Record<string, string>;
@@ -91,14 +103,15 @@ describe("container deployment configuration", () => {
     );
   });
 
-  it("pins every Compose operation and rollback to the validated repository stack", () => {
+  it("pins every Compose operation in an executable terminal-safe deployment child", () => {
     const runbook = readProjectFile("docs/docker-local.md");
     const helper = readProjectFile("scripts/compose-safe.sh");
+    const deploy = readProjectFile("scripts/deploy.sh");
 
-    expect(helper).toContain('REPO_ROOT="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd -P)"');
-    expect(helper).toContain('--project-directory "$REPO_ROOT"');
-    expect(helper).toContain('--file "$REPO_ROOT/compose.yaml"');
-    expect(helper).toContain('--project-name spock-workspace-dashboard');
+    expect(deploy).toContain('REPO_ROOT="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd -P)"');
+    expect(deploy).toContain('--project-directory "$REPO_ROOT"');
+    expect(deploy).toContain('--file "$COMPOSE_FILE"');
+    expect(deploy).toContain('--project-name "$PROJECT_NAME"');
     for (const variable of [
       "COMPOSE_FILE",
       "COMPOSE_PROJECT_NAME",
@@ -106,19 +119,15 @@ describe("container deployment configuration", () => {
       "COMPOSE_ENV_FILES",
       "COMPOSE_PROFILES",
     ]) {
-      expect(helper).toContain(`-u ${variable}`);
+      expect(deploy).toMatch(new RegExp(`unset[\\s\\S]*\\b${variable}\\b`));
     }
-    expect(runbook).not.toMatch(/\bdocker compose (?:config|build|up|ps|exec|down)\b/);
-    for (const operation of ["up", "ps", "exec", "down"]) {
-      expect(runbook).toMatch(new RegExp(`\\bcompose_safe ${operation}\\b`));
-    }
-    for (const operation of ["config", "build"]) {
-      expect(runbook).toMatch(new RegExp(`\\bcompose_safe_no_secret ${operation}\\b`));
-    }
-    expect(runbook).toContain('CID="$(compose_safe ps -q dashboard)"');
+    expect(runbook).toContain("./scripts/deploy.sh local");
+    expect(runbook).toContain("./scripts/deploy.sh down");
+    expect(runbook).not.toMatch(/^\s*(?:source|\.)\s+scripts\/compose-safe\.sh/m);
+    expect(helper).not.toMatch(/^set\s+-/m);
     expect(helper).toContain("compose_safe_no_secret()");
     expect(helper).toMatch(/compose_safe_no_secret\(\) \{\s*HERMES_API_KEY= _compose_safe/);
-    expect(helper).toMatch(/compose_safe\(\) \{\s*_compose_safe/);
+    expect(helper).toMatch(/compose_safe\(\) \{\s*HERMES_API_KEY= _compose_safe/);
 
     const probe = spawnSync("bash", ["-c", [
       ". scripts/compose-safe.sh",
@@ -127,7 +136,7 @@ describe("container deployment configuration", () => {
       "HERMES_API_KEY=runtime-secret compose_safe_no_secret build",
     ].join("; ")], { cwd: process.cwd(), encoding: "utf8" });
     expect(probe.status).toBe(0);
-    expect(probe.stdout).toBe("<runtime-secret>\n<>\n");
+    expect(probe.stdout).toBe("<>\n<>\n");
   });
 
   it("declares and verifies a fail-closed container sandbox", () => {
@@ -168,5 +177,21 @@ describe("container deployment configuration", () => {
     expect(effectiveVerifier).toContain('state.get("PidsLimit")');
     expect(effectiveVerifier).toContain('state.get("LogConfig")');
     expect(effectiveVerifier).toContain('set(log_config) == {"Type", "Config"}');
+  });
+
+  it("documents the exact safe Node-local rollback as child processes", () => {
+    const runbook = readProjectFile("docs/docker-local.md");
+    const design = readProjectFile("openspec/changes/prepare-containerized-local-deployment/design.md");
+    for (const command of [
+      "./scripts/deploy.sh down",
+      "npm ci",
+      "npm run build",
+      "env -u HOSTNAME -u PORT DASHBOARD_HOSTNAME=127.0.0.1 PORT=3011 npm start",
+    ]) {
+      expect(runbook).toContain(command);
+      expect(design).toContain(command);
+    }
+    expect(design).not.toContain("carregar o helper");
+    expect(design).not.toContain("compose_safe down");
   });
 });

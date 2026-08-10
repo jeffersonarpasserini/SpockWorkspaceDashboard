@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: spock-workspace-dashboard:local
+    image: ${DASHBOARD_IMAGE:-spock-workspace-dashboard:local}
     init: true
     restart: unless-stopped
     mem_limit: "${DASHBOARD_MEMORY_LIMIT:-512m}"
@@ -21,6 +21,7 @@ services:
       HERMES_BIN: hermes
       HERMES_API_URL: "${HERMES_API_URL:-}"
       HERMES_API_KEY: "${HERMES_API_KEY:-}"
+      WORKSPACE_IDENTITY: "${DASHBOARD_WORKSPACE_IDENTITY:?workspace identity must be provided by deploy.sh}"
     volumes:
       - "${DASHBOARD_WORKSPACE_PATH:?defina o caminho absoluto do workspace}:/workspace:ro"
     privileged: false
