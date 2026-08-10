@@ -44,6 +44,40 @@ validate_root() {
   [ -f "$COMPOSE_FILE" ] || die "missing fixed Compose file"
 }
 
+validate_bind_address() {
+  local candidate a b c d
+  if [[ -v DASHBOARD_BIND_ADDRESS ]]; then
+    candidate="$DASHBOARD_BIND_ADDRESS"
+  else
+    candidate="127.0.0.1"
+  fi
+  if [[ "$candidate" =~ ^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$ ]]; then
+    a=$((10#${BASH_REMATCH[1]})); b=$((10#${BASH_REMATCH[2]}))
+    c=$((10#${BASH_REMATCH[3]})); d=$((10#${BASH_REMATCH[4]}))
+    if (( a <= 255 && b <= 255 && c <= 255 && d <= 255 )) && \
+       [ "$candidate" = "$a.$b.$c.$d" ] && \
+       { [ "$candidate" = "127.0.0.1" ] || (( a == 100 && b >= 64 && b <= 127 )); }; then
+      if [ "$candidate" != "127.0.0.1" ]; then
+        local owned_file
+        local -a owned_addresses=()
+        command -v tailscale >/dev/null 2>&1 || \
+          die "Tailscale ownership could not be proven: tailscale CLI unavailable"
+        new_temp tailscale-ip
+        owned_file="$LAST_TEMP"
+        HERMES_API_KEY= tailscale ip -4 >"$owned_file" 2>/dev/null || \
+          die "Tailscale ownership could not be proven: tailscale ip -4 failed"
+        mapfile -t owned_addresses <"$owned_file"
+        [ "${#owned_addresses[@]}" -eq 1 ] && [ "${owned_addresses[0]}" = "$candidate" ] || \
+          die "Tailscale ownership could not be proven: expected one exact host IPv4"
+      fi
+      DASHBOARD_BIND_ADDRESS="$candidate"
+      export DASHBOARD_BIND_ADDRESS
+      return 0
+    fi
+  fi
+  die "DASHBOARD_BIND_ADDRESS must be exactly 127.0.0.1 or an IPv4 in 100.64.0.0/10"
+}
+
 validate_workspace() {
   [ -n "${DASHBOARD_WORKSPACE_PATH:-}" ] || die "set DASHBOARD_WORKSPACE_PATH to an absolute existing workspace directory"
   case "$DASHBOARD_WORKSPACE_PATH" in /*) ;; *) die "DASHBOARD_WORKSPACE_PATH must be absolute" ;; esac
@@ -172,7 +206,7 @@ verify_declared() {
   json="$LAST_TEMP"
   compose_no_secret config --format json > "$json" || die "Compose config failed"
   python3 "$SCRIPT_DIR/verify-compose-config.py" "$json" "$DASHBOARD_WORKSPACE_PATH" \
-    "${DASHBOARD_PORT:-3011}" "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
+    "$DASHBOARD_BIND_ADDRESS" "${DASHBOARD_PORT:-3011}" "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
     "${DASHBOARD_PIDS_LIMIT:-128}" "${DASHBOARD_LOG_MAX_SIZE:-10m}" "${DASHBOARD_LOG_MAX_FILE:-3}" \
     "$WORKSPACE_IDENTITY" || die "declared Compose verification failed"
 }
@@ -217,7 +251,7 @@ verify_effective() {
   json="$LAST_TEMP"
   HERMES_API_KEY= docker inspect --format '{"Entrypoint":{{json .Config.Entrypoint}},"Cmd":{{json .Config.Cmd}},"User":{{json .Config.User}},"ReadonlyRootfs":{{json .HostConfig.ReadonlyRootfs}},"Privileged":{{json .HostConfig.Privileged}},"Devices":{{json .HostConfig.Devices}},"DeviceRequests":{{json .HostConfig.DeviceRequests}},"DeviceCgroupRules":{{json .HostConfig.DeviceCgroupRules}},"PidMode":{{json .HostConfig.PidMode}},"IpcMode":{{json .HostConfig.IpcMode}},"AppArmorProfile":{{json .AppArmorProfile}},"SecurityOpt":{{json .HostConfig.SecurityOpt}},"CapAdd":{{json .HostConfig.CapAdd}},"CapDrop":{{json .HostConfig.CapDrop}},"PortBindings":{{json .HostConfig.PortBindings}},"Mounts":{{json .Mounts}},"Tmpfs":{{json .HostConfig.Tmpfs}},"Memory":{{json .HostConfig.Memory}},"NanoCpus":{{json .HostConfig.NanoCpus}},"PidsLimit":{{json .HostConfig.PidsLimit}},"LogConfig":{{json .HostConfig.LogConfig}}}' "$cid" > "$json" || die "effective inspection failed"
   HERMES_API_KEY= python3 "$SCRIPT_DIR/verify-container-inspect.py" "$json" "$DASHBOARD_WORKSPACE_PATH" \
-    "${DASHBOARD_PORT:-3011}" "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
+    "$DASHBOARD_BIND_ADDRESS" "${DASHBOARD_PORT:-3011}" "${DASHBOARD_MEMORY_LIMIT:-512m}" "${DASHBOARD_CPUS:-1.0}" \
     "${DASHBOARD_PIDS_LIMIT:-128}" "${DASHBOARD_LOG_MAX_SIZE:-10m}" "${DASHBOARD_LOG_MAX_FILE:-3}" \
     || die "effective container verification failed"
 }
@@ -232,7 +266,7 @@ verify_runtime_isolation() {
 
 verify_liveness() {
   local body
-  body="$(HERMES_API_KEY= curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${DASHBOARD_PORT:-3011}/api/health")" || die "HTTP liveness failed"
+  body="$(HERMES_API_KEY= curl --fail --silent --show-error --max-time 10 "http://${DASHBOARD_BIND_ADDRESS}:${DASHBOARD_PORT:-3011}/api/health")" || die "HTTP liveness failed"
   HERMES_API_KEY= python3 -c 'import json,sys; raise SystemExit(0 if json.loads(sys.argv[1]) == {"status":"ok"} else 1)' "$body" \
     || die "HTTP liveness payload is invalid"
 }
@@ -299,6 +333,7 @@ show_release_state() {
 main() {
   local command="${1:-}"
   validate_root
+  validate_bind_address
   case "$command" in
     validate)
       validate_workspace

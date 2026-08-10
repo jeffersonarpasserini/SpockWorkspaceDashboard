@@ -13,7 +13,7 @@ O contrato público aceita somente versões estáveis numéricas `MAJOR.MINOR.PA
 3. Mantenha `main` como default branch protegida, com merge/review/status gates. O workflow faz checkout com histórico completo e exige que `GITHUB_SHA` seja ancestral de `origin/main`; uma tag em feature commit falha.
 4. Garanta que GitHub Actions possa gravar Contents, Packages, ID token e Attestations, e que a API possa ler environment/ruleset/package/release. O job usa permissões somente para essas operações.
 
-**Estado observado na revisão final:** o environment `release` está ausente, não há ruleset ativo, `main` está sem proteção e Docker não está disponível no host de revisão. Portanto criação de tag, release e deploy continuam bloqueados até configuração e contraprova externas; os arquivos deste repositório não alegam concluir esses gates.
+**Estado observado na revisão final:** no host Linux Docker `bumblebee`, `verify` e `status` retornaram rc 0 no commit `3908841`, incluindo o probe corrigido de isolamento, sobre o contêiner criado pelo fluxo anterior. O rerun completo de `deploy.sh local` no mesmo commit permanece pendente para fechar a evidência de build/criação/start. O environment `release` continua ausente, não há ruleset ativo e `main` permanece sem proteção; tag e release seguem bloqueadas.
 
 Gate verificável (requer `gh` autenticado com acesso administrativo de leitura):
 

@@ -55,7 +55,8 @@ O build usa `output: "standalone"`; por isso a produção executa `.next/standal
 | `HERMES_API_KEY` | Must match Hermes `API_SERVER_KEY` | empty |
 | `DASHBOARD_HOSTNAME` | Override explícito do endereço do servidor standalone Node local | `127.0.0.1` |
 | `PORT` | Porta host-facing dos servidores Node local (desenvolvimento e standalone) | `3011` |
-| `DASHBOARD_PORT` | Porta publicada pelo Compose no loopback do host; o contêiner continua em `3000` | `3011` |
+| `DASHBOARD_BIND_ADDRESS` | Host IP publicado pelo Compose; somente `127.0.0.1` ou IPv4 Tailscale canônico pertencente ao host | `127.0.0.1` |
+| `DASHBOARD_PORT` | Porta publicada pelo Compose; o contêiner continua em `3000` | `3011` |
 
 Example board mapping:
 
@@ -105,7 +106,7 @@ Project scope in chat is conversational context, not an operating-system sandbox
 
 ## Docker local e deploy versionado
 
-Os arquivos `Dockerfile` e `compose.yaml` suportam preparação local e releases imutáveis sem alterar Homepage, proxy ou Tailscale. O Compose exige `DASHBOARD_WORKSPACE_PATH`, monta esse workspace como somente leitura, declara `privileged: false` e publica somente em `127.0.0.1` por padrão. Defaults conservadores limitam o serviço a `512m`, `1.0` CPU e `128` PIDs, com logs rotacionados. A imagem não inclui Hermes CLI nem monta Docker socket, devices, home Hermes ou credenciais do host.
+Os arquivos `Dockerfile` e `compose.yaml` suportam preparação local e releases imutáveis sem alterar Homepage, proxy ou a configuração do daemon Tailscale. O Compose exige `DASHBOARD_WORKSPACE_PATH`, monta esse workspace como somente leitura, declara `privileged: false` e publica somente em `127.0.0.1` por padrão. O override `DASHBOARD_BIND_ADDRESS=100.95.240.74` habilita acesso Tailscale-only quando esse IPv4 é comprovado exatamente por `tailscale ip -4`; outros endereços falham antes de Compose. A aplicação não possui autenticação própria, portanto o acesso depende da policy e das tags verificadas no painel Tailscale, além de teste por peer autorizado; consulte `docs/docker-local.md`. Defaults conservadores limitam o serviço a `512m`, `1.0` CPU e `128` PIDs, com logs rotacionados. A imagem não inclui Hermes CLI nem monta Docker socket, devices, home Hermes ou credenciais do host.
 
 O operador executa somente `./scripts/deploy.sh <comando>` como processo filho; nunca faz source de helper nem altera opções no terminal remoto. `build`/`local` são o fluxo local. Uma versão estável exata `MAJOR.MINOR.PATCH` usa manifest GHCR por digest, faz verificação de proveniência, `pull`, `up --no-start --no-build`, inspeção parada e `start`; prerelease, metadata e zeros à esquerda são rejeitados. A chave Hermes é herdada somente pelo processo exato de `up --no-start`; o entrypoint Linux valida device/inode do bind efetivo antes de Node. Ainda não existe tag, versão ou release publicada por esta mudança.
 
@@ -128,12 +129,14 @@ As mudanças ativas são:
 
 - `add-workspace-agent-dashboard`: implementação local-first original;
 - `prepare-containerized-local-deployment`: preparação Docker local/homelab;
-- `add-versioned-deployment-export`: exportação de release imutável e CLI terminal-safe.
+- `add-versioned-deployment-export`: exportação de release imutável e CLI terminal-safe;
+- `add-tailscale-dashboard-access`: publicação Tailscale-only com ownership, ACLs e contraprovas de rede.
 
 ```bash
 npx -y @fission-ai/openspec@1.8.0 validate add-workspace-agent-dashboard --strict
 npx -y @fission-ai/openspec@1.8.0 validate prepare-containerized-local-deployment --strict
 npx -y @fission-ai/openspec@1.8.0 validate add-versioned-deployment-export --strict
+npx -y @fission-ai/openspec@1.8.0 validate add-tailscale-dashboard-access --strict
 ```
 
 A consulta Graphify da nova raiz continua pendente porque `graphify-out/graph.json` não existe; nenhum resultado foi presumido.

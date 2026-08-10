@@ -15,7 +15,7 @@ services:
         max-size: "${DASHBOARD_LOG_MAX_SIZE:-10m}"
         max-file: "${DASHBOARD_LOG_MAX_FILE:-3}"
     ports:
-      - "127.0.0.1:${DASHBOARD_PORT:-3011}:3000"
+      - "${DASHBOARD_BIND_ADDRESS:-127.0.0.1}:${DASHBOARD_PORT:-3011}:3000"
     environment:
       WORKSPACE_ROOT: /workspace
       HERMES_BIN: hermes

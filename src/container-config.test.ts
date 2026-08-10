@@ -29,10 +29,11 @@ describe("container deployment configuration", () => {
     expect(dockerfile).not.toMatch(/HERMES_API_KEY\s*=/);
   });
 
-  it("publishes only to loopback and grants no sensitive host mounts", () => {
+  it("defaults publication to loopback and supports an explicit validated bind address", () => {
     const compose = readProjectFile("compose.yaml");
 
-    expect(compose).toContain('127.0.0.1:${DASHBOARD_PORT:-3011}:3000');
+    expect(compose).toContain('${DASHBOARD_BIND_ADDRESS:-127.0.0.1}:${DASHBOARD_PORT:-3011}:3000');
+    expect(compose).not.toContain('"${DASHBOARD_PORT:-3011}:3000"');
     expect(compose).toMatch(/\/workspace:ro/);
     expect(compose).toContain("read_only: true");
     expect(compose).toContain("no-new-privileges:true");
@@ -177,6 +178,26 @@ describe("container deployment configuration", () => {
     expect(effectiveVerifier).toContain('state.get("PidsLimit")');
     expect(effectiveVerifier).toContain('state.get("LogConfig")');
     expect(effectiveVerifier).toContain('set(log_config) == {"Type", "Config"}');
+  });
+
+  it("documents Tailscale-only deployment, verification, and exact loopback rollback", () => {
+    const runbook = readProjectFile("docs/docker-local.md");
+    const readme = readProjectFile("README.md");
+    for (const text of [runbook, readme]) {
+      expect(text).toContain("DASHBOARD_BIND_ADDRESS");
+      expect(text).toContain("100.95.240.74");
+    }
+    expect(runbook).toContain("http://100.95.240.74:3011");
+    expect(runbook).toContain("DASHBOARD_BIND_ADDRESS=127.0.0.1 ./scripts/deploy.sh local");
+    expect(runbook).toMatch(/ACLs[\s\S]*tags[\s\S]*Tailscale/i);
+    expect(runbook).toContain("https://login.tailscale.com/admin/machines");
+    expect(runbook).toContain("https://login.tailscale.com/admin/acls");
+    expect(runbook).toContain("tailscale ping 100.95.240.74");
+    expect(runbook).toMatch(/peer[\s\S]*autorizado/i);
+    expect(runbook).toContain("192.168.10.74");
+    expect(runbook).toMatch(/não possui autenticação própria/i);
+    expect(runbook).not.toMatch(/(?:DASHBOARD_PORT|3011):3000/);
+    expect(runbook).not.toContain("0.0.0.0:3011");
   });
 
   it("documents the exact safe Node-local rollback as child processes", () => {

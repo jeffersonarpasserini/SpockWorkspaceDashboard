@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed verifier for rendered `docker compose config --format json`."""
 from decimal import Decimal, InvalidOperation
+import ipaddress
 import json
 import os
 import re
@@ -57,8 +58,20 @@ def empty_collection(value, name):
     require(value is None or value == [] or value == {}, f"{name} must be empty or null")
 
 
+def require_bind_address(value):
+    require(isinstance(value, str), "invalid DASHBOARD_BIND_ADDRESS")
+    try:
+        address = ipaddress.IPv4Address(value)
+    except ipaddress.AddressValueError as exc:
+        raise ValidationError("invalid DASHBOARD_BIND_ADDRESS") from exc
+    tailscale = ipaddress.IPv4Network("100.64.0.0/10")
+    require(str(address) == value and (value == "127.0.0.1" or address in tailscale),
+            "DASHBOARD_BIND_ADDRESS must be loopback or Tailscale IPv4")
+    return value
+
+
 def main():
-    require(len(sys.argv) == 10, "usage: verify-compose-config.py JSON WORKSPACE PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES WORKSPACE_IDENTITY")
+    require(len(sys.argv) == 11, "usage: verify-compose-config.py JSON WORKSPACE BIND_ADDRESS PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES WORKSPACE_IDENTITY")
     with open(sys.argv[1], encoding="utf-8") as stream:
         cfg = json.load(stream)
     require(isinstance(cfg, dict), "invalid Compose configuration")
@@ -67,13 +80,14 @@ def main():
     svc = services["dashboard"]
     require(isinstance(svc, dict), "invalid dashboard service")
     expected_workspace = os.path.realpath(sys.argv[2])
-    expected_port = require_int(sys.argv[3], "DASHBOARD_PORT")
-    expected_memory = require_bytes(sys.argv[4], "DASHBOARD_MEMORY_LIMIT")
-    expected_cpus = require_cpus(sys.argv[5], "DASHBOARD_CPUS")
-    expected_pids = require_int(sys.argv[6], "DASHBOARD_PIDS_LIMIT")
-    expected_log_size = sys.argv[7]
-    expected_log_files = require_int(sys.argv[8], "DASHBOARD_LOG_MAX_FILE")
-    expected_identity = sys.argv[9]
+    expected_bind_address = require_bind_address(sys.argv[3])
+    expected_port = require_int(sys.argv[4], "DASHBOARD_PORT")
+    expected_memory = require_bytes(sys.argv[5], "DASHBOARD_MEMORY_LIMIT")
+    expected_cpus = require_cpus(sys.argv[6], "DASHBOARD_CPUS")
+    expected_pids = require_int(sys.argv[7], "DASHBOARD_PIDS_LIMIT")
+    expected_log_size = sys.argv[8]
+    expected_log_files = require_int(sys.argv[9], "DASHBOARD_LOG_MAX_FILE")
+    expected_identity = sys.argv[10]
     require(expected_pids > 0, "DASHBOARD_PIDS_LIMIT must be positive")
     require(expected_log_files > 0, "DASHBOARD_LOG_MAX_FILE must be positive")
     require_bytes(expected_log_size, "DASHBOARD_LOG_MAX_SIZE")
@@ -112,7 +126,7 @@ def main():
     ports = require_list(svc.get("ports"), "ports")
     require(len(ports) == 1 and isinstance(ports[0], dict), "exactly one structured port is required")
     port = ports[0]
-    require(port.get("host_ip") == "127.0.0.1", "published port must bind to loopback")
+    require(port.get("host_ip") == expected_bind_address, "published port bind address mismatch")
     require(require_int(port.get("published"), "published") == expected_port, "published port mismatch")
     require(require_int(port.get("target"), "target") == 3000, "target port must be 3000")
     require(str(port.get("protocol", "")).lower() == "tcp", "port protocol must be tcp")

@@ -74,7 +74,7 @@ A documentação operacional SHALL fornecer comandos fail-closed, inclusive sob 
 
 #### Scenario: Host Docker é verificado
 - **WHEN** o operador executa a sequência documentada em um host com Docker
-- **THEN** config/build/up/ps/exec e CID usam targeting fixo e assertions exaustivas validam health do Docker, resposta HTTP, UID não-root, `/` e `/workspace` não graváveis, rootfs read-only, `Privileged=false`, devices/device requests/device cgroup rules ausentes, modos PID/IPC não host-like, perfis AppArmor/seccomp não `unconfined`, publicação única `127.0.0.1:<porta>:3000/tcp`, `CapAdd` vazio/nulo, `CapDrop` contendo `ALL`, `no-new-privileges`, `.Mounts` contendo exatamente o bind `/workspace` read-only e `.HostConfig.Tmpfs` contendo exatamente `/tmp` com tamanho e opções aprovados, sem escrever no workspace
+- **THEN** config/build/up/ps/exec e CID usam targeting fixo e assertions exaustivas validam health do Docker, resposta HTTP, UID não-root, `/` e `/workspace` não graváveis, rootfs read-only, `Privileged=false`, devices/device requests/device cgroup rules ausentes, modos PID/IPC não host-like, perfis AppArmor/seccomp não `unconfined`, publicação única `<endereço-validado>:<porta>:3000/tcp` — loopback por padrão ou Tailscale-only conforme a mudança específica —, `CapAdd` vazio/nulo, `CapDrop` contendo `ALL`, `no-new-privileges`, `.Mounts` contendo exatamente o bind `/workspace` read-only e `.HostConfig.Tmpfs` contendo exatamente `/tmp` com tamanho e opções aprovados, sem escrever no workspace
 
 #### Scenario: Operador reverte para Node local
 - **WHEN** o operador decide abandonar a execução Compose

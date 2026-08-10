@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed verifier for the selected Docker inspect projection."""
 from decimal import Decimal, InvalidOperation
+import ipaddress
 import json
 import os
 import re
@@ -62,8 +63,20 @@ def require_tmpfs_size(value):
     require(int(match.group(1)) * units[match.group(2)] == 64 * 1024**2, "tmpfs size must be 64 MiB")
 
 
+def require_bind_address(value):
+    require(isinstance(value, str), "invalid DASHBOARD_BIND_ADDRESS")
+    try:
+        address = ipaddress.IPv4Address(value)
+    except ipaddress.AddressValueError as exc:
+        raise ValidationError("invalid DASHBOARD_BIND_ADDRESS") from exc
+    tailscale = ipaddress.IPv4Network("100.64.0.0/10")
+    require(str(address) == value and (value == "127.0.0.1" or address in tailscale),
+            "DASHBOARD_BIND_ADDRESS must be loopback or Tailscale IPv4")
+    return value
+
+
 def main():
-    require(len(sys.argv) == 9, "usage: verify-container-inspect.py JSON WORKSPACE PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES")
+    require(len(sys.argv) == 10, "usage: verify-container-inspect.py JSON WORKSPACE BIND_ADDRESS PORT MEMORY CPUS PIDS LOG_SIZE LOG_FILES")
     with open(sys.argv[1], encoding="utf-8") as stream:
         state = json.load(stream)
     require(isinstance(state, dict), "invalid container inspection")
@@ -72,13 +85,14 @@ def main():
     require(state.get("User") == "node", "effective image user must be node")
     require(state.get("ReadonlyRootfs") is True, "ReadonlyRootfs must be true")
     expected_workspace = os.path.realpath(sys.argv[2])
-    expected_port = require_int(sys.argv[3], "DASHBOARD_PORT")
-    expected_memory = require_bytes(sys.argv[4], "DASHBOARD_MEMORY_LIMIT")
-    expected_nano_cpus = require_cpus(sys.argv[5], "DASHBOARD_CPUS") * Decimal(1_000_000_000)
+    expected_bind_address = require_bind_address(sys.argv[3])
+    expected_port = require_int(sys.argv[4], "DASHBOARD_PORT")
+    expected_memory = require_bytes(sys.argv[5], "DASHBOARD_MEMORY_LIMIT")
+    expected_nano_cpus = require_cpus(sys.argv[6], "DASHBOARD_CPUS") * Decimal(1_000_000_000)
     require(expected_nano_cpus == expected_nano_cpus.to_integral_value(), "DASHBOARD_CPUS cannot be represented as NanoCpus")
-    expected_pids = require_int(sys.argv[6], "DASHBOARD_PIDS_LIMIT")
-    expected_log_size = sys.argv[7]
-    expected_log_files = require_int(sys.argv[8], "DASHBOARD_LOG_MAX_FILE")
+    expected_pids = require_int(sys.argv[7], "DASHBOARD_PIDS_LIMIT")
+    expected_log_size = sys.argv[8]
+    expected_log_files = require_int(sys.argv[9], "DASHBOARD_LOG_MAX_FILE")
 
     require(state.get("Privileged") is False, "Privileged must be false")
     require(state.get("Devices") in (None, []), "Devices must be empty")
@@ -117,7 +131,7 @@ def main():
     require(isinstance(bindings, dict) and set(bindings) == {"3000/tcp"}, "exactly 3000/tcp must be published")
     published = bindings["3000/tcp"]
     require(isinstance(published, list) and len(published) == 1 and isinstance(published[0], dict), "exactly one structured binding is required")
-    require(published[0].get("HostIp") == "127.0.0.1", "published port must bind to loopback")
+    require(published[0].get("HostIp") == expected_bind_address, "published port bind address mismatch")
     require(require_int(published[0].get("HostPort"), "HostPort") == expected_port, "HostPort mismatch")
 
     mounts = require_list(state.get("Mounts"), "Mounts")

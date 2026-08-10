@@ -34,7 +34,7 @@ function run(args: string[], env: Record<string, string | undefined> = {}) {
   });
 }
 
-function fixtureHarness(health = "healthy") {
+function fixtureHarness(health = "healthy", bindAddress = "127.0.0.1") {
   const dir = mkdtempSync(join(root, ".spock-deploy-test-"));
   harnessDirectories.push(dir);
   const bin = join(dir, "bin");
@@ -49,7 +49,7 @@ function fixtureHarness(health = "healthy") {
     mem_limit: "512m", cpus: 1, pids_limit: 128,
     logging: { driver: "local", options: { "max-size": "10m", "max-file": "3" } },
     cap_drop: ["ALL"], security_opt: ["no-new-privileges:true"],
-    ports: [{ host_ip: "127.0.0.1", published: "3011", target: 3000, protocol: "tcp" }],
+    ports: [{ host_ip: bindAddress, published: "3011", target: 3000, protocol: "tcp" }],
     volumes: [{ type: "bind", source: workspace, target: "/workspace", read_only: true }],
     tmpfs: ["/tmp:size=64m,mode=1777"],
   } } });
@@ -62,13 +62,14 @@ function fixtureHarness(health = "healthy") {
     NanoCpus: 1_000_000_000, PidsLimit: 128,
     LogConfig: { Type: "local", Config: { "max-size": "10m", "max-file": "3" } },
     CapAdd: null, CapDrop: ["ALL"],
-    PortBindings: { "3000/tcp": [{ HostIp: "127.0.0.1", HostPort: "3011" }] },
+    PortBindings: { "3000/tcp": [{ HostIp: bindAddress, HostPort: "3011" }] },
     Mounts: [{ Type: "bind", Source: workspace, Destination: "/workspace", RW: false }],
     Tmpfs: { "/tmp": "size=64m,mode=1777" },
   });
   const docker = `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s docker %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nif [[ "$1" == "exec" ]]; then [ "\${RUNTIME_VERIFY_HANG:-}" != 1 ] || /usr/bin/sleep 30; exit "\${RUNTIME_VERIFY_RC:-0}"; fi\nif [[ "$*" == *"config --format json"* ]]; then printf '%s\\n' "$DECLARED"; if [[ "\${MUTATE_WORKSPACE_AFTER_CONFIG:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; exit 0; fi\nif [[ "$*" == *" up --no-start"* ]]; then if [[ "\${MUTATE_WORKSPACE_DURING_UP:-}" == 1 ]]; then replacement="$(mktemp -d "$MOCK_LOG.replacement.XXXXXX")"; rm -rf -- "$DASHBOARD_WORKSPACE_PATH"; mv -- "$replacement" "$DASHBOARD_WORKSPACE_PATH"; fi; /usr/bin/stat -Lc '%d:%i' -- "$DASHBOARD_WORKSPACE_PATH" >"$MOCK_LOG.mount-identity"; exit 0; fi\nif [[ "$*" == *"ps -q dashboard"* || "$*" == *"ps -aq dashboard"* ]]; then echo cid123; exit 0; fi\nif [[ "$*" == "inspect --format {{if .State.Health}}"* ]]; then mounted="$(/usr/bin/cat "$MOCK_LOG.mount-identity" 2>/dev/null || true)"; if [[ -n "$mounted" && "$mounted" != "$DASHBOARD_WORKSPACE_IDENTITY" ]]; then echo unhealthy; else echo "$HEALTH"; fi; exit 0; fi\nif [[ "$*" == "inspect --format {"* ]]; then printf '%s\\n' "$EFFECTIVE"; exit 0; fi\nexit 0\n`;
   writeFileSync(join(bin, "docker"), docker);
   writeFileSync(join(bin, "curl"), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s curl %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nprintf '{"status":"ok"}\\n'\n`);
+  writeFileSync(join(bin, "tailscale"), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s tailscale %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\n[ "$*" = "ip -4" ] || exit 2\nprintf '%b' "\${TAILSCALE_IP_OUTPUT:-100.95.240.74\\n}"\nexit "\${TAILSCALE_RC:-0}"\n`);
   writeFileSync(join(bin, "gh"), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s gh %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nif [[ "$1" == version && "$#" -eq 1 ]]; then printf 'gh version %s (2026-01-01)\\nhttps://github.com/cli/cli/releases/tag/v%s\\n' "\${GH_VERSION:-2.68.0}" "\${GH_VERSION:-2.68.0}"; exit 0; fi\nif [[ "$*" == "attestation verify --help" ]]; then printf '%s\\n' '      --source-ref string' '      --source-digest string' "\${GH_HELP_BUNDLE_FLAG:---bundle-from-oci}"; exit 0; fi\nif [[ "$*" == "api repos/jeffersonarpasserini/SpockWorkspaceDashboard/commits/v1.2.3 --jq .sha" ]]; then printf '%s\\n' "${"b".repeat(40)}"; exit 0; fi\nif [[ "$1" == attestation && "$2" == verify ]]; then exit "\${GH_ATTEST_RC:-0}"; fi\nexit 1\n`);
   for (const [name, target] of Object.entries({
     git: "/usr/bin/git", stat: "/usr/bin/stat", mktemp: "/usr/bin/mktemp",
@@ -80,6 +81,7 @@ function fixtureHarness(health = "healthy") {
   }
   chmodSync(join(bin, "docker"), 0o755);
   chmodSync(join(bin, "curl"), 0o755);
+  chmodSync(join(bin, "tailscale"), 0o755);
   chmodSync(join(bin, "gh"), 0o755);
   return { dir, workspace, log, env: {
     PATH: `${bin}:${process.env.PATH}`, MOCK_LOG: log, DECLARED: declared,
@@ -89,6 +91,66 @@ function fixtureHarness(health = "healthy") {
 }
 
 describe("versioned deployment export", () => {
+  it("defaults to loopback and uses a selected Tailscale address in both verifiers and host liveness", () => {
+    const loopback = fixtureHarness();
+    const defaultResult = run(["verify"], loopback.env);
+    expect(defaultResult.status, defaultResult.stderr).toBe(0);
+    const defaultCalls = readFileSync(loopback.log, "utf8");
+    expect(defaultCalls).toContain(`verify-compose-config.py`);
+    expect(defaultCalls).toContain(` ${loopback.workspace} 127.0.0.1 3011 `);
+    expect(defaultCalls).toContain("curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3011/api/health");
+
+    const tailscaleAddress = "100.95.240.74";
+    const tailscale = fixtureHarness("healthy", tailscaleAddress);
+    const tailscaleResult = run(["verify"], { ...tailscale.env, DASHBOARD_BIND_ADDRESS: tailscaleAddress });
+    expect(tailscaleResult.status, tailscaleResult.stderr).toBe(0);
+    const tailscaleCalls = readFileSync(tailscale.log, "utf8");
+    expect(tailscaleCalls).toContain(` ${tailscale.workspace} ${tailscaleAddress} 3011 `);
+    expect(tailscaleCalls).toContain(`curl --fail --silent --show-error --max-time 10 http://${tailscaleAddress}:3011/api/health`);
+  });
+
+  it("rejects unsafe or malformed bind addresses before any Docker Compose child", () => {
+    const invalidAddresses = [
+      "", "0.0.0.0", "10.0.0.1", "172.16.0.1", "192.168.10.74", "localhost",
+      "::1", "100.63.255.255", "100.128.0.0", "100.95.240", "100.95.240.074", "100.95.240.74/32",
+    ];
+    for (const address of invalidAddresses) {
+      const harness = fixtureHarness();
+      const result = run(["validate"], { ...harness.env, DASHBOARD_BIND_ADDRESS: address });
+      expect(result.status, JSON.stringify(address)).not.toBe(0);
+      expect(result.stderr, JSON.stringify(address)).toContain("DASHBOARD_BIND_ADDRESS");
+      const calls = readFileSync(harness.log, "utf8");
+      expect(calls, JSON.stringify(address)).not.toContain("docker compose");
+    }
+  });
+
+  it("proves the selected CGNAT address is the host's unique Tailscale IPv4 before Compose", () => {
+    const address = "100.95.240.74";
+    const accepted = fixtureHarness("healthy", address);
+    const acceptedResult = run(["validate"], { ...accepted.env, DASHBOARD_BIND_ADDRESS: address });
+    expect(acceptedResult.status, acceptedResult.stderr).toBe(0);
+    expect(readFileSync(accepted.log, "utf8")).toContain("env=EMPTY tailscale ip -4 alias=EMPTY");
+
+    for (const [label, extraEnv] of [
+      ["daemon unavailable", { TAILSCALE_RC: "1" }],
+      ["different CGNAT address", { TAILSCALE_IP_OUTPUT: "100.95.240.75\\n" }],
+      ["ambiguous output", { TAILSCALE_IP_OUTPUT: `${address}\\n${address}\\n` }],
+    ] as const) {
+      const harness = fixtureHarness("healthy", address);
+      const result = run(["validate"], { ...harness.env, ...extraEnv, DASHBOARD_BIND_ADDRESS: address });
+      expect(result.status, label).not.toBe(0);
+      expect(result.stderr, label).toContain("Tailscale ownership");
+      expect(readFileSync(harness.log, "utf8"), label).not.toContain("docker compose");
+    }
+
+    const missingCli = fixtureHarness("healthy", address);
+    rmSync(join(missingCli.dir, "bin", "tailscale"));
+    const missingResult = run(["validate"], { ...missingCli.env, DASHBOARD_BIND_ADDRESS: address });
+    expect(missingResult.status).not.toBe(0);
+    expect(missingResult.stderr).toContain("Tailscale ownership");
+    expect(readFileSync(missingCli.log, "utf8")).not.toContain("docker compose");
+  });
+
   it("accepts only stable numeric SemVer and the exact immutable publisher image", () => {
     const harness = fixtureHarness();
     mkdirSync(resolve(root, "releases"), { recursive: true });

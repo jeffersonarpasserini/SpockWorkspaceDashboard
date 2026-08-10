@@ -7,12 +7,15 @@ import { describe, expect, it } from "vitest";
 const workspace = resolve(process.cwd());
 const workspaceStat = statSync(workspace);
 const workspaceIdentity = `${workspaceStat.dev}:${workspaceStat.ino}`;
-const verifierArgs = [workspace, "3011", "512m", "1.0", "128", "10m", "3", workspaceIdentity];
+function verifierArgs(bindAddress = "127.0.0.1") {
+  return [workspace, bindAddress, "3011", "512m", "1.0", "128", "10m", "3", workspaceIdentity];
+}
 
 function verify(
   script: string,
   fixture: unknown,
   options: { optimizeEnv?: string; optimizedFlag?: boolean } = {},
+  bindAddress = "127.0.0.1",
 ) {
   const directory = mkdtempSync(join(tmpdir(), "spock-verifier-"));
   const fixturePath = join(directory, "fixture.json");
@@ -21,7 +24,7 @@ function verify(
     ...(options.optimizedFlag ? ["-O"] : []),
     resolve(script),
     fixturePath,
-    ...(script.includes("verify-compose-config") ? verifierArgs : verifierArgs.slice(0, -1)),
+    ...(script.includes("verify-compose-config") ? verifierArgs(bindAddress) : verifierArgs(bindAddress).slice(0, -1)),
   ], {
     cwd: workspace,
     encoding: "utf8",
@@ -94,6 +97,53 @@ describe("container hardening verifier fixtures", () => {
     { label: "PYTHONOPTIMIZE=1", options: { optimizeEnv: "1" } },
     { label: "python3 -O", options: { optimizedFlag: true } },
   ] as const;
+
+  it("rejects an unsafe expected HostIp even when declared and effective state match it", () => {
+    for (const unsafeAddress of ["0.0.0.0", "192.168.10.74", "100.128.0.1"]) {
+      const declared = clone(safeDeclared);
+      declared.services.dashboard.ports[0].host_ip = unsafeAddress;
+      expect(
+        verify("scripts/verify-compose-config.py", declared, {}, unsafeAddress).status,
+        `declared ${unsafeAddress}`,
+      ).not.toBe(0);
+
+      const effective = clone(safeEffective);
+      effective.PortBindings["3000/tcp"][0].HostIp = unsafeAddress;
+      expect(
+        verify("scripts/verify-container-inspect.py", effective, {}, unsafeAddress).status,
+        `effective ${unsafeAddress}`,
+      ).not.toBe(0);
+    }
+  });
+
+  it("requires exactly the selected Tailscale HostIp in declared and effective state", () => {
+    const tailscaleAddress = "100.95.240.74";
+    for (const mode of pythonModes) {
+      const declared = clone(safeDeclared);
+      declared.services.dashboard.ports[0].host_ip = tailscaleAddress;
+      expect(verify("scripts/verify-compose-config.py", declared, mode.options, tailscaleAddress).status, mode.label).toBe(0);
+
+      const effective = clone(safeEffective);
+      effective.PortBindings["3000/tcp"][0].HostIp = tailscaleAddress;
+      expect(verify("scripts/verify-container-inspect.py", effective, mode.options, tailscaleAddress).status, mode.label).toBe(0);
+
+      for (const [script, fixture] of [
+        ["scripts/verify-compose-config.py", safeDeclared],
+        ["scripts/verify-container-inspect.py", safeEffective],
+      ] as const) {
+        const result = verify(script, fixture, mode.options, tailscaleAddress);
+        expect(result.status, `${mode.label}: ${script} mismatched HostIp`).not.toBe(0);
+      }
+
+      const additionalDeclared = clone(declared);
+      additionalDeclared.services.dashboard.ports.push({ host_ip: "127.0.0.1", published: "3011", target: 3000, protocol: "tcp" });
+      expect(verify("scripts/verify-compose-config.py", additionalDeclared, mode.options, tailscaleAddress).status, mode.label).not.toBe(0);
+
+      const additionalEffective = clone(effective);
+      additionalEffective.PortBindings["3000/tcp"].push({ HostIp: "127.0.0.1", HostPort: "3011" });
+      expect(verify("scripts/verify-container-inspect.py", additionalEffective, mode.options, tailscaleAddress).status, mode.label).not.toBe(0);
+    }
+  });
 
   it("accepts the declared safe fixture and rejects every hostile sandbox mutation", () => {
     const mutations: Array<(fixture: typeof safeDeclared) => void> = [
