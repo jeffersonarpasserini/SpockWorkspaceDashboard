@@ -1,0 +1,22 @@
+services:
+  database:
+    image: postgres:17.6-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${SPOCK_DB_NAME:?define SPOCK_DB_NAME}
+      POSTGRES_USER: ${SPOCK_DB_USER:?define SPOCK_DB_USER}
+      POSTGRES_PASSWORD: ${SPOCK_DB_PASSWORD:?define SPOCK_DB_PASSWORD}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - spock-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  spock-postgres-data:

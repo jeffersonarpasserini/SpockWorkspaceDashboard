@@ -123,6 +123,30 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .integration-error { margin: 0 20px 8px; color: #e58d96; font-size: 12px; }
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
+.openspec-section { padding-top: 58px; }
+.openspec-change { margin-bottom: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+.openspec-change > header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; padding: 20px 22px; border-bottom: 1px solid var(--border); }
+.openspec-change > header > div { min-width: 0; }
+.openspec-change h3 { display: inline; margin: 0 10px; font-size: 18px; }
+.openspec-change code { display: block; margin-top: 10px; color: var(--subtle); font-size: 11px; }
+.source-revision { flex: none; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.traceability-tabs { display: flex; gap: 6px; padding: 10px 14px; overflow-x: auto; border-bottom: 1px solid var(--border); background: #0d0f13; }
+.traceability-tabs a { padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+.traceability-tabs a:hover { color: var(--text); border-color: var(--border-strong); }
+.traceability-tabs span { margin-left: 5px; color: var(--text); }
+.traceability-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.traceability-grid > section { padding: 20px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.traceability-grid > section:nth-child(2n) { border-right: 0; }
+.traceability-grid h4 { margin: 0 0 12px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.trace-row { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; padding: 10px 0; border-top: 1px solid #20232b; }
+.trace-row:first-of-type { border-top: 0; }
+.trace-row > div { min-width: 0; }
+.trace-row strong, .trace-row small { display: block; overflow-wrap: anywhere; }
+.trace-row strong { font-size: 12px; font-weight: 550; }
+.trace-row small { margin-top: 5px; color: var(--subtle); font-size: 10px; line-height: 1.4; }
+.trace-missing { opacity: .55; }
+.trace-missing strong { text-decoration: line-through; }
+
 @media (max-width: 1050px) {
   .project-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .summary-strip, .evidence-grid { grid-template-columns: repeat(2,1fr); }
@@ -141,4 +165,6 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   .summary-strip > div:last-child, .evidence-grid > div:last-child { border-bottom: 0; }
   .chat-panel form { grid-template-columns: 1fr; }
   .section-heading { align-items: flex-start; flex-direction: column; }
+  .traceability-grid { grid-template-columns: 1fr; }
+  .traceability-grid > section { border-right: 0; }
 }

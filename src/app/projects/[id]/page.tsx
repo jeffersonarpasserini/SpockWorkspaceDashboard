@@ -3,17 +3,21 @@ import { notFound } from "next/navigation";
 import { ChatPanel } from "@/components/ChatPanel";
 import { KanbanBoard } from "@/components/KanbanBoard";
 import { RefreshButton } from "@/components/RefreshButton";
+import { OpenSpecTraceability } from "@/components/OpenSpecTraceability";
 import { createDefaultDashboardService } from "@/lib/dashboard";
+import { loadOpenSpecTraceability } from "@/modules/openspec/load-traceability";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const projectId = (await params).id;
   let project;
   try {
-    project = await createDefaultDashboardService().getProject((await params).id);
+    project = await createDefaultDashboardService().getProject(projectId);
   } catch {
     notFound();
   }
+  const traceability = await loadOpenSpecTraceability(projectId);
   const total = project.openspec.checked + project.openspec.unchecked;
   return (
     <main>
@@ -28,6 +32,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         <div><span>Observed</span><strong>{new Date(project.observedAt).toLocaleTimeString()}</strong><small>{new Date(project.observedAt).toLocaleDateString()}</small></div>
       </section>
       <section className="board-section"><div className="section-heading"><div><span className="eyebrow">Execution</span><h2>Agent and OpenSpec Kanban</h2></div><p>{project.tasks.length} work items</p></div><KanbanBoard tasks={project.tasks} /></section>
+      <OpenSpecTraceability traceability={traceability} />
       <ChatPanel projectId={project.id} projectName={project.name} />
     </main>
   );
