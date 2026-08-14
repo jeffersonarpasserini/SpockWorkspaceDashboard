@@ -1,0 +1,34 @@
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DASHBOARD_IMAGE:-spock-workspace-dashboard:local}
+    init: true
+    restart: unless-stopped
+    mem_limit: "${DASHBOARD_MEMORY_LIMIT:-512m}"
+    cpus: ${DASHBOARD_CPUS:-1.0}
+    pids_limit: ${DASHBOARD_PIDS_LIMIT:-128}
+    logging:
+      driver: local
+      options:
+        max-size: "${DASHBOARD_LOG_MAX_SIZE:-10m}"
+        max-file: "${DASHBOARD_LOG_MAX_FILE:-3}"
+    ports:
+      - "${DASHBOARD_BIND_ADDRESS:-127.0.0.1}:${DASHBOARD_PORT:-3011}:3000"
+    environment:
+      WORKSPACE_ROOT: /workspace
+      HERMES_BIN: hermes
+      HERMES_API_URL: "${HERMES_API_URL:-}"
+      HERMES_API_KEY: "${HERMES_API_KEY:-}"
+      WORKSPACE_IDENTITY: "${DASHBOARD_WORKSPACE_IDENTITY:?workspace identity must be provided by deploy.sh}"
+    volumes:
+      - "${DASHBOARD_WORKSPACE_PATH:?defina o caminho absoluto do workspace}:/workspace:ro"
+    privileged: false
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

@@ -1,16 +1,23 @@
 schema: spec-driven
 
 context: |
-  Spock Workspace Dashboard is a local-first web application for supervising software projects
-  and Hermes Agent work. The runtime uses TypeScript, Next.js App Router, React and Node.js.
-  It scans a configured workspace root without traversing outside it, reads Git and OpenSpec
-  as local evidence, consumes Hermes Kanban through its documented CLI JSON surface, and sends
-  chat requests through the documented OpenAI-compatible Hermes API server.
+  Spock Workspace Dashboard is evolving from a read-mostly local dashboard into a persistent
+  project control plane for software work performed by humans and AI agents. It uses TypeScript,
+  Next.js and React for the web application, a separate Node.js worker for synchronization and
+  orchestration, and PostgreSQL as the durable system of record. OpenSpec remains the versioned
+  source of intent; PostgreSQL owns stable identities, assignments, runs, usage, costs, evidence,
+  audit events and derived projections.
 
-  The application must remain useful when Hermes, Git, OpenSpec or a project board is unavailable.
+  Hermes remains the model/profile gateway and the existing Python agent-orchestrator remains the
+  LangGraph workflow service. Spock integrates through versioned APIs and events rather than
+  reimplementing provider access. A future remote daemon may use Go behind the runner protocol,
+  but the initial control plane and worker remain TypeScript to avoid a premature rewrite.
+
+  The application must remain useful when a runner, Git, OpenSpec or an external provider is unavailable.
   Secrets remain server-side and must never be returned to the browser or written to logs.
-  Project status must distinguish observed source, checked OpenSpec tasks, live Kanban work,
-  local Git state and unavailable evidence; it must never infer completion from file presence.
+  Status must distinguish declared intent, observed evidence, execution, validation and release;
+  completion must never be inferred from file presence or an agent success message. Every cost and
+  duration must declare its definition, provenance and confidence.
 
 rules:
   proposal:
