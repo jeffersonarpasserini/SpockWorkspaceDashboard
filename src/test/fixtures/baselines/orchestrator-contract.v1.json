@@ -7,7 +7,7 @@
     "contractVersion": "fixture-v1",
     "transport": "fixture-only",
     "liveEndpoint": null,
-    "operations": ["capabilities", "submit"]
+    "operations": ["health", "capabilities", "submit", "status", "events"]
   },
   "schema": {
     "runtime": "Python 3.12 FastAPI/LangGraph",

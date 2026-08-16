@@ -791,8 +791,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_config_next",
-      "community": 17,
-      "community_name": "devDependencies",
+      "community": 110,
+      "community_name": "eslint-config-next",
       "norm_label": "eslint-config-next"
     },
     {
@@ -802,8 +802,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "eslint_config_next",
-      "community": 17,
-      "community_name": "devDependencies",
+      "community": 110,
+      "community_name": "eslint-config-next",
       "norm_label": "eslint-config-next"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "package_devdependencies_vitest",
-      "community": 109,
-      "community_name": "vitest",
+      "community": 17,
+      "community_name": "devDependencies",
       "norm_label": "vitest"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "vitest",
-      "community": 109,
-      "community_name": "vitest",
+      "community": 17,
+      "community_name": "devDependencies",
       "norm_label": "vitest"
     },
     {
@@ -1955,8 +1955,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "app/page.tsx"
     },
     {
@@ -1966,8 +1966,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_page_dynamic",
-      "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "dynamic"
     },
     {
@@ -1978,8 +1978,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_app_page_home",
-      "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "home()"
     },
     {
@@ -1990,7 +1990,7 @@
       "_origin": "ast",
       "id": "src_app_projects_id_page",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "[id]/page.tsx"
     },
     {
@@ -2001,7 +2001,7 @@
       "_origin": "ast",
       "id": "src_app_projects_id_page_dynamic",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "dynamic"
     },
     {
@@ -2013,7 +2013,7 @@
       "_origin": "ast",
       "id": "src_app_projects_id_page_projectpage",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "projectpage()"
     },
     {
@@ -2024,7 +2024,7 @@
       "_origin": "ast",
       "id": "src_components_chatpanel_test",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "chatpanel.test.tsx"
     },
     {
@@ -2035,7 +2035,7 @@
       "_origin": "ast",
       "id": "src_components_chatpanel",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "chatpanel.tsx"
     },
     {
@@ -2048,7 +2048,7 @@
       "_origin": "ast",
       "id": "src_components_chatpanel_fetcher",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "fetcher"
     },
     {
@@ -2061,7 +2061,7 @@
       "_origin": "ast",
       "id": "src_components_chatpanel_message",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "message"
     },
     {
@@ -2073,7 +2073,7 @@
       "_origin": "ast",
       "id": "src_components_chatpanel_chatpanel",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "chatpanel()"
     },
     {
@@ -2152,7 +2152,7 @@
       "_origin": "ast",
       "id": "src_components_openspectraceability_test",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "openspectraceability.test.tsx"
     },
     {
@@ -2163,7 +2163,7 @@
       "_origin": "ast",
       "id": "src_components_openspectraceability",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "openspectraceability.tsx"
     },
     {
@@ -2175,7 +2175,7 @@
       "_origin": "ast",
       "id": "src_components_openspectraceability_openspectraceability",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "openspectraceability()"
     },
     {
@@ -2187,7 +2187,7 @@
       "_origin": "ast",
       "id": "src_components_openspectraceability_revision",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "revision()"
     },
     {
@@ -2199,7 +2199,7 @@
       "_origin": "ast",
       "id": "src_components_openspectraceability_tracerow",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "tracerow()"
     },
     {
@@ -2266,7 +2266,7 @@
       "_origin": "ast",
       "id": "src_components_refreshbutton",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "refreshbutton.tsx"
     },
     {
@@ -2278,8 +2278,53 @@
       "_origin": "ast",
       "id": "src_components_refreshbutton_refreshbutton",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "refreshbutton()"
+    },
+    {
+      "label": "WorkflowVisualization.test.tsx",
+      "file_type": "code",
+      "source_file": "src/components/WorkflowVisualization.test.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_components_workflowvisualization_test",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowvisualization.test.tsx"
+    },
+    {
+      "label": "WorkflowVisualization.tsx",
+      "file_type": "code",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_components_workflowvisualization",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowvisualization.tsx"
+    },
+    {
+      "label": "labels",
+      "file_type": "code",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_components_workflowvisualization_labels",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "labels"
+    },
+    {
+      "label": "WorkflowVisualization()",
+      "file_type": "code",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L5",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_components_workflowvisualization_workflowvisualization",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowvisualization()"
     },
     {
       "label": "container-config.test.ts",
@@ -2523,8 +2568,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_config_test",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "lib/config.test.ts"
     },
     {
@@ -2534,8 +2579,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_config",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "lib/config.ts"
     },
     {
@@ -2545,8 +2590,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_config_envschema",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "envschema"
     },
     {
@@ -2558,8 +2603,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_lib_config_dashboardconfig",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "dashboardconfig"
     },
     {
@@ -2570,8 +2615,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_config_readdashboardconfig",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "readdashboardconfig()"
     },
     {
@@ -2582,8 +2627,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_config_defaultboardslug",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "defaultboardslug()"
     },
     {
@@ -2629,8 +2674,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_dashboard_summarize",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 0,
+      "community_name": "types.ts",
       "norm_label": "summarize()"
     },
     {
@@ -2653,8 +2698,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_dashboard_createdefaultdashboardservice",
-      "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community": 59,
+      "community_name": "dashboard.ts",
       "norm_label": "createdefaultdashboardservice()"
     },
     {
@@ -2981,8 +3026,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_status_test",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 0,
+      "community_name": "types.ts",
       "norm_label": "status.test.ts"
     },
     {
@@ -3017,8 +3062,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_status_deriveprojectstatus",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 0,
+      "community_name": "types.ts",
       "norm_label": "deriveprojectstatus()"
     },
     {
@@ -3180,8 +3225,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_workspace_test",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "workspace.test.ts"
     },
     {
@@ -3191,8 +3236,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_workspace_test_created",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "created"
     },
     {
@@ -3203,8 +3248,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_test_temproot",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "temproot()"
     },
     {
@@ -3214,8 +3259,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_workspace",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "workspace.ts"
     },
     {
@@ -3225,8 +3270,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_workspace_markers",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "markers"
     },
     {
@@ -3237,8 +3282,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_encodeprojectname",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "encodeprojectname()"
     },
     {
@@ -3249,8 +3294,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_decodeprojectid",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "decodeprojectid()"
     },
     {
@@ -3261,8 +3306,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_iswithin",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "iswithin()"
     },
     {
@@ -3273,8 +3318,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_discoverprojects",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "discoverprojects()"
     },
     {
@@ -3285,8 +3330,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_lib_workspace_resolveprojectpath",
-      "community": 3,
-      "community_name": "chat/route.ts",
+      "community": 108,
+      "community_name": "workspace.ts",
       "norm_label": "resolveprojectpath()"
     },
     {
@@ -3417,8 +3462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_test",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "baseline-fixtures.test.ts"
     },
     {
@@ -3428,8 +3473,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "baseline-fixtures.ts"
     },
     {
@@ -3439,8 +3484,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_availability",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "availability"
     },
     {
@@ -3450,8 +3495,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_taskstatus",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "taskstatus"
     },
     {
@@ -3461,8 +3506,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_capabilitystate",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "capabilitystate"
     },
     {
@@ -3472,8 +3517,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_dashboardbaselineschema",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "dashboardbaselineschema"
     },
     {
@@ -3483,8 +3528,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_orchestratorbaselineschema",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "orchestratorbaselineschema"
     },
     {
@@ -3494,8 +3539,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_dashboardbaseline",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "dashboardbaseline"
     },
     {
@@ -3505,8 +3550,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_modules_control_plane_baseline_fixtures_orchestratorbaseline",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "orchestratorbaseline"
     },
     {
@@ -3588,8 +3633,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_control_plane_domain_runstatus",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "runstatus"
     },
     {
@@ -3612,8 +3657,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_control_plane_domain_orchestratorcapabilitystate",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "orchestratorcapabilitystate"
     },
     {
@@ -4222,6 +4267,348 @@
       "norm_label": "calculatedevelopmentmetrics()"
     },
     {
+      "label": "ledger.test.ts",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_test",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "ledger.test.ts"
+    },
+    {
+      "label": "base",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_test_base",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "base"
+    },
+    {
+      "label": "prices",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_test_prices",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "prices"
+    },
+    {
+      "label": "ledger.ts",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "ledger.ts"
+    },
+    {
+      "label": "USAGE_KINDS",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usage_kinds",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "usage_kinds"
+    },
+    {
+      "label": "UsageKind",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L11",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usagekind",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "usagekind"
+    },
+    {
+      "label": "COST_CLASSES",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_cost_classes",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "cost_classes"
+    },
+    {
+      "label": "CostClass",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L14",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_costclass",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "costclass"
+    },
+    {
+      "label": "UsageDimensions",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L16",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usagedimensions",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "usagedimensions"
+    },
+    {
+      "label": "UsageEvent",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L24",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usageevent",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "usageevent"
+    },
+    {
+      "label": "PriceEntry",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L35",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_priceentry",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "priceentry"
+    },
+    {
+      "label": "CostEntry",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L49",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_costentry",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "costentry"
+    },
+    {
+      "label": "assertInteger()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L58",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_assertinteger",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "assertinteger()"
+    },
+    {
+      "label": "canonicalUsage()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L62",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_canonicalusage",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "canonicalusage()"
+    },
+    {
+      "label": "UsageLedger",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L66",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usageledger",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "usageledger"
+    },
+    {
+      "label": ".ingest()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L71",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usageledger_ingest",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": ".ingest()"
+    },
+    {
+      "label": ".events()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L101",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_usageledger_events",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": ".events()"
+    },
+    {
+      "label": "selectEffectivePrice()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L106",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_selecteffectiveprice",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "selecteffectiveprice()"
+    },
+    {
+      "label": "priceUsage()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L119",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_priceusage",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "priceusage()"
+    },
+    {
+      "label": "CostGroup",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L138",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_costgroup",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "costgroup"
+    },
+    {
+      "label": "CostTotal",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L140",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_costtotal",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "costtotal"
+    },
+    {
+      "label": "aggregateCosts()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L147",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_aggregatecosts",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "aggregatecosts()"
+    },
+    {
+      "label": "PilotCostAggregate",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L167",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_pilotcostaggregate",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "pilotcostaggregate"
+    },
+    {
+      "label": "adaptPilotCost()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L175",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_adaptpilotcost",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "adaptpilotcost()"
+    },
+    {
+      "label": "BudgetEvidence",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L192",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_budgetevidence",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "budgetevidence"
+    },
+    {
+      "label": "BudgetAlert",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L199",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_budgetalert",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "budgetalert"
+    },
+    {
+      "label": "evaluateBudget()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L201",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_evaluatebudget",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "evaluatebudget()"
+    },
+    {
+      "label": "authorizePaidRoute()",
+      "file_type": "code",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L208",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_costs_ledger_authorizepaidroute",
+      "community": 109,
+      "community_name": "ledger.ts",
+      "norm_label": "authorizepaidroute()"
+    },
+    {
       "label": "database/config.test.ts",
       "file_type": "code",
       "source_file": "src/modules/database/config.test.ts",
@@ -4779,7 +5166,7 @@
       "source_location": "L469",
       "_origin": "ast",
       "id": "src_modules_database_schema_databaseschema",
-      "community": 31,
+      "community": 111,
       "community_name": "databaseSchema",
       "norm_label": "databaseschema"
     },
@@ -4790,8 +5177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_jobs_job_queue_postgres_integration_test",
-      "community": 21,
-      "community_name": "connection.ts",
+      "community": 104,
+      "community_name": "JobQueueRepository",
       "norm_label": "job-queue-postgres.integration.test.ts"
     },
     {
@@ -4801,8 +5188,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_modules_jobs_job_queue_postgres_integration_test_integration",
-      "community": 21,
-      "community_name": "connection.ts",
+      "community": 104,
+      "community_name": "JobQueueRepository",
       "norm_label": "integration"
     },
     {
@@ -5149,7 +5536,7 @@
       "_origin": "ast",
       "id": "src_modules_openspec_load_traceability",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "load-traceability.ts"
     },
     {
@@ -5161,7 +5548,7 @@
       "_origin": "ast",
       "id": "src_modules_openspec_load_traceability_loadopenspectraceability",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "loadopenspectraceability()"
     },
     {
@@ -5171,8 +5558,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy_test",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": "mutation-policy.test.ts"
     },
     {
@@ -5182,8 +5569,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": "mutation-policy.ts"
     },
     {
@@ -5193,8 +5580,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy_open_spec_mutation_policy",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": "open_spec_mutation_policy"
     },
     {
@@ -5206,8 +5593,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy_openspecmutationdisablederror",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": "openspecmutationdisablederror"
     },
     {
@@ -5218,8 +5605,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy_openspecmutationdisablederror_constructor",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5230,8 +5617,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_mutation_policy_assertopenspecmutationallowed",
-      "community": 108,
-      "community_name": "mutation-policy.ts",
+      "community": 8,
+      "community_name": "background-sync.ts",
       "norm_label": "assertopenspecmutationallowed()"
     },
     {
@@ -5320,7 +5707,7 @@
       "_origin": "ast",
       "id": "src_modules_openspec_read_model_openspectraceability",
       "community": 16,
-      "community_name": "createDefaultDashboardService",
+      "community_name": "[id]/page.tsx",
       "norm_label": "openspectraceability"
     },
     {
@@ -5332,8 +5719,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_read_model_openspecreadrepository",
-      "community": 106,
-      "community_name": "repository-postgres.integration.test.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": "openspecreadrepository"
     },
     {
@@ -5344,8 +5731,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_read_model_openspecreadrepository_constructor",
-      "community": 106,
-      "community_name": "repository-postgres.integration.test.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".constructor()"
     },
     {
@@ -5356,8 +5743,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_read_model_openspecreadrepository_getbyexternalprojectid",
-      "community": 106,
-      "community_name": "repository-postgres.integration.test.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".getbyexternalprojectid()"
     },
     {
@@ -5622,8 +6009,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_repository_openspecimportresult",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "openspecimportresult"
     },
     {
@@ -5635,8 +6022,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_repository_openspecrepository",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "openspecrepository"
     },
     {
@@ -5647,8 +6034,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_repository_openspecrepository_constructor",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5671,8 +6058,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_repository_openspecrepository_recordreadfailure",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": ".recordreadfailure()"
     },
     {
@@ -5875,8 +6262,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_test",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "sync-service.test.ts"
     },
     {
@@ -5886,8 +6273,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "sync-service.ts"
     },
     {
@@ -5899,8 +6286,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_openspecsnapshotreader",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "openspecsnapshotreader"
     },
     {
@@ -5911,8 +6298,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_openspecsnapshotreader_read",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": ".read()"
     },
     {
@@ -5924,8 +6311,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_openspecsyncservice",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": "openspecsyncservice"
     },
     {
@@ -5936,8 +6323,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_openspecsyncservice_constructor",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -5948,9 +6335,32 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_openspec_sync_service_openspecsyncservice_synchronize",
-      "community": 45,
-      "community_name": "sync-service.ts",
+      "community": 2,
+      "community_name": "snapshot.ts",
       "norm_label": ".synchronize()"
+    },
+    {
+      "label": "contract-fixtures.test.ts",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_fixtures_test",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "contract-fixtures.test.ts"
+    },
+    {
+      "label": "fixture()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_fixtures_test_fixture",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "fixture()"
     },
     {
       "label": "contract.ts",
@@ -5959,8 +6369,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "contract.ts"
     },
     {
@@ -5972,8 +6382,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract_orchestratorcapability",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "orchestratorcapability"
     },
     {
@@ -5985,8 +6395,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract_submitworkflowcommand",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "submitworkflowcommand"
     },
     {
@@ -5998,46 +6408,134 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract_submittedworkflow",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "submittedworkflow"
     },
     {
-      "label": "OrchestratorAdapter",
+      "label": "OrchestratorHealth",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/contract.ts",
       "source_location": "L25",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_orchestratorhealth",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "orchestratorhealth"
+    },
+    {
+      "label": "WorkflowStatus",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L30",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_workflowstatus",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "workflowstatus"
+    },
+    {
+      "label": "OrchestratorEvent",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L37",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_orchestratorevent",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "orchestratorevent"
+    },
+    {
+      "label": "EventPage",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L47",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_eventpage",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "eventpage"
+    },
+    {
+      "label": "OrchestratorAdapter",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L52",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
       "id": "src_modules_orchestrator_contract_orchestratoradapter",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "orchestratoradapter"
+    },
+    {
+      "label": ".health()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L53",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_orchestratoradapter_health",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".health()"
     },
     {
       "label": ".capabilities()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/contract.ts",
-      "source_location": "L26",
+      "source_location": "L54",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract_orchestratoradapter_capabilities",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".capabilities()"
     },
     {
       "label": ".submit()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/contract.ts",
-      "source_location": "L27",
+      "source_location": "L55",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_contract_orchestratoradapter_submit",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".submit()"
+    },
+    {
+      "label": ".status()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L56",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_orchestratoradapter_status",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".status()"
+    },
+    {
+      "label": ".events()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_contract_orchestratoradapter_events",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".events()"
     },
     {
       "label": "fake.test.ts",
@@ -6046,8 +6544,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_test",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "fake.test.ts"
     },
     {
@@ -6057,8 +6555,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_test_command",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "command"
     },
     {
@@ -6068,83 +6566,252 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "fake.ts"
     },
     {
       "label": "IntegrationHoldError",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L8",
+      "source_location": "L11",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_integrationholderror",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "integrationholderror"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L9",
+      "source_location": "L12",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_integrationholderror_constructor",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".constructor()"
     },
     {
       "label": "FakeOrchestratorAdapter",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_fakeorchestratoradapter",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": "fakeorchestratoradapter"
     },
     {
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L18",
+      "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_constructor",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".constructor()"
+    },
+    {
+      "label": ".health()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L29",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_health",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".health()"
     },
     {
       "label": ".capabilities()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L23",
+      "source_location": "L33",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_capabilities",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".capabilities()"
     },
     {
       "label": ".submit()",
       "file_type": "code",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L27",
+      "source_location": "L37",
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_submit",
-      "community": 1,
-      "community_name": "domain.ts",
+      "community": 45,
+      "community_name": "contract.ts",
       "norm_label": ".submit()"
+    },
+    {
+      "label": ".status()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_status",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".status()"
+    },
+    {
+      "label": ".events()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L55",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_fake_fakeorchestratoradapter_events",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".events()"
+    },
+    {
+      "label": "observation-ingestion.test.ts",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_test",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "observation-ingestion.test.ts"
+    },
+    {
+      "label": "event()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L5",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_test_event",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "event()"
+    },
+    {
+      "label": "observation-ingestion.ts",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "observation-ingestion.ts"
+    },
+    {
+      "label": "ObservedRunProjection",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_observedrunprojection",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "observedrunprojection"
+    },
+    {
+      "label": "IngestionResult",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L20",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_ingestionresult",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "ingestionresult"
+    },
+    {
+      "label": "textField()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_textfield",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "textfield()"
+    },
+    {
+      "label": "countField()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_countfield",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "countfield()"
+    },
+    {
+      "label": "FixtureObservationProjection",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L34",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": "fixtureobservationprojection"
+    },
+    {
+      "label": ".ingest()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L38",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".ingest()"
+    },
+    {
+      "label": ".get()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L92",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_get",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".get()"
+    },
+    {
+      "label": ".empty()",
+      "file_type": "code",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L97",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_empty",
+      "community": 45,
+      "community_name": "contract.ts",
+      "norm_label": ".empty()"
     },
     {
       "label": "catalog-postgres.integration.test.ts",
@@ -6262,8 +6929,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_modules_projects_catalog_repository_projectcatalogrepository",
-      "community": 12,
-      "community_name": "catalog-repository.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": "projectcatalogrepository"
     },
     {
@@ -6274,8 +6941,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_projects_catalog_repository_projectcatalogrepository_constructor",
-      "community": 12,
-      "community_name": "catalog-repository.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".constructor()"
     },
     {
@@ -6286,8 +6953,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_projects_catalog_repository_projectcatalogrepository_syncdiscoveredprojects",
-      "community": 12,
-      "community_name": "catalog-repository.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".syncdiscoveredprojects()"
     },
     {
@@ -6298,8 +6965,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_projects_catalog_repository_projectcatalogrepository_listworkspaceprojects",
-      "community": 12,
-      "community_name": "catalog-repository.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".listworkspaceprojects()"
     },
     {
@@ -6310,8 +6977,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_projects_catalog_repository_projectcatalogrepository_listprojects",
-      "community": 12,
-      "community_name": "catalog-repository.ts",
+      "community": 111,
+      "community_name": "databaseSchema",
       "norm_label": ".listprojects()"
     },
     {
@@ -6333,8 +7000,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_projects_persisted_discovery_test",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 12,
+      "community_name": "catalog-repository.ts",
       "norm_label": "persisted-discovery.test.ts"
     },
     {
@@ -6344,8 +7011,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_modules_projects_persisted_discovery",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 12,
+      "community_name": "catalog-repository.ts",
       "norm_label": "persisted-discovery.ts"
     },
     {
@@ -6356,8 +7023,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_modules_projects_persisted_discovery_createpersistedprojectdiscovery",
-      "community": 59,
-      "community_name": "dashboard.ts",
+      "community": 12,
+      "community_name": "catalog-repository.ts",
       "norm_label": "createpersistedprojectdiscovery()"
     },
     {
@@ -6512,7 +7179,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_test",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "sync-health.test.ts"
     },
     {
@@ -6523,7 +7190,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "sync-health.ts"
     },
     {
@@ -6536,7 +7203,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_synchealthsource",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "synchealthsource"
     },
     {
@@ -6549,7 +7216,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_synchealthrun",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "synchealthrun"
     },
     {
@@ -6562,7 +7229,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_projectsynchealth",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "projectsynchealth"
     },
     {
@@ -6575,7 +7242,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_systemsynchealth",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "systemsynchealth"
     },
     {
@@ -6587,7 +7254,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_calculatesynchealth",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "calculatesynchealth()"
     },
     {
@@ -6600,7 +7267,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_projectsynchealthrepository",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "projectsynchealthrepository"
     },
     {
@@ -6612,7 +7279,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_projectsynchealthrepository_constructor",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": ".constructor()"
     },
     {
@@ -6624,7 +7291,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_projectsynchealthrepository_load",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": ".load()"
     },
     {
@@ -6636,7 +7303,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_completeddurations",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "completeddurations()"
     },
     {
@@ -6648,7 +7315,7 @@
       "_origin": "ast",
       "id": "src_modules_projects_sync_health_average",
       "community": 31,
-      "community_name": "databaseSchema",
+      "community_name": "sync-health.ts",
       "norm_label": "average()"
     },
     {
@@ -7396,6 +8063,188 @@
       "community": 105,
       "community_name": "worktree-cleanup.ts",
       "norm_label": "planworktreecleanup()"
+    },
+    {
+      "label": "templates.test.ts",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_test",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "templates.test.ts"
+    },
+    {
+      "label": "templates.ts",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "templates.ts"
+    },
+    {
+      "label": "WorkflowKind",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflowkind",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowkind"
+    },
+    {
+      "label": "WorkflowNodeStatus",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L4",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflownodestatus",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflownodestatus"
+    },
+    {
+      "label": "WorkflowStepDefinition",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflowstepdefinition",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowstepdefinition"
+    },
+    {
+      "label": "WorkflowTemplate",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L14",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflowtemplate",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowtemplate"
+    },
+    {
+      "label": "templates",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_templates",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "templates"
+    },
+    {
+      "label": "freezeTemplate()",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L47",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_freezetemplate",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "freezetemplate()"
+    },
+    {
+      "label": "WORKFLOW_TEMPLATES",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflow_templates",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflow_templates"
+    },
+    {
+      "label": "WorkflowHandoff",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L58",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_workflowhandoff",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "workflowhandoff"
+    },
+    {
+      "label": "validateHandoff()",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L67",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_validatehandoff",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "validatehandoff()"
+    },
+    {
+      "label": "ManualWorkflowNode",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L74",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_manualworkflownode",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "manualworkflownode"
+    },
+    {
+      "label": "createManualWorkflow()",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L82",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_createmanualworkflow",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "createmanualworkflow()"
+    },
+    {
+      "label": "requestCorrection()",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L86",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_requestcorrection",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "requestcorrection()"
+    },
+    {
+      "label": "completeManualNode()",
+      "file_type": "code",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L94",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "src_modules_workflows_templates_completemanualnode",
+      "community": 1,
+      "community_name": "domain.ts",
+      "norm_label": "completemanualnode()"
     },
     {
       "label": "setup.ts",
@@ -8615,7 +9464,7 @@
       "label": "Goals / Non-Goals",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L7",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_goals_non_goals",
       "community": 37,
@@ -8626,7 +9475,7 @@
       "label": "Decisions",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L20",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_decisions",
       "community": 37,
@@ -8637,7 +9486,7 @@
       "label": "1. Override expl\u00edcito e restrito",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L22",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_1_override_expl\u00edcito_e_restrito",
       "community": 37,
@@ -8648,7 +9497,7 @@
       "label": "2. Verifica\u00e7\u00e3o declarativa e efetiva parametrizada",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L28",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_2_verifica\u00e7\u00e3o_declarativa_e_efetiva_parametrizada",
       "community": 37,
@@ -8659,7 +9508,7 @@
       "label": "3. Health e liveness",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L32",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_3_health_e_liveness",
       "community": 37,
@@ -8670,7 +9519,7 @@
       "label": "4. Opera\u00e7\u00e3o e rollback",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L36",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_4_opera\u00e7\u00e3o_e_rollback",
       "community": 37,
@@ -8681,7 +9530,7 @@
       "label": "Risks / Trade-offs",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_risks_trade_offs",
       "community": 37,
@@ -8692,7 +9541,7 @@
       "label": "Validation",
       "file_type": "document",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L46",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "openspec_changes_add_tailscale_dashboard_access_design_validation",
       "community": 37,
@@ -17077,6 +17926,76 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.test.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization_test",
+      "target": "src_components_workflowvisualization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.test.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization_test",
+      "target": "src_components_workflowvisualization_workflowvisualization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization",
+      "target": "src_components_workflowvisualization_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization",
+      "target": "src_components_workflowvisualization_workflowvisualization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization",
+      "target": "src_modules_workflows_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WorkflowVisualization.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_workflowvisualization",
+      "target": "src_modules_workflows_templates_manualworkflownode",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/container-config.test.ts",
@@ -19690,6 +20609,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_control_plane_domain",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -19750,6 +20681,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_workflowstatus",
+      "target": "src_modules_control_plane_domain_runstatus",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -19771,6 +20714,30 @@
       "_origin": "ast",
       "source": "src_modules_orchestrator_contract_orchestratorcapability",
       "target": "src_modules_control_plane_domain_orchestratorcapabilitystate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_control_plane_domain_teamrole",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_workflowstepdefinition",
+      "target": "src_modules_control_plane_domain_teamrole",
       "confidence_score": 1.0
     },
     {
@@ -20105,18 +21072,6 @@
       "source": "src_modules_control_plane_invariants",
       "target": "src_modules_control_plane_invariants_workflowversioninvariant",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/modules/control-plane/invariants.ts",
-      "source_location": "L102",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_modules_control_plane_invariants_assertcostentryinvariant",
-      "target": "src_modules_control_plane_invariants_cost_classes"
     },
     {
       "relation": "calls",
@@ -20625,6 +21580,496 @@
       "_origin": "ast",
       "source": "src_modules_control_plane_metrics_calculatedevelopmentmetrics",
       "target": "src_modules_control_plane_metrics_sumintervaldurations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_adaptpilotcost",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_aggregatecosts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_authorizepaidroute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_evaluatebudget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_priceentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_priceusage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_test_base",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_test_prices",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_usageevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_test",
+      "target": "src_modules_costs_ledger_usageledger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L175",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_adaptpilotcost",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L147",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_aggregatecosts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_assertinteger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L208",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_authorizepaidroute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_budgetalert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L192",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_budgetevidence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_canonicalusage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_cost_classes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_costclass",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_costentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L138",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_costgroup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_costtotal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L201",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_evaluatebudget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_pilotcostaggregate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_priceentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L119",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_priceusage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_selecteffectiveprice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_usage_kinds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_usagedimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_usageevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_usagekind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger",
+      "target": "src_modules_costs_ledger_usageledger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "context": "type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_costentry",
+      "target": "src_modules_costs_ledger_usagedimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "context": "type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_pilotcostaggregate",
+      "target": "src_modules_costs_ledger_usagedimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "context": "type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_usageevent",
+      "target": "src_modules_costs_ledger_usagedimensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L176",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_adaptpilotcost",
+      "target": "src_modules_costs_ledger_assertinteger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L122",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_priceusage",
+      "target": "src_modules_costs_ledger_assertinteger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_usageledger_ingest",
+      "target": "src_modules_costs_ledger_assertinteger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_usageledger_ingest",
+      "target": "src_modules_costs_ledger_canonicalusage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_usageledger",
+      "target": "src_modules_costs_ledger_usageledger_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_usageledger",
+      "target": "src_modules_costs_ledger_usageledger_ingest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/costs/ledger.ts",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_costs_ledger_priceusage",
+      "target": "src_modules_costs_ledger_selecteffectiveprice",
       "confidence_score": 1.0
     },
     {
@@ -24182,10 +25627,116 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract_fixtures_test_fixture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract_submittedworkflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract_submitworkflowcommand",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_contract_workflowstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_fake",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract-fixtures.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_fixtures_test",
+      "target": "src_modules_orchestrator_fake_fakeorchestratoradapter",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/contract.ts",
-      "source_location": "L25",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract",
+      "target": "src_modules_orchestrator_contract_eventpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_contract",
@@ -24201,6 +25752,28 @@
       "_origin": "ast",
       "source": "src_modules_orchestrator_contract",
       "target": "src_modules_orchestrator_contract_orchestratorcapability",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract",
+      "target": "src_modules_orchestrator_contract_orchestratorhealth",
       "confidence_score": 1.0
     },
     {
@@ -24226,6 +25799,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract",
+      "target": "src_modules_orchestrator_contract_workflowstatus",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -24234,6 +25818,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake",
+      "target": "src_modules_orchestrator_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_contract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_test",
       "target": "src_modules_orchestrator_contract",
       "confidence_score": 1.0
     },
@@ -24254,7 +25862,7 @@
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L23",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_capabilities",
@@ -24266,7 +25874,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L18",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_constructor",
@@ -24290,7 +25898,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L16",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
@@ -24302,7 +25910,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L27",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_submit",
@@ -24326,7 +25934,7 @@
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L27",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_submit",
@@ -24334,10 +25942,142 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake",
+      "target": "src_modules_orchestrator_contract_orchestratorhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_health",
+      "target": "src_modules_orchestrator_contract_orchestratorhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake",
+      "target": "src_modules_orchestrator_contract_workflowstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_constructor",
+      "target": "src_modules_orchestrator_contract_workflowstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_status",
+      "target": "src_modules_orchestrator_contract_workflowstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_constructor",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter_events",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_test",
+      "target": "src_modules_orchestrator_contract_orchestratorevent",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/contract.ts",
-      "source_location": "L26",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_contract_orchestratoradapter",
@@ -24348,7 +26088,40 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/contract.ts",
-      "source_location": "L27",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_orchestratoradapter",
+      "target": "src_modules_orchestrator_contract_orchestratoradapter_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_orchestratoradapter",
+      "target": "src_modules_orchestrator_contract_orchestratoradapter_health",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_contract_orchestratoradapter",
+      "target": "src_modules_orchestrator_contract_orchestratoradapter_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/contract.ts",
+      "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_contract_orchestratoradapter",
@@ -24372,7 +26145,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
@@ -24430,7 +26203,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake",
@@ -24441,7 +26214,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L8",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake",
@@ -24452,7 +26225,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L9",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_integrationholderror",
@@ -24463,7 +26236,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L23",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
@@ -24474,7 +26247,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L18",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
@@ -24485,11 +26258,203 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/orchestrator/fake.ts",
-      "source_location": "L27",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
+      "target": "src_modules_orchestrator_fake_fakeorchestratoradapter_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
+      "target": "src_modules_orchestrator_fake_fakeorchestratoradapter_health",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
+      "target": "src_modules_orchestrator_fake_fakeorchestratoradapter_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/fake.ts",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_modules_orchestrator_fake_fakeorchestratoradapter",
       "target": "src_modules_orchestrator_fake_fakeorchestratoradapter_submit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_test",
+      "target": "src_modules_orchestrator_observation_ingestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_test",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_test",
+      "target": "src_modules_orchestrator_observation_ingestion_test_event",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_observation_ingestion_countfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_observation_ingestion_ingestionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_observation_ingestion_observedrunprojection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion",
+      "target": "src_modules_orchestrator_observation_ingestion_textfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "target": "src_modules_orchestrator_observation_ingestion_textfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "target": "src_modules_orchestrator_observation_ingestion_countfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_empty",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/orchestrator/observation-ingestion.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_ingest",
+      "target": "src_modules_orchestrator_observation_ingestion_fixtureobservationprojection_empty",
       "confidence_score": 1.0
     },
     {
@@ -26485,6 +28450,221 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_test",
+      "target": "src_modules_workflows_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_test",
+      "target": "src_modules_workflows_templates_completemanualnode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_test",
+      "target": "src_modules_workflows_templates_createmanualworkflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_test",
+      "target": "src_modules_workflows_templates_requestcorrection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_test",
+      "target": "src_modules_workflows_templates_workflow_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_completemanualnode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_createmanualworkflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_freezetemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_manualworkflownode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_requestcorrection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_validatehandoff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflow_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflowhandoff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflowkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflownodestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflowstepdefinition",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates",
+      "target": "src_modules_workflows_templates_workflowtemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/workflows/templates.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_workflows_templates_completemanualnode",
+      "target": "src_modules_workflows_templates_validatehandoff",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/versioned-deployment.test.ts",
@@ -27509,7 +29689,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design",
@@ -27520,7 +29700,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design",
@@ -27531,7 +29711,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design",
@@ -27542,7 +29722,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L46",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design",
@@ -27553,7 +29733,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L22",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design_decisions",
@@ -27564,7 +29744,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L28",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design_decisions",
@@ -27575,7 +29755,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design_decisions",
@@ -27586,7 +29766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "openspec/changes/add-tailscale-dashboard-access/design.md",
-      "source_location": "L36",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
       "source": "openspec_changes_add_tailscale_dashboard_access_design_decisions",
@@ -32061,5 +34241,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "03f47bb6a361c296c1a12f8965f22dcbfe8ac8ea"
+  "built_at_commit": "04c51db40f7f2229c2cf8de212724e5b4da23bfd"
 }

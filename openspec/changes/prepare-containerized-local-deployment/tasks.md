@@ -29,7 +29,7 @@
 
 - [x] 4.1 Executar `npm test`, `npm run typecheck`, `npm run lint` e `npm run build`; confirmar que `.next/standalone/server.js` foi gerado e exercitar `/api/health` no servidor standalone local.
 - [x] 4.2 Executar `npx -y @fission-ai/openspec@1.8.0 validate prepare-containerized-local-deployment --strict` e corrigir erros.
-- [ ] 4.3 No host Linux Docker `bumblebee`, repetir no commit `3908841` o fluxo corrigido completo `deploy.sh local`, seguido de `verify` e `status`. O rerun atual comprovou `verify` rc 0 e serviço `healthy`, incluindo `User=node`, `ReadonlyRootfs=true`, UID não-root e `/`/`/workspace` não graváveis, mas reutilizou o contêiner criado pelo fluxo anterior; build/criação/start pela versão corrigida ainda precisam de evidência conjunta antes de concluir esta tarefa.
+- [x] 4.3 No host Linux Docker `bumblebee`, executar na revisão `04c51db` o fluxo corrigido completo `deploy.sh local`, seguido de `verify`, `status` e liveness HTTP. A execução de 2026-08-16 reconstruiu e recriou o contêiner, retornou `verify` rc 0, serviço `healthy`, publicação exclusiva em `127.0.0.1:3011`, `User=node`, `ReadonlyRootfs=true`, UID não-root e `/`/`/workspace` não graváveis.
 - [x] 4.4 Consultar Graphify e cruzar relações de Docker, control plane, retenção, Hermes e Tailscale; registrar evidência e limitações em `docs/graphify-evidence.md`.
 - [x] 4.5 Revisar `git diff`/`git status`, manter `next-env.d.ts` fora do diff e deixar commit/push fora da preparação técnica até a aprovação final integrada.
 - [x] 4.6 Executar o gate real `npm run test:e2e` contra um standalone novo em `127.0.0.1:3101`, com `reuseExistingServer: false` e assets preparados pelo próprio start; confirmar 3 testes aprovados e 1 skip esperado do cenário exclusivamente mobile.

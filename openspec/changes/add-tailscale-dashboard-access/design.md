@@ -4,6 +4,8 @@ O Compose publica hoje apenas em loopback. A aplicação não possui autenticaç
 
 Graphify foi atualizado e consultado nesta raiz em 2026-08-15. O cruzamento confirmou que reachability Tailscale e liveness Docker não concedem autorização da aplicação nem liberam dispatch; a evidência e suas limitações estão em `docs/graphify-evidence.md`.
 
+Em 2026-08-16, o host `bumblebee` recriou e verificou a revisão `04c51db` com publicação exclusiva em `100.95.240.74:3011`, health HTTP 200 e ausência de resposta no IPv4 LAN `192.168.10.74:3011`. O dashboard foi devolvido a `127.0.0.1:3011` após o teste. Essa evidência prova binding local, não ACL, tag ou acesso de um peer; o gate remoto permanece aberto.
+
 ## Goals / Non-Goals
 
 **Goals:**

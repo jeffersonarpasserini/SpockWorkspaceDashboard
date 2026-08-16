@@ -86,7 +86,7 @@ As assertions do runbook comparam o Compose expandido e `.HostConfig.Memory`, `.
 - Suite completa, typecheck, lint, build e startup HTTP real do script standalone verificam regressões, geração standalone, loopback padrão e respeito a `PORT` fornecida.
 - `openspec validate ... --strict` verifica os artefatos normativos.
 - O runbook fornece assertions reproduzíveis e fail-closed para Compose expandido com chave vazia, build/up/ps, health Docker, liveness HTTP, usuário efetivo `node`, `ReadonlyRootfs=true` e um probe comportamental bounded do UID e da não-gravabilidade de `/` e `/workspace`, além das whitelists de portas, capabilities, mounts, recursos e logging no Compose e no contêiner efetivo.
-- A execução Docker real no host Linux `bumblebee` confirmou o verifier corrigido no commit `3908841`: `verify` e `status` retornaram rc 0, incluindo `User=node`, `ReadonlyRootfs=true`, UID não-root e `/`/`/workspace` não graváveis, e o serviço permaneceu `healthy` em loopback. Como o contêiner observado foi criado pelo fluxo anterior, ainda é necessário repetir `deploy.sh local` no commit corrigido para vincular build/criação/start à mesma evidência. Graphify e os gates externos de release permanecem independentes.
+- A execução Docker real de 2026-08-16 no host Linux `bumblebee`, revisão `04c51db`, reconstruiu a imagem e recriou o contêiner pelo fluxo corrigido completo. `local`, `verify`, `status` e liveness HTTP passaram com `User=node`, `ReadonlyRootfs=true`, UID não-root, `/` e `/workspace` não graváveis, publicação exclusiva em `127.0.0.1:3011` e serviço `healthy`. Graphify e os gates externos de release permanecem independentes.
 
 ## Risks / Trade-offs
 

@@ -19,6 +19,6 @@
 
 - [x] 4.1 Executar testes focados e completos (86/86), typecheck, lint, audit (0), build, E2E (3 pass/1 skip esperado) e quatro validações OpenSpec strict.
 - [x] 4.2 Obter revisão Docker/DevOps, segurança e documentação; O’Brien, Tuvok e Uhura aprovaram commit/push e Spock revisou o diff integral. A aprovação de deployment permanece separada e pendente nos gates 4.3–4.4.
-- [ ] 4.3 No `bumblebee`, recriar com `DASHBOARD_BIND_ADDRESS=100.95.240.74`, executar `verify`/`status` e confirmar HTTP 200 local pelo IP Tailscale.
+- [x] 4.3 No `bumblebee`, recriar com `DASHBOARD_BIND_ADDRESS=100.95.240.74`, executar `verify`/`status` e confirmar HTTP 200 local pelo IP Tailscale. Em 2026-08-16, a revisão `04c51db` passou com container `healthy`, binding efetivo exclusivo `100.95.240.74:3011` e ausência de resposta em `192.168.10.74:3011`; após a prova, o serviço retornou e foi verificado em `127.0.0.1:3011`.
 - [ ] 4.4 Confirmar as ACLs/tags aplicáveis, acesso HTTP a partir de peer Tailscale autorizado e ausência de publicação no IPv4 LAN `192.168.10.74`; não inferir autorização apenas do teste local.
 - [x] 4.5 Atualizar Graphify e cruzar Tailscale, Docker, autorização e gates operacionais; registrar evidência e limitações em `docs/graphify-evidence.md`.

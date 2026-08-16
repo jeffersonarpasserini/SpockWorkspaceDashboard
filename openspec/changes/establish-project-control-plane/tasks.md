@@ -56,24 +56,24 @@
 
 ## 6. Agent Orchestrator contract — observation slice
 
-- [ ] 6.0 Keep this section limited to local contract fixtures and `FakeOrchestratorAdapter` until the owner explicitly announces Agent Orchestrator completion and authorizes live integration.
-- [ ] 6.1 RED: add consumer-driven contract fixtures for health, workflow submission, status, sequenced events and idempotency.
+- [x] 6.0 Keep this section limited to local contract fixtures and `FakeOrchestratorAdapter` until the owner explicitly announces Agent Orchestrator completion and authorizes live integration.
+- [x] 6.1 RED: add consumer-driven contract fixtures for health, workflow submission, status, sequenced events and idempotency.
 - [ ] 6.2 Version the contract and authenticate service-to-service requests without sharing database users.
-- [ ] 6.3 Add capability discovery with `implemented`, `validated_shadow`, `planned` and `unavailable` states.
-- [ ] 6.4 Report the current Hermes/reserve graph as implemented and documented team graphs as planned until executable proof exists.
-- [ ] 6.5 Implement fixture-backed ingestion of session, correlation, profile, observed model, billing mode, usage, tool-call, budget and terminal events.
-- [ ] 6.6 Reconcile duplicate, missing, out-of-order and unknown-outcome events without double counting.
-- [ ] 6.7 Keep all live HTTP, event and Phoenix/OpenTelemetry integrations disabled by default while the integration hold is active.
+- [x] 6.3 Add fixture-backed capability discovery with `implemented`, `validated_shadow`, `planned` and `unavailable` states.
+- [x] 6.4 Report the current Hermes/reserve graph as implemented and documented team graphs as planned until executable proof exists.
+- [x] 6.5 Implement fixture-backed ingestion of session, correlation, profile, observed model, billing mode, usage, tool-call, budget and terminal events.
+- [x] 6.6 Reconcile duplicate, missing, out-of-order and unknown-outcome events without double counting.
+- [x] 6.7 Keep all live HTTP, event and Phoenix/OpenTelemetry integrations disabled by default while the integration hold is active.
 - [ ] 6.8 After explicit owner authorization, create a separate reviewed gate to replace fixtures with observation-only live traffic.
 
 ## 7. Workflow and handoff model — vertical slice
 
-- [ ] 7.1 RED: test feature, bug, infrastructure and analysis workflow definitions and risk-dependent branches.
-- [ ] 7.2 Add immutable workflow templates/versions, workflow runs, role steps and handoffs.
-- [ ] 7.3 Implement manual/shadow execution of planned nodes without automatic downstream dispatch.
-- [ ] 7.4 Implement at most two default correction loops, then create an actionable human blocker.
-- [ ] 7.5 Preserve objective, inputs, output summary, evidence, source revision and actor at every handoff.
-- [ ] 7.6 Add workflow visualization that clearly distinguishes planned, waiting, running, blocked and completed nodes.
+- [x] 7.1 RED: test feature, bug, infrastructure and analysis workflow definitions and risk-dependent branches.
+- [x] 7.2 Add immutable workflow templates/versions, manual workflow nodes, role steps and handoffs.
+- [x] 7.3 Implement manual/shadow execution state for planned nodes without automatic downstream dispatch.
+- [x] 7.4 Implement at most two default correction loops, then create an actionable human blocker.
+- [x] 7.5 Preserve objective, inputs, output summary, evidence, source revision and actor at every handoff.
+- [x] 7.6 Add workflow visualization that clearly distinguishes planned, waiting, running, blocked and completed nodes.
 
 ## 8. Runs and durable orchestration — vertical slice
 
@@ -88,13 +88,13 @@
 
 ## 9. Token and cost ledger — vertical slice
 
-- [ ] 9.1 RED: property-test idempotent usage ingestion, compensating corrections and aggregation boundaries.
-- [ ] 9.2 Add usage events for input, cached input, cache write, output, reasoning, tool calls and compute.
-- [ ] 9.3 Add immutable effective-dated price catalog entries with source, currency and confidence.
-- [ ] 9.4 Add cost entries that distinguish actual, estimated, simulated, allocated and infrastructure classes.
-- [ ] 9.5 Import the pilot's simulated/billed split through a traceable compatibility adapter rather than treating aggregates as raw events.
-- [ ] 9.6 Add task, run, agent, project and system totals without mixing incompatible cost classes.
-- [ ] 9.7 Add budget alerts and fail closed when a paid route lacks authoritative remaining-budget evidence.
+- [x] 9.1 RED: property-test idempotent usage ingestion, compensating corrections and aggregation boundaries.
+- [x] 9.2 Add usage events for input, cached input, cache write, output, reasoning, tool calls and compute.
+- [x] 9.3 Add immutable effective-dated price catalog entries with source, currency and confidence.
+- [x] 9.4 Add cost entries that distinguish actual, estimated, simulated, allocated and infrastructure classes.
+- [x] 9.5 Import the pilot's simulated/billed split through a traceable compatibility adapter rather than treating aggregates as raw events.
+- [x] 9.6 Add task, run, agent, project and system totals without mixing incompatible cost classes.
+- [x] 9.7 Add budget alerts and fail closed when a paid route lacks authoritative remaining-budget evidence.
 
 ## 10. Time and performance analytics — vertical slice
 

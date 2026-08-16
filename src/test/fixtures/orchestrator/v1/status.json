@@ -1,0 +1,6 @@
+{
+  "workflowRunId": "fixture:req-fixture-1",
+  "requestId": "req-fixture-1",
+  "status": "running",
+  "lastSequence": 2
+}

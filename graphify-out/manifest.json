@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "src/modules/control-plane/baseline-fixtures.ts": {
-    "mtime": 1786796609.562254,
-    "ast_hash": "0e667593945739593afbd475d75009e7",
+    "mtime": 1786908341.6631386,
+    "ast_hash": "60c82ba1e06d9c8bf43c339471b5cde5",
     "semantic_hash": ""
   },
   "src/modules/control-plane/domain.ts": {
@@ -480,18 +480,18 @@
     "semantic_hash": ""
   },
   "src/modules/orchestrator/contract.ts": {
-    "mtime": 1786751191.5215108,
-    "ast_hash": "749938118b6a3902be9a6dd7cb66db29",
+    "mtime": 1786908319.4763706,
+    "ast_hash": "39341c24ccdd8d83002079d7aa51d6b2",
     "semantic_hash": ""
   },
   "src/modules/orchestrator/fake.test.ts": {
-    "mtime": 1786751191.5223353,
-    "ast_hash": "53f0235843fd2bbbbc5d124ac33c730e",
+    "mtime": 1786908319.9053853,
+    "ast_hash": "2a4c1dfedc00ab323910e1b8ae7fa8d6",
     "semantic_hash": ""
   },
   "src/modules/orchestrator/fake.ts": {
-    "mtime": 1786751191.5223353,
-    "ast_hash": "74473a27f9b9cce06f45082cf791bd29",
+    "mtime": 1786908319.6893778,
+    "ast_hash": "d1c412794aa3c0c2550365704a17470d",
     "semantic_hash": ""
   },
   "src/modules/projects/catalog-postgres.integration.test.ts": {
@@ -545,8 +545,8 @@
     "semantic_hash": ""
   },
   "src/test/fixtures/baselines/orchestrator-contract.v1.json": {
-    "mtime": 1786796609.3562477,
-    "ast_hash": "0d9827de9ac6ee8aef73375784af1701",
+    "mtime": 1786908321.3744361,
+    "ast_hash": "cc7ca8edb18e3f672dfbdd008a60e909",
     "semantic_hash": ""
   },
   "src/test/setup.ts": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786845031.1870925,
-    "ast_hash": "a64a6181508feb2bbf5a199441d7e30d",
+    "mtime": 1786909085.6633604,
+    "ast_hash": "b707f06382cf15412c1c7202ae2b9997",
     "semantic_hash": ""
   },
   "compose.database.yaml": {
@@ -660,8 +660,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/add-tailscale-dashboard-access/design.md": {
-    "mtime": 1786845030.0810568,
-    "ast_hash": "4b4145475bc1f38d0f4fcc7285954613",
+    "mtime": 1786908208.1775258,
+    "ast_hash": "f1e81c00a42fae51aa42149f0244144c",
     "semantic_hash": ""
   },
   "openspec/changes/add-tailscale-dashboard-access/proposal.md": {
@@ -675,8 +675,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/add-tailscale-dashboard-access/tasks.md": {
-    "mtime": 1786845029.6480427,
-    "ast_hash": "d9e8818bf22310af7bfc561aa72747ab",
+    "mtime": 1786908207.9635184,
+    "ast_hash": "69f4324a48fc6bfc8e781e80e722afd6",
     "semantic_hash": ""
   },
   "openspec/changes/add-versioned-deployment-export/design.md": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/establish-project-control-plane/tasks.md": {
-    "mtime": 1786835491.9662976,
-    "ast_hash": "87126e9da0e5e557e98161f69f956de9",
+    "mtime": 1786909085.4353554,
+    "ast_hash": "adbb6c17b55a3de265060af357ebc785",
     "semantic_hash": ""
   },
   "openspec/changes/prepare-containerized-local-deployment/.openspec.yaml": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/prepare-containerized-local-deployment/design.md": {
-    "mtime": 1786845030.7450783,
-    "ast_hash": "6370d52c51f70e6ff17d2cd16b082f0a",
+    "mtime": 1786899971.299853,
+    "ast_hash": "5183ddeae075c824e379d2d98196317c",
     "semantic_hash": ""
   },
   "openspec/changes/prepare-containerized-local-deployment/proposal.md": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "openspec/changes/prepare-containerized-local-deployment/tasks.md": {
-    "mtime": 1786845029.8660498,
-    "ast_hash": "6766db709d0a13b89ce4e7c5d555399b",
+    "mtime": 1786899971.0848463,
+    "ast_hash": "54f89b026aff1f4758f878b8aa326550",
     "semantic_hash": ""
   },
   "openspec/config.yaml": {
@@ -920,8 +920,73 @@
     "semantic_hash": ""
   },
   "docs/graphify-evidence.md": {
-    "mtime": 1786845051.6357555,
-    "ast_hash": "9588c2d56a76969defa3a96ac2d01e83",
+    "mtime": 1786908555.0305462,
+    "ast_hash": "e655a5dec18de887a23c6297edfd1c7b",
+    "semantic_hash": ""
+  },
+  "src/components/WorkflowVisualization.test.tsx": {
+    "mtime": 1786908490.494302,
+    "ast_hash": "1a5abf30aa628bf2f63e1332cc7cc599",
+    "semantic_hash": ""
+  },
+  "src/components/WorkflowVisualization.tsx": {
+    "mtime": 1786908490.2812946,
+    "ast_hash": "8e20af906b01b2dfb6d114b6f67aa6b4",
+    "semantic_hash": ""
+  },
+  "src/modules/orchestrator/contract-fixtures.test.ts": {
+    "mtime": 1786908321.1554286,
+    "ast_hash": "78d2a9a02f868b0f9f77a4da08cbccfb",
+    "semantic_hash": ""
+  },
+  "src/modules/orchestrator/observation-ingestion.test.ts": {
+    "mtime": 1786908416.7797422,
+    "ast_hash": "21ee6e3a7f9add4247f6be3c196064f5",
+    "semantic_hash": ""
+  },
+  "src/modules/orchestrator/observation-ingestion.ts": {
+    "mtime": 1786908405.4653497,
+    "ast_hash": "aee5c36607db42fee46bd300934ed9b7",
+    "semantic_hash": ""
+  },
+  "src/modules/workflows/templates.test.ts": {
+    "mtime": 1786908490.0692873,
+    "ast_hash": "695256e16599a4cf02d6c2fb54edf7c3",
+    "semantic_hash": ""
+  },
+  "src/modules/workflows/templates.ts": {
+    "mtime": 1786908505.2408144,
+    "ast_hash": "f8f777d89c545b419634c03c58b7ef8e",
+    "semantic_hash": ""
+  },
+  "src/test/fixtures/orchestrator/v1/events.json": {
+    "mtime": 1786908320.9294207,
+    "ast_hash": "5718a0814d868947119ec5809cae701d",
+    "semantic_hash": ""
+  },
+  "src/test/fixtures/orchestrator/v1/health.json": {
+    "mtime": 1786908320.2653978,
+    "ast_hash": "375f686102ab7ae1d3190a0c41e77182",
+    "semantic_hash": ""
+  },
+  "src/test/fixtures/orchestrator/v1/status.json": {
+    "mtime": 1786908320.7134132,
+    "ast_hash": "4fbd0037aa15f8a71e55f6bf9ebdc60d",
+    "semantic_hash": ""
+  },
+  "src/test/fixtures/orchestrator/v1/submission.json": {
+    "mtime": 1786908320.4904056,
+    "ast_hash": "1ed00e6d4ab149caa5c99a136a5418d7",
+    "semantic_hash": ""
+  },
+  "src/modules/costs/ledger.test.ts": {
+    "mtime": 1786909085.2143505,
+    "ast_hash": "dc9b35dc08dd5b58e762af6c0a8580ce",
+    "semantic_hash": ""
+  },
+  "src/modules/costs/ledger.ts": {
+    "mtime": 1786909084.9993458,
+    "ast_hash": "d81dbda7a77fc425d433cc618bbd79b7",
     "semantic_hash": ""
   }
 }
