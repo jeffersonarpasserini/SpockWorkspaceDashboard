@@ -277,3 +277,11 @@ Test domain transitions, real PostgreSQL concurrency, usage idempotency, OpenSpe
 shared orchestrator contract fixtures, worker/orchestrator crash recovery, capability-state accuracy,
 path/secret/auth boundaries, team handoffs, price snapshots, metrics and browser workflows. Autonomous
 dispatch remains disabled until persistence, identity, authentication, audit and reconciliation pass.
+
+On 2026-08-16 the complete available test matrix passed: 218 unit/component/contract/security tests,
+15 PostgreSQL integration tests against the isolated `spock_dashboard` database (including atomic
+claims and expired-lease recovery), and three Playwright desktop/mobile checks with one intentionally
+inapplicable desktop skip. Least-privilege grants were verified with temporary `NOLOGIN` roles that
+were removed with their grants immediately after the test. The local database still has no persistent
+web/worker/migration login roles; provisioning them remains an environment deployment responsibility.
+No Dashboard, Agent Orchestrator, Hermes or observability container was stopped for this validation.

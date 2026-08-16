@@ -98,43 +98,43 @@
 
 ## 10. Time and performance analytics — vertical slice
 
-- [ ] 10.1 RED: test lead, queue, cycle, wall, active-agent, blocked, review, elapsed and agent-hours definitions including overlapping runs.
-- [ ] 10.2 Derive intervals from append-only transitions with provenance and confidence.
-- [ ] 10.3 Add portfolio/project/agent reports for throughput, first-attempt success, retries, rework and cost per accepted task.
-- [ ] 10.4 Display calendar elapsed time separately from summed parallel agent-hours.
-- [ ] 10.5 Mark unavailable or partial metrics instead of substituting current time or zero.
+- [x] 10.1 RED: test lead, queue, cycle, wall, active-agent, blocked, review, elapsed and agent-hours definitions including overlapping runs.
+- [x] 10.2 Derive intervals from append-only transitions with provenance and confidence.
+- [x] 10.3 Add portfolio/project/agent reports for throughput, first-attempt success, retries, rework and cost per accepted task.
+- [x] 10.4 Display calendar elapsed time separately from summed parallel agent-hours.
+- [x] 10.5 Mark unavailable or partial metrics instead of substituting current time or zero.
 
 ## 11. Evidence and quality gates — vertical slice
 
-- [ ] 11.1 RED: prove successful agent output cannot directly accept a task.
-- [ ] 11.2 Add evidence and versioned quality-gate records for commits, diffs, PRs, tests, CI, documents, media, deployment, traces and human approval.
-- [ ] 11.3 Implement task-type policies and reproducible gate evaluation over exact evidence revisions.
-- [ ] 11.4 Add human accept/rework flows with reviewer, reason and evidence set.
-- [ ] 11.5 Add optional GitHub/GitLab evidence adapters without claiming CI or release when unavailable.
+- [x] 11.1 RED: prove successful agent output cannot directly accept a task.
+- [x] 11.2 Add evidence and versioned quality-gate records for commits, diffs, PRs, tests, CI, documents, media, deployment, traces and human approval.
+- [x] 11.3 Implement task-type policies and reproducible gate evaluation over exact evidence revisions.
+- [x] 11.4 Add human accept/rework flows with reviewer, reason and evidence set.
+- [x] 11.5 Add optional GitHub/GitLab evidence adapters without claiming CI or release when unavailable.
 
 ## 12. Authentication, authorization and secrets
 
-- [ ] 12.1 RED: prove every mutation, stream and execution action enforces authenticated workspace/project scope.
-- [ ] 12.2 Implement owner, admin, operator, reviewer and viewer roles plus agent-specific action scopes.
-- [ ] 12.3 Add CSRF protection, optimistic versions, idempotency keys and signed provider webhooks.
-- [ ] 12.4 Store encrypted secret references, inject them only into approved children and verify redaction in logs, errors and traces.
-- [ ] 12.5 Version/hash hooks and require explicit approval on first use or content change.
-- [ ] 12.6 Audit mutations, dispatch, approvals, budget/policy changes and secret-reference changes.
+- [x] 12.1 RED: prove every mutation, stream and execution action enforces authenticated workspace/project scope.
+- [x] 12.2 Implement owner, admin, operator, reviewer and viewer roles plus agent-specific action scopes.
+- [x] 12.3 Add CSRF protection, optimistic versions, idempotency keys and signed provider webhooks.
+- [x] 12.4 Store encrypted secret references, inject them only into approved children and verify redaction in logs, errors and traces.
+- [x] 12.5 Version/hash hooks and require explicit approval on first use or content change.
+- [x] 12.6 Audit mutations, dispatch, approvals, budget/policy changes and secret-reference changes.
 
 ## 13. UI and accessibility
 
-- [ ] 13.1 Add portfolio metrics, budgets, active work, blockers and stale-source indicators.
-- [ ] 13.2 Add project tabs for Overview, Specs, Tasks, Runs, Agents, Documents, Costs, Timeline and Settings.
-- [ ] 13.3 Add task detail traceability from OpenSpec intent through assignments, runs, usage, evidence and acceptance.
+- [x] 13.1 Add portfolio metrics, budgets, active work, blockers and stale-source indicators.
+- [x] 13.2 Add project tabs for Overview, Specs, Tasks, Runs, Agents, Documents, Costs, Timeline and Settings.
+- [x] 13.3 Add task detail traceability from OpenSpec intent through assignments, runs, usage, evidence and acceptance.
 - [ ] 13.4 Add live SSE updates with cursor recovery and authorized filtering.
-- [ ] 13.5 Verify keyboard access, focus, semantic status, responsive tables/boards and non-color-only distinctions.
+- [x] 13.5 Verify keyboard access, focus, semantic status, responsive tables/boards and non-color-only distinctions.
 
 ## 14. Migration, operations and rollout
 
-- [ ] 14.1 Rehearse migration from a current-dashboard fixture and verify no history is invented.
-- [ ] 14.2 Add liveness, readiness, worker heartbeat, queue lag, reconciliation and dead-letter metrics.
+- [x] 14.1 Rehearse migration from a current-dashboard fixture and verify no history is invented.
+- [x] 14.2 Add liveness, readiness, worker heartbeat, queue lag, reconciliation and dead-letter metrics.
 - [x] 14.3 Add PostgreSQL backup/restore, migration and incident runbooks with exact database-role boundaries.
-- [ ] 14.4 Run unit, component, contract, PostgreSQL integration, concurrency, security, browser and crash-recovery suites.
+- [x] 14.4 Run unit, component, contract, PostgreSQL integration, concurrency, security, browser and crash-recovery suites.
 - [x] 14.5 Run typecheck, lint, production build and strict validation on every capability spec in this change.
 - [ ] 14.6 Complete a shadow run, one supervised real task and a restart drill before enabling autonomous dispatch.
 - [ ] 14.7 Obtain independent review of domain semantics, accounting, orchestrator capability claims and security boundaries.
