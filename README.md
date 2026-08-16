@@ -140,7 +140,7 @@ Quadro atualizado em 16/08/2026:
 | 2 | `prepare-containerized-local-deployment` | 24 | 0 | Concluída |
 | 3 | `add-tailscale-dashboard-access` | 12 | 1 | Validação externa por peer/ACL |
 | 4 | `add-versioned-deployment-export` | 13 | 0 | Concluída |
-| 5 | `establish-project-control-plane` | 52 | 45 | Em desenvolvimento |
+| 5 | `establish-project-control-plane` | 75 | 22 | Em desenvolvimento |
 | 6 | `govern-runtime-data-retention-and-privacy` | 7 | 6 | Aguardando governança e gates destrutivos |
 | 7 | `rehearse-disaster-recovery-and-vps-cutover` | 0 | 13 | Planejada e adiada até a VPS |
 | 8 | `containerize-hermes-runtime-topology` | 0 | 13 | Planejada; bloqueada até equivalência comportamental |

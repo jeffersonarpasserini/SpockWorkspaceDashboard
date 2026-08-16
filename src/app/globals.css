@@ -48,6 +48,7 @@ main { width: min(1500px, calc(100% - 64px)); margin: 0 auto; padding-bottom: 80
 button:disabled { opacity: .45; cursor: not-allowed; }
 
 .summary-strip { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); border-radius: var(--radius); background: rgba(17,19,24,.72); box-shadow: var(--shadow); }
+.portfolio-summary { grid-template-columns: repeat(5, 1fr); }
 .summary-strip > div { padding: 22px 26px; display: flex; flex-direction: column; gap: 5px; border-right: 1px solid var(--border); }
 .summary-strip > div:last-child { border-right: 0; }
 .summary-strip strong { font-size: 26px; font-weight: 600; letter-spacing: -.03em; }
@@ -79,6 +80,20 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .card-link { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; margin-top: 19px; border-top: 1px solid var(--border); color: #c5c1ff; font-size: 12px; font-weight: 600; }
 .card-link:hover { color: white; }
 .empty-state { padding: 70px; text-align: center; border: 1px dashed var(--border-strong); border-radius: var(--radius); color: var(--muted); }
+
+.project-tabs { display: flex; gap: 6px; margin-bottom: 22px; padding: 8px; overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); }
+.project-tabs a { padding: 8px 10px; border-radius: 6px; color: var(--muted); white-space: nowrap; font-size: 12px; }
+.project-tabs a:hover, .project-tabs a:focus-visible { color: var(--text); background: var(--panel-soft); }
+.capability-panels { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; padding-top: 58px; }
+.capability-panels > section { min-height: 115px; padding: 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); }
+.capability-panels h2 { margin: 0 0 14px; font-size: 14px; }
+.capability-unavailable { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.task-traceability { margin-top: 58px; padding: 22px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); }
+.task-traceability h2 { margin: 6px 0 20px; }
+.task-traceability dl { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.task-traceability dl > div { padding: 14px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.task-traceability dt { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.task-traceability dd { margin: 7px 0 0; overflow-wrap: anywhere; font-size: 12px; }
 
 .evidence-grid { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); }
 .evidence-grid > div { padding: 20px 22px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 7px; min-width: 0; }
@@ -150,6 +165,7 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 @media (max-width: 1050px) {
   .project-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .summary-strip, .evidence-grid { grid-template-columns: repeat(2,1fr); }
+  .portfolio-summary, .capability-panels { grid-template-columns: repeat(2,1fr); }
   .summary-strip > div:nth-child(2), .evidence-grid > div:nth-child(2) { border-right: 0; }
   .summary-strip > div:nth-child(-n+2), .evidence-grid > div:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
 }
@@ -161,6 +177,7 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   .hero h1, .project-hero h1 { font-size: 40px; }
   .project-grid { grid-template-columns: 1fr; }
   .summary-strip, .evidence-grid { grid-template-columns: 1fr; }
+  .portfolio-summary, .capability-panels, .task-traceability dl { grid-template-columns: 1fr; }
   .summary-strip > div, .summary-strip > div:nth-child(2), .evidence-grid > div, .evidence-grid > div:nth-child(2) { border-right: 0; border-bottom: 1px solid var(--border); }
   .summary-strip > div:last-child, .evidence-grid > div:last-child { border-bottom: 0; }
   .chat-panel form { grid-template-columns: 1fr; }
