@@ -1,0 +1,15 @@
+{
+  "command": {
+    "requestId": "req-fixture-1",
+    "projectId": "project-fixture-1",
+    "taskId": "task-fixture-1",
+    "workflowVersion": "feature@1",
+    "profile": "b-elanna",
+    "objective": "Validate the local contract fixture"
+  },
+  "response": {
+    "workflowRunId": "fixture:req-fixture-1",
+    "requestId": "req-fixture-1",
+    "status": "queued"
+  }
+}

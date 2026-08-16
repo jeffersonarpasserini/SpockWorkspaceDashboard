@@ -15,7 +15,7 @@
   "13": "ADDED Requirements",
   "14": "Design: Spock project control plane",
   "15": "ADDED Requirements",
-  "16": "createDefaultDashboardService",
+  "16": "[id]/page.tsx",
   "17": "devDependencies",
   "18": "Decisions",
   "19": "ADDED Requirements",
@@ -30,7 +30,7 @@
   "28": "scripts",
   "29": "verify-compose-config.py",
   "30": "verify-container-inspect.py",
-  "31": "databaseSchema",
+  "31": "sync-health.ts",
   "32": "openspec-explore/SKILL.md",
   "33": "Decisions",
   "34": "ADDED Requirements",
@@ -44,7 +44,7 @@
   "42": "Change: Add workspace agent dashboard",
   "43": "container-verifiers.test.ts",
   "44": "versioned-deployment.test.ts",
-  "45": "sync-service.ts",
+  "45": "contract.ts",
   "46": "0007_runtime_retention_governance.sql",
   "47": "PostgreSQL operations",
   "48": "package.json",
@@ -107,6 +107,8 @@
   "105": "worktree-cleanup.ts",
   "106": "repository-postgres.integration.test.ts",
   "107": "graphify-evidence.md",
-  "108": "mutation-policy.ts",
-  "109": "vitest"
+  "108": "workspace.ts",
+  "109": "ledger.ts",
+  "110": "eslint-config-next",
+  "111": "databaseSchema"
 }

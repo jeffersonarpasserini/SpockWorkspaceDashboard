@@ -132,18 +132,30 @@ Consulte [`docs/docker-local.md`](docs/docker-local.md) para preparação e [`do
 
 ## OpenSpec
 
-As mudanças ativas são:
+Quadro atualizado em 16/08/2026:
 
-- `add-workspace-agent-dashboard`: implementação local-first original;
-- `prepare-containerized-local-deployment`: preparação Docker local/homelab;
-- `add-versioned-deployment-export`: exportação de release imutável e CLI terminal-safe;
-- `add-tailscale-dashboard-access`: publicação Tailscale-only com ownership, ACLs e contraprovas de rede.
+| # | Mudança | Concluídas | Pendentes | Estado |
+|---:|---|---:|---:|---|
+| 1 | `add-workspace-agent-dashboard` | 62 | 0 | Concluída |
+| 2 | `prepare-containerized-local-deployment` | 24 | 0 | Concluída |
+| 3 | `add-tailscale-dashboard-access` | 12 | 1 | Validação externa por peer/ACL |
+| 4 | `add-versioned-deployment-export` | 13 | 0 | Concluída |
+| 5 | `establish-project-control-plane` | 52 | 45 | Em desenvolvimento |
+| 6 | `govern-runtime-data-retention-and-privacy` | 7 | 6 | Aguardando governança e gates destrutivos |
+| 7 | `rehearse-disaster-recovery-and-vps-cutover` | 0 | 13 | Planejada e adiada até a VPS |
+| 8 | `containerize-hermes-runtime-topology` | 0 | 13 | Planejada; bloqueada até equivalência comportamental |
+
+As contagens são derivadas dos checkboxes dos respectivos arquivos `tasks.md`. Uma mudança concluída permanece ativa no OpenSpec até seu arquivamento deliberado. As pendências externas, destrutivas ou adiadas não devem ser encerradas apenas para completar o quadro.
 
 ```bash
 npx -y @fission-ai/openspec@1.8.0 validate add-workspace-agent-dashboard --strict
 npx -y @fission-ai/openspec@1.8.0 validate prepare-containerized-local-deployment --strict
 npx -y @fission-ai/openspec@1.8.0 validate add-versioned-deployment-export --strict
 npx -y @fission-ai/openspec@1.8.0 validate add-tailscale-dashboard-access --strict
+npx -y @fission-ai/openspec@1.8.0 validate establish-project-control-plane --strict
+npx -y @fission-ai/openspec@1.8.0 validate govern-runtime-data-retention-and-privacy --strict
+npx -y @fission-ai/openspec@1.8.0 validate rehearse-disaster-recovery-and-vps-cutover --strict
+npx -y @fission-ai/openspec@1.8.0 validate containerize-hermes-runtime-topology --strict
 ```
 
 A consulta Graphify da raiz foi executada e cruzou Docker, Tailscale, control plane, retenção, recovery e Hermes. A evidência datada e as limitações estão em `docs/graphify-evidence.md`.

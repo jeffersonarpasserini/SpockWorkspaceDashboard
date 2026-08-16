@@ -1,0 +1,24 @@
+{
+  "cursor": 0,
+  "events": [
+    {
+      "eventId": "10000000-0000-4000-8000-000000000001",
+      "deduplicationKey": "fixture:req-fixture-1:1",
+      "workflowRunId": "fixture:req-fixture-1",
+      "sequence": 1,
+      "type": "run.queued",
+      "occurredAt": "2026-08-16T00:00:01.000Z",
+      "payload": { "profile": "b-elanna", "billingMode": "token-plan" }
+    },
+    {
+      "eventId": "10000000-0000-4000-8000-000000000002",
+      "deduplicationKey": "fixture:req-fixture-1:2",
+      "workflowRunId": "fixture:req-fixture-1",
+      "sequence": 2,
+      "type": "run.started",
+      "occurredAt": "2026-08-16T00:00:02.000Z",
+      "payload": { "observedModel": "qwen3.8-max" }
+    }
+  ],
+  "nextCursor": 2
+}

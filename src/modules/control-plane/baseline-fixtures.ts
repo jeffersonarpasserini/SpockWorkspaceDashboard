@@ -62,7 +62,7 @@ export const orchestratorBaselineSchema = z.object({
     contractVersion: z.string().min(1),
     transport: z.literal("fixture-only"),
     liveEndpoint: z.null(),
-    operations: z.array(z.enum(["capabilities", "submit"]))
+    operations: z.array(z.enum(["health", "capabilities", "submit", "status", "events"]))
   }),
   schema: z.object({
     runtime: z.string().min(1),

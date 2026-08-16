@@ -1,16 +1,16 @@
-# Graph Report - SpockWorkspaceDashboard  (2026-08-15)
+# Graph Report - SpockWorkspaceDashboard  (2026-08-16)
 
 ## Corpus Check
-- 180 files · ~72,485 words
+- 193 files · ~75,939 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1181 nodes · 1622 edges · 110 communities (94 shown, 16 thin omitted)
+- 1251 nodes · 1738 edges · 112 communities (97 shown, 15 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.71)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `03f47bb6`
+- Built from commit: `04c51db4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -31,7 +31,7 @@
 - ADDED Requirements
 - Design: Spock project control plane
 - ADDED Requirements
-- createDefaultDashboardService
+- [id]/page.tsx
 - devDependencies
 - Decisions
 - ADDED Requirements
@@ -46,7 +46,7 @@
 - scripts
 - verify-compose-config.py
 - verify-container-inspect.py
-- databaseSchema
+- sync-health.ts
 - openspec-explore/SKILL.md
 - Decisions
 - ADDED Requirements
@@ -60,7 +60,7 @@
 - Change: Add workspace agent dashboard
 - container-verifiers.test.ts
 - versioned-deployment.test.ts
-- sync-service.ts
+- contract.ts
 - 0007_runtime_retention_governance.sql
 - PostgreSQL operations
 - package.json
@@ -105,8 +105,10 @@
 - worktree-cleanup.ts
 - repository-postgres.integration.test.ts
 - graphify-evidence.md
-- mutation-policy.ts
-- vitest
+- workspace.ts
+- ledger.ts
+- eslint-config-next
+- databaseSchema
 
 ## God Nodes (most connected - your core abstractions)
 1. `die()` - 20 edges
@@ -118,40 +120,40 @@
 7. `scripts` - 12 edges
 8. `createDatabaseConnection()` - 12 edges
 9. `readOpenSpecChangeSnapshot()` - 12 edges
-10. `ProjectIdentity` - 11 edges
+10. `FakeOrchestratorAdapter` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `createDefaultDashboardService()` --indirect_call--> `readGitEvidence()`  [INFERRED]
-  src/lib/dashboard.ts → src/lib/git.ts
 - `createDefaultDashboardService()` --indirect_call--> `readHermesEvidence()`  [INFERRED]
   src/lib/dashboard.ts → src/lib/kanban.ts
 - `createDefaultDashboardService()` --indirect_call--> `readOpenSpecEvidence()`  [INFERRED]
   src/lib/dashboard.ts → src/lib/openspec.ts
 - `createDefaultDashboardService()` --indirect_call--> `resolveProjectPath()`  [INFERRED]
   src/lib/dashboard.ts → src/lib/workspace.ts
+- `POST()` --calls--> `readDashboardConfig()`  [EXTRACTED]
+  src/app/api/chat/route.ts → src/lib/config.ts
 - `POST()` --calls--> `createDefaultDashboardService()`  [EXTRACTED]
   src/app/api/chat/route.ts → src/lib/dashboard.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (110 total, 16 thin omitted)
+## Communities (112 total, 15 thin omitted)
 
 ### Community 0 - "types.ts"
-Cohesion: 0.16
-Nodes (14): columnLabels, KanbanBoard(), tasks, labels, ProjectCard(), project, ProjectStatusEvidence, BoardTask (+6 more)
+Cohesion: 0.13
+Nodes (16): columnLabels, KanbanBoard(), tasks, labels, ProjectCard(), project, summarize(), deriveProjectStatus() (+8 more)
 
 ### Community 1 - "domain.ts"
 Cohesion: 0.06
-Nodes (42): availability, capabilityState, dashboardBaseline, dashboardBaselineSchema, orchestratorBaseline, orchestratorBaselineSchema, taskStatus, AgentProfileSnapshot (+34 more)
+Nodes (40): labels, WorkflowVisualization(), AgentProfileSnapshot, INITIAL_ENGINEERING_TEAM, ORCHESTRATOR_CAPABILITY_STATES, Project, Run, RUN_STATUSES (+32 more)
 
 ### Community 2 - "snapshot.ts"
-Cohesion: 0.12
-Nodes (29): changed(), duplicates(), ObservedSpecTask, parseRepositoryBindings(), parseSpecTasks(), PersistedSpecTask, reconcileSpecTasks(), ReconciliationEntry (+21 more)
+Cohesion: 0.09
+Nodes (33): changed(), duplicates(), ObservedSpecTask, parseRepositoryBindings(), parseSpecTasks(), PersistedSpecTask, reconcileSpecTasks(), ReconciliationEntry (+25 more)
 
 ### Community 3 - "chat/route.ts"
-Cohesion: 0.10
-Nodes (19): chatMessageSchema, POST(), requestSchema, ChatClientOptions, ChatMessage, createHermesChatClient(), Fetcher, readBoundedBody() (+11 more)
+Cohesion: 0.17
+Nodes (8): chatMessageSchema, POST(), requestSchema, ChatClientOptions, ChatMessage, createHermesChatClient(), Fetcher, readBoundedBody()
 
 ### Community 4 - "deploy.sh"
 Cohesion: 0.18
@@ -170,8 +172,8 @@ Cohesion: 0.10
 Nodes (19): agentProfileVersions, agentProjectScopes, agents, auditEvents, domainEvents, jobs, outboxEvents, projects (+11 more)
 
 ### Community 8 - "background-sync.ts"
-Cohesion: 0.15
-Nodes (10): boundedInteger(), OpenSpecBackgroundSync, OpenSpecBackgroundSyncResult, OpenSpecSourceRegistration, PostgresOpenSpecSourceRegistration, ActiveChangeCatalog, listActiveOpenSpecChanges(), openDirectory() (+2 more)
+Cohesion: 0.12
+Nodes (13): boundedInteger(), OpenSpecBackgroundSync, OpenSpecBackgroundSyncResult, OpenSpecSourceRegistration, PostgresOpenSpecSourceRegistration, ActiveChangeCatalog, listActiveOpenSpecChanges(), openDirectory() (+5 more)
 
 ### Community 9 - "Spock Workspace Dashboard"
 Cohesion: 0.08
@@ -186,8 +188,8 @@ Cohesion: 0.08
 Nodes (24): ADDED Requirements, Purpose, Requirement: Healthcheck mínimo e limitado, Requirement: Imagem de produção restrita, Requirement: Interface preservada no contêiner, Requirement: Recursos e logs são limitados no Compose local, Requirement: Rede local por padrão, Requirement: Verificação e rollback operacionais reproduzíveis (+16 more)
 
 ### Community 12 - "catalog-repository.ts"
-Cohesion: 0.15
-Nodes (13): ProjectIdentity, PersistedProject, ProjectCatalogRepository, ProjectCatalogStore, projectSlug(), WorkspaceRegistration, CatalogMismatch, compareCatalog() (+5 more)
+Cohesion: 0.16
+Nodes (13): ProjectIdentity, PersistedProject, ProjectCatalogStore, projectSlug(), WorkspaceRegistration, createPersistedProjectDiscovery(), CatalogMismatch, compareCatalog() (+5 more)
 
 ### Community 13 - "ADDED Requirements"
 Cohesion: 0.09
@@ -201,13 +203,13 @@ Nodes (18): Architectural decision, Current orchestrator reality, Design: Spock 
 Cohesion: 0.11
 Nodes (18): ADDED Requirements, Requirement: Dashboard and Agent Architecture share a bounded monorepo, Requirement: Deployment artifacts are immutable and portable, Requirement: Hermes process dependencies are discovered and health-gated, Requirement: Restore is proven before server cutover, Requirement: Workspace exports are complete, versioned and secret-safe, Scenario: Agent services start on a clean VPS, Scenario: Backup is restored on a fresh server (+10 more)
 
-### Community 16 - "createDefaultDashboardService"
-Cohesion: 0.14
-Nodes (12): dynamic, Home(), dynamic, ProjectPage(), ChatPanel(), Fetcher, Message, OpenSpecTraceability() (+4 more)
+### Community 16 - "[id]/page.tsx"
+Cohesion: 0.16
+Nodes (9): dynamic, ProjectPage(), ChatPanel(), Fetcher, Message, OpenSpecTraceability(), RefreshButton(), loadOpenSpecTraceability() (+1 more)
 
 ### Community 17 - "devDependencies"
 Cohesion: 0.12
-Nodes (17): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, @playwright/test, @testing-library/jest-dom, @testing-library/react (+9 more)
+Nodes (17): eslint, devDependencies, eslint, @playwright/test, @testing-library/jest-dom, @testing-library/react, @testing-library/user-event, @types/node (+9 more)
 
 ### Community 18 - "Decisions"
 Cohesion: 0.12
@@ -222,8 +224,8 @@ Cohesion: 0.12
 Nodes (15): 10. Time and performance analytics — vertical slice, 11. Evidence and quality gates — vertical slice, 12. Authentication, authorization and secrets, 13. UI and accessibility, 14. Migration, operations and rollout, 1. Domain contract and baselines, 2. PostgreSQL foundation, 3. Persisted project catalog — vertical slice (+7 more)
 
 ### Community 21 - "connection.ts"
-Cohesion: 0.22
-Nodes (8): DatabaseConfig, databaseEnvironment, readDatabaseConfig(), createDatabaseConnection(), DatabaseConnection, integration, integration, integration
+Cohesion: 0.24
+Nodes (7): DatabaseConfig, databaseEnvironment, readDatabaseConfig(), createDatabaseConnection(), DatabaseConnection, integration, integration
 
 ### Community 22 - "add-workspace-agent-dashboard/tasks.md"
 Cohesion: 0.14
@@ -261,9 +263,9 @@ Nodes (11): empty_collection(), main(), Exception, Raised when rendered Compose 
 Cohesion: 0.42
 Nodes (11): main(), Exception, Raised when effective container state violates an invariant., require(), require_bind_address(), require_bytes(), require_cpus(), require_int() (+3 more)
 
-### Community 31 - "databaseSchema"
-Cohesion: 0.22
-Nodes (9): databaseSchema, average(), calculateSyncHealth(), completedDurations(), ProjectSyncHealth, ProjectSyncHealthRepository, SyncHealthRun, SyncHealthSource (+1 more)
+### Community 31 - "sync-health.ts"
+Cohesion: 0.23
+Nodes (8): average(), calculateSyncHealth(), completedDurations(), ProjectSyncHealth, ProjectSyncHealthRepository, SyncHealthRun, SyncHealthSource, SystemSyncHealth
 
 ### Community 32 - "openspec-explore/SKILL.md"
 Cohesion: 0.18
@@ -317,9 +319,9 @@ Nodes (6): safeDeclared, safeEffective, verifierArgs(), verify(), workspace, wor
 Cohesion: 0.25
 Nodes (3): deploy, harnessDirectories, root
 
-### Community 45 - "sync-service.ts"
-Cohesion: 0.25
-Nodes (4): OpenSpecImportResult, OpenSpecRepository, OpenSpecSnapshotReader, OpenSpecSyncService
+### Community 45 - "contract.ts"
+Cohesion: 0.07
+Nodes (25): availability, capabilityState, dashboardBaseline, dashboardBaselineSchema, orchestratorBaseline, orchestratorBaselineSchema, taskStatus, OrchestratorCapabilityState (+17 more)
 
 ### Community 47 - "PostgreSQL operations"
 Cohesion: 0.33
@@ -366,8 +368,8 @@ Cohesion: 0.67
 Nodes (3): _compose_safe(), compose_safe_no_secret(), compose-safe.sh script
 
 ### Community 59 - "dashboard.ts"
-Cohesion: 0.17
-Nodes (12): createDashboardService(), DashboardDependencies, summarize(), defaultRunner(), execFileAsync, readGitEvidence(), Runner, deriveProjectStatus() (+4 more)
+Cohesion: 0.15
+Nodes (16): dynamic, Home(), DashboardConfig, defaultBoardSlug(), envSchema, readDashboardConfig(), createDashboardService(), createDefaultDashboardService() (+8 more)
 
 ### Community 72 - "kanban.ts"
 Cohesion: 0.29
@@ -429,37 +431,49 @@ Nodes (4): 1. Objectives and inventory, 2. Protected backup, 3. Restore rehearsa
 Cohesion: 0.39
 Nodes (6): assertSchemaReady(), checkSchemaReadiness(), evaluateSchemaReadiness(), REQUIRED_SCHEMA_MIGRATIONS, SchemaReadiness, integration
 
+### Community 104 - "JobQueueRepository"
+Cohesion: 0.28
+Nodes (3): ClaimedJob, JobQueueRepository, integration
+
 ### Community 105 - "worktree-cleanup.ts"
 Cohesion: 0.38
 Nodes (4): isWithin(), planWorktreeCleanup(), created, WorktreeCleanupPlan
 
 ### Community 106 - "repository-postgres.integration.test.ts"
-Cohesion: 0.18
-Nodes (15): documents, externalBindings, projectSources, specChanges, specRequirements, specScenarios, specTasks, syncRuns (+7 more)
+Cohesion: 0.22
+Nodes (14): documents, externalBindings, projectSources, specChanges, specRequirements, specScenarios, specTasks, syncRuns (+6 more)
 
-### Community 108 - "mutation-policy.ts"
-Cohesion: 0.53
-Nodes (3): assertOpenSpecMutationAllowed(), OPEN_SPEC_MUTATION_POLICY, OpenSpecMutationDisabledError
+### Community 108 - "workspace.ts"
+Cohesion: 0.38
+Nodes (7): decodeProjectId(), discoverProjects(), encodeProjectName(), isWithin(), MARKERS, resolveProjectPath(), created
+
+### Community 109 - "ledger.ts"
+Cohesion: 0.11
+Nodes (24): adaptPilotCost(), aggregateCosts(), assertInteger(), authorizePaidRoute(), BudgetAlert, BudgetEvidence, canonicalUsage(), COST_CLASSES (+16 more)
+
+### Community 111 - "databaseSchema"
+Cohesion: 0.31
+Nodes (3): databaseSchema, OpenSpecReadRepository, ProjectCatalogRepository
 
 ## Knowledge Gaps
-- **540 isolated node(s):** `config`, `nextConfig`, `name`, `version`, `private` (+535 more)
+- **559 isolated node(s):** `config`, `nextConfig`, `name`, `version`, `private` (+554 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createDatabaseConnection()` connect `connection.ts` to `schema.ts`, `readiness.ts`, `repository-postgres.integration.test.ts`, `createDefaultDashboardService`, `dashboard.ts`?**
+- **Why does `createDatabaseConnection()` connect `connection.ts` to `readiness.ts`, `JobQueueRepository`, `schema.ts`, `repository-postgres.integration.test.ts`, `[id]/page.tsx`, `dashboard.ts`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `databaseSchema` connect `databaseSchema` to `schema.ts`, `background-sync.ts`, `repository-postgres.integration.test.ts`, `catalog-repository.ts`, `sync-service.ts`, `connection.ts`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `createDefaultDashboardService()` connect `createDefaultDashboardService` to `chat/route.ts`, `openspec.ts`, `kanban.ts`, `connection.ts`, `dashboard.ts`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
+- **Why does `createDefaultDashboardService()` connect `dashboard.ts` to `chat/route.ts`, `openspec.ts`, `kanban.ts`, `workspace.ts`, `catalog-repository.ts`, `[id]/page.tsx`, `connection.ts`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `databaseSchema` connect `databaseSchema` to `snapshot.ts`, `schema.ts`, `background-sync.ts`, `repository-postgres.integration.test.ts`, `catalog-repository.ts`, `connection.ts`, `sync-health.ts`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `createDefaultDashboardService()` (e.g. with `readGitEvidence()` and `readHermesEvidence()`) actually correct?**
   _`createDefaultDashboardService()` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `config`, `nextConfig`, `name` to the rest of the system?**
-  _540 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _559 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `types.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.13405797101449277 - nodes in this community are weakly interconnected._
 - **Should `domain.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05974025974025974 - nodes in this community are weakly interconnected._
-- **Should `snapshot.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06471631205673758 - nodes in this community are weakly interconnected._
