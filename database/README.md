@@ -8,9 +8,7 @@ database definition:
 
 ```bash
 docker compose --env-file .env.local -f compose.database.yaml up -d
-psql "$SPOCK_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/0001_control_plane_foundation.sql
-psql "$SPOCK_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/0002_openspec_governance.sql
-psql "$SPOCK_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/migrations/0003_openspec_observed_references.sql
+npm run db:migrate
 ```
 
 The migration intentionally creates application objects, not cluster roles or databases. An
@@ -19,3 +17,4 @@ The first migration contains portfolio, source, sync, job, outbox and append-onl
 later migrations add OpenSpec, team, runs, usage, prices and evidence as their vertical slices land.
 
 Do not run Spock migrations against `agent_orchestrator`, `honcho` or any other application database.
+See `docs/postgresql-operations.md` for readiness, backup/restore and incident procedures.

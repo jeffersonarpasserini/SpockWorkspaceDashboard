@@ -5,7 +5,9 @@ const envSchema = z.object({
   HERMES_BIN: z.string().min(1).default("hermes"),
   HERMES_BOARD_MAP: z.string().default("{}"),
   HERMES_API_URL: z.string().default(""),
-  HERMES_API_KEY: z.string().default("")
+  HERMES_API_KEY: z.string().default(""),
+  SPOCK_PROJECT_CATALOG_MODE: z.enum(["legacy", "persisted"]).default("legacy"),
+  SPOCK_WORKSPACE_SLUG: z.string().regex(/^[a-z0-9][a-z0-9-]*$/).default("local-workspace")
 });
 
 export interface DashboardConfig {
@@ -14,9 +16,11 @@ export interface DashboardConfig {
   boardMap: Record<string, string>;
   hermesApiUrl: string;
   hermesApiKey: string;
+  projectCatalogMode: "legacy" | "persisted";
+  workspaceSlug: string;
 }
 
-export function readDashboardConfig(env: NodeJS.ProcessEnv = process.env): DashboardConfig {
+export function readDashboardConfig(env: Record<string, string | undefined> = process.env): DashboardConfig {
   const parsed = envSchema.parse(env);
   let boardMap: Record<string, string> = {};
   try {
@@ -32,7 +36,9 @@ export function readDashboardConfig(env: NodeJS.ProcessEnv = process.env): Dashb
     hermesBin: parsed.HERMES_BIN,
     boardMap,
     hermesApiUrl: parsed.HERMES_API_URL,
-    hermesApiKey: parsed.HERMES_API_KEY
+    hermesApiKey: parsed.HERMES_API_KEY,
+    projectCatalogMode: parsed.SPOCK_PROJECT_CATALOG_MODE,
+    workspaceSlug: parsed.SPOCK_WORKSPACE_SLUG
   };
 }
 

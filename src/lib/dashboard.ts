@@ -5,6 +5,9 @@ import { readOpenSpecEvidence } from "./openspec";
 import { deriveProjectStatus } from "./status";
 import { discoverProjects, resolveProjectPath } from "./workspace";
 import type { GitEvidence, HermesEvidence, OpenSpecEvidence, ProjectDetail, ProjectIdentity, ProjectSummary } from "./types";
+import { createDatabaseConnection } from "@/modules/database/connection";
+import { ProjectCatalogRepository } from "@/modules/projects/catalog-repository";
+import { createPersistedProjectDiscovery } from "@/modules/projects/persisted-discovery";
 
 interface DashboardDependencies {
   workspaceRoot: string;
@@ -75,11 +78,21 @@ export function createDashboardService(deps: DashboardDependencies) {
 
 export function createDefaultDashboardService() {
   const config = readDashboardConfig();
+  const discover = config.projectCatalogMode === "persisted"
+    ? async (root: string) => {
+      const connection = createDatabaseConnection();
+      try {
+        return await createPersistedProjectDiscovery(new ProjectCatalogRepository(connection.db), config.workspaceSlug)(root);
+      } finally {
+        await connection.close();
+      }
+    }
+    : discoverProjects;
   return createDashboardService({
     workspaceRoot: config.workspaceRoot,
     boardMap: config.boardMap,
     hermesBin: config.hermesBin,
-    discover: discoverProjects,
+    discover,
     resolve: resolveProjectPath,
     readGit: readGitEvidence,
     readOpenSpec: readOpenSpecEvidence,

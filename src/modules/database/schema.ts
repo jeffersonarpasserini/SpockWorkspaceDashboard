@@ -103,6 +103,112 @@ export const syncRuns = spockSchema.table("sync_runs", {
   check("sync_runs_dates_ordered", sql`${table.finishedAt} IS NULL OR ${table.finishedAt} >= ${table.startedAt}`)
 ]);
 
+export const retentionPolicies = spockSchema.table("retention_policies", {
+  ledger: text("ledger").primaryKey(),
+  retentionDays: integer("retention_days").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  check("retention_policies_ledger_valid", sql`${table.ledger} IN ('domain_events', 'audit_events', 'outbox_events')`),
+  check("retention_policies_days_minimum", sql`${table.retentionDays} >= 30`)
+]);
+
+export const retentionPolicyVersions = spockSchema.table("retention_policy_versions", {
+  id: uuid("id").primaryKey(),
+  dataClass: text("data_class").notNull(),
+  policyRevision: integer("policy_revision").notNull(),
+  authority: text("authority").notNull(),
+  classification: text("classification").notNull(),
+  retentionClock: text("retention_clock").notNull(),
+  activeDays: integer("active_days").notNull(),
+  tombstoneDays: integer("tombstone_days").notNull(),
+  purgeWithinDays: integer("purge_within_days").notNull(),
+  confirmationMode: text("confirmation_mode").notNull(),
+  derivedCopies: jsonb("derived_copies").notNull().default([]),
+  effectiveAt: timestamp("effective_at", { withTimezone: true }).notNull(),
+  retiredAt: timestamp("retired_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  unique("retention_policy_versions_revision_unique").on(table.dataClass, table.policyRevision),
+  check("retention_policy_versions_revision_positive", sql`${table.policyRevision} > 0`),
+  check("retention_policy_versions_active_days", sql`${table.activeDays} >= 0`),
+  check("retention_policy_versions_tombstone_days", sql`${table.tombstoneDays} >= 0`),
+  check("retention_policy_versions_purge_days", sql`${table.purgeWithinDays} > 0`),
+  check("retention_policy_versions_derived_array", sql`jsonb_typeof(${table.derivedCopies}) = 'array'`),
+  check("retention_policy_versions_dates", sql`${table.retiredAt} IS NULL OR ${table.retiredAt} > ${table.effectiveAt}`)
+]);
+
+export const retentionHolds = spockSchema.table("retention_holds", {
+  id: uuid("id").primaryKey(),
+  workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id),
+  dataClass: text("data_class").notNull(),
+  targetId: text("target_id").notNull(),
+  authorizedBy: text("authorized_by").notNull(),
+  reasonCode: text("reason_code").notNull(),
+  startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  releasedAt: timestamp("released_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  index("retention_holds_active_idx").on(table.workspaceId, table.dataClass, table.targetId, table.expiresAt).where(sql`${table.releasedAt} IS NULL`),
+  check("retention_holds_dates", sql`${table.expiresAt} > ${table.startsAt}`),
+  check("retention_holds_release_date", sql`${table.releasedAt} IS NULL OR ${table.releasedAt} >= ${table.startsAt}`)
+]);
+
+export const retentionTombstones = spockSchema.table("retention_tombstones", {
+  id: uuid("id").primaryKey(),
+  workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id),
+  dataClass: text("data_class").notNull(),
+  targetIdHash: text("target_id_hash").notNull(),
+  policyRevision: integer("policy_revision").notNull(),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }).notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  unique("retention_tombstones_target_unique").on(table.workspaceId, table.dataClass, table.targetIdHash),
+  check("retention_tombstones_hash", sql`${table.targetIdHash} ~ '^[0-9a-f]{64}$'`),
+  check("retention_tombstones_revision", sql`${table.policyRevision} > 0`),
+  check("retention_tombstones_dates", sql`${table.expiresAt} >= ${table.deletedAt}`)
+]);
+
+export const retentionPlans = spockSchema.table("retention_plans", {
+  id: uuid("id").primaryKey(),
+  workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id),
+  idempotencyKey: text("idempotency_key").notNull(),
+  policyRevisionSetHash: text("policy_revision_set_hash").notNull(),
+  dryRun: integer("dry_run").notNull().default(1),
+  status: text("status").notNull().default("planned"),
+  plannedAt: timestamp("planned_at", { withTimezone: true }).notNull(),
+  completedAt: timestamp("completed_at", { withTimezone: true }),
+  sanitizedErrorClass: text("sanitized_error_class"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  unique("retention_plans_idempotency_unique").on(table.workspaceId, table.idempotencyKey),
+  check("retention_plans_hash", sql`${table.policyRevisionSetHash} ~ '^[0-9a-f]{64}$'`),
+  check("retention_plans_dry_run", sql`${table.dryRun} IN (0, 1)`),
+  check("retention_plans_dates", sql`${table.completedAt} IS NULL OR ${table.completedAt} >= ${table.plannedAt}`)
+]);
+
+export const retentionPlanItems = spockSchema.table("retention_plan_items", {
+  id: uuid("id").primaryKey(),
+  planId: uuid("plan_id").notNull().references(() => retentionPlans.id),
+  dataClass: text("data_class").notNull(),
+  targetIdHash: text("target_id_hash").notNull(),
+  decision: text("decision").notNull(),
+  confirmationState: text("confirmation_state").notNull().default("pending"),
+  claimedBy: text("claimed_by"),
+  claimedUntil: timestamp("claimed_until", { withTimezone: true }),
+  attempts: integer("attempts").notNull().default(0),
+  sanitizedErrorClass: text("sanitized_error_class"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  unique("retention_plan_items_target_unique").on(table.planId, table.dataClass, table.targetIdHash),
+  index("retention_plan_items_claim_idx").on(table.planId, table.confirmationState, table.claimedUntil, table.createdAt),
+  check("retention_plan_items_hash", sql`${table.targetIdHash} ~ '^[0-9a-f]{64}$'`),
+  check("retention_plan_items_attempts", sql`${table.attempts} >= 0`),
+  check("retention_plan_items_claim", sql`(${table.claimedBy} IS NULL) = (${table.claimedUntil} IS NULL)`)
+]);
+
 export const specChanges = spockSchema.table("spec_changes", {
   id: uuid("id").primaryKey(),
   projectId: uuid("project_id").notNull().references(() => projects.id),
@@ -206,6 +312,92 @@ export const externalBindings = spockSchema.table("external_bindings", {
   check("external_bindings_provenance_valid", sql`${table.provenance} IN ('hierarchical_ref', 'repository_binding', 'human_confirmed')`)
 ]);
 
+export const agents = spockSchema.table("agents", {
+  id: uuid("id").primaryKey(),
+  workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id),
+  agentKey: text("agent_key").notNull(),
+  displayName: text("display_name").notNull(),
+  status: text("status").notNull().default("active"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  version: bigint("version", { mode: "number" }).notNull().default(1)
+}, (table) => [
+  unique("agents_workspace_key_unique").on(table.workspaceId, table.agentKey),
+  check("agents_key_format", sql`${table.agentKey} ~ '^[a-z0-9][a-z0-9-]*$'`),
+  check("agents_display_name_not_blank", sql`length(btrim(${table.displayName})) > 0`),
+  check("agents_status_valid", sql`${table.status} IN ('active', 'disabled', 'retired')`),
+  check("agents_version_positive", sql`${table.version} > 0`)
+]);
+
+export const agentProfileVersions = spockSchema.table("agent_profile_versions", {
+  id: uuid("id").primaryKey(),
+  agentId: uuid("agent_id").notNull().references(() => agents.id),
+  profileVersion: integer("profile_version").notNull(),
+  externalProfile: text("external_profile").notNull(),
+  provider: text("provider").notNull(),
+  model: text("model").notNull(),
+  billingMode: text("billing_mode").notNull(),
+  configurationHash: text("configuration_hash").notNull(),
+  capabilities: jsonb("capabilities").notNull().default([]),
+  observedAt: timestamp("observed_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  unique("agent_profile_versions_number_unique").on(table.agentId, table.profileVersion),
+  unique("agent_profile_versions_hash_unique").on(table.agentId, table.configurationHash),
+  check("agent_profile_versions_number_positive", sql`${table.profileVersion} > 0`),
+  check("agent_profile_versions_profile_not_blank", sql`length(btrim(${table.externalProfile})) > 0`),
+  check("agent_profile_versions_provider_not_blank", sql`length(btrim(${table.provider})) > 0`),
+  check("agent_profile_versions_model_not_blank", sql`length(btrim(${table.model})) > 0`),
+  check("agent_profile_versions_hash_format", sql`${table.configurationHash} ~ '^[0-9a-f]{64}$'`),
+  check("agent_profile_versions_capabilities_array", sql`jsonb_typeof(${table.capabilities}) = 'array'`)
+]);
+
+export const teamRoles = spockSchema.table("team_roles", {
+  id: uuid("id").primaryKey(),
+  workspaceId: uuid("workspace_id").notNull().references(() => workspaces.id),
+  roleKey: text("role_key").notNull(),
+  name: text("name").notNull(),
+  responsibility: text("responsibility").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  version: bigint("version", { mode: "number" }).notNull().default(1)
+}, (table) => [
+  unique("team_roles_workspace_key_unique").on(table.workspaceId, table.roleKey),
+  check("team_roles_key_format", sql`${table.roleKey} ~ '^[a-z0-9][a-z0-9-]*$'`),
+  check("team_roles_name_not_blank", sql`length(btrim(${table.name})) > 0`),
+  check("team_roles_responsibility_not_blank", sql`length(btrim(${table.responsibility})) > 0`),
+  check("team_roles_version_positive", sql`${table.version} > 0`)
+]);
+
+export const agentProjectScopes = spockSchema.table("agent_project_scopes", {
+  id: uuid("id").primaryKey(),
+  agentId: uuid("agent_id").notNull().references(() => agents.id),
+  projectId: uuid("project_id").notNull().references(() => projects.id),
+  policy: text("policy").notNull().default("allow"),
+  capabilities: jsonb("capabilities").notNull().default([]),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  version: bigint("version", { mode: "number" }).notNull().default(1)
+}, (table) => [
+  unique("agent_project_scopes_unique").on(table.agentId, table.projectId),
+  check("agent_project_scopes_policy_valid", sql`${table.policy} IN ('allow', 'deny')`),
+  check("agent_project_scopes_capabilities_array", sql`jsonb_typeof(${table.capabilities}) = 'array'`),
+  check("agent_project_scopes_version_positive", sql`${table.version} > 0`)
+]);
+
+export const teamRoleAssignments = spockSchema.table("team_role_assignments", {
+  id: uuid("id").primaryKey(),
+  roleId: uuid("role_id").notNull().references(() => teamRoles.id),
+  agentId: uuid("agent_id").notNull().references(() => agents.id),
+  projectId: uuid("project_id").references(() => projects.id),
+  startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
+  endsAt: timestamp("ends_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+}, (table) => [
+  index("team_role_assignments_active_idx").on(table.roleId, table.projectId, table.startsAt),
+  check("team_role_assignments_dates_ordered", sql`${table.endsAt} IS NULL OR ${table.endsAt} >= ${table.startsAt}`)
+]);
+
 export const domainEvents = spockSchema.table("domain_events", {
   sequence: bigserial("sequence", { mode: "number" }).primaryKey(),
   eventId: uuid("event_id").notNull().unique(),
@@ -280,11 +472,22 @@ export const databaseSchema = {
   projectSources,
   documents,
   syncRuns,
+  retentionPolicies,
+  retentionPolicyVersions,
+  retentionHolds,
+  retentionTombstones,
+  retentionPlans,
+  retentionPlanItems,
   specChanges,
   specRequirements,
   specScenarios,
   specTasks,
   externalBindings,
+  agents,
+  agentProfileVersions,
+  teamRoles,
+  agentProjectScopes,
+  teamRoleAssignments,
   domainEvents,
   jobs,
   outboxEvents,

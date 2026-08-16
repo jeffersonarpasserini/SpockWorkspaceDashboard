@@ -88,4 +88,4 @@ O último comando fica em primeiro plano, prepara os assets standalone pelo scri
 
 ## Graphify
 
-A consulta Graphify deste repositório segue pendente porque `graphify-out/graph.json` não existe. Nenhum resultado foi presumido.
+Graphify foi atualizado e consultado nesta raiz. O resultado confirma que liveness Docker, reachability Tailscale, autorização, dispatch e provider access são gates separados. Consulte `docs/graphify-evidence.md` para a evidência datada e suas limitações.
