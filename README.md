@@ -57,6 +57,9 @@ O build usa `output: "standalone"`; por isso a produção executa `.next/standal
 | `PORT` | Porta host-facing dos servidores Node local (desenvolvimento e standalone) | `3011` |
 | `DASHBOARD_BIND_ADDRESS` | Host IP publicado pelo Compose; somente `127.0.0.1` ou IPv4 Tailscale canônico pertencente ao host | `127.0.0.1` |
 | `DASHBOARD_PORT` | Porta publicada pelo Compose; o contêiner continua em `3000` | `3011` |
+| `SPOCK_DATABASE_URL` | PostgreSQL dedicado ao control plane; obrigatório para leituras persistidas | none |
+| `SPOCK_PROJECT_CATALOG_MODE` | Fonte do catálogo: `legacy` ou `persisted` | `legacy` |
+| `SPOCK_WORKSPACE_SLUG` | Workspace persistido selecionado quando o catálogo está em modo `persisted` | `local-workspace` |
 
 Example board mapping:
 
@@ -65,6 +68,10 @@ HERMES_BOARD_MAP={"QualitasSystem":"qualitas-system","SpockWorkspaceDashboard":"
 ```
 
 When a project has no explicit mapping, its lower-case hyphenated name is used as the board slug.
+
+Keep `SPOCK_PROJECT_CATALOG_MODE=legacy` until shadow synchronization reports parity. Enabling
+`persisted` changes only project discovery; Git, OpenSpec and Hermes evidence continue through their
+bounded adapters. OpenSpec document mutation remains unconditionally disabled.
 
 ## Hermes Kanban
 
@@ -139,4 +146,4 @@ npx -y @fission-ai/openspec@1.8.0 validate add-versioned-deployment-export --str
 npx -y @fission-ai/openspec@1.8.0 validate add-tailscale-dashboard-access --strict
 ```
 
-A consulta Graphify da nova raiz continua pendente porque `graphify-out/graph.json` não existe; nenhum resultado foi presumido.
+A consulta Graphify da raiz foi executada e cruzou Docker, Tailscale, control plane, retenção, recovery e Hermes. A evidência datada e as limitações estão em `docs/graphify-evidence.md`.

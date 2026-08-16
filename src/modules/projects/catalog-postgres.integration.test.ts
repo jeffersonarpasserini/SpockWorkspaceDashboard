@@ -41,7 +41,7 @@ integration("PostgreSQL project catalog", () => {
     expect(first).toHaveLength(1);
     expect(second).toHaveLength(1);
     expect(second[0].id).toBe(first[0].id);
-    expect(second[0]).toMatchObject({ name: "Alpha", slug: "alpha", sourceStatus: "available" });
+    expect(second[0]).toMatchObject({ externalId: "local-alpha", name: "Alpha", slug: "alpha", markers: [".git"], sourceStatus: "available" });
   });
 
   it.runIf(Boolean(process.env.SPOCK_TEST_WORKSPACE_ROOT))("matches the real discovered workspace in shadow mode", async () => {

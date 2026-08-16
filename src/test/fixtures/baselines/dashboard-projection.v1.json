@@ -1,0 +1,44 @@
+{
+  "fixtureVersion": "dashboard-projection-v1",
+  "capturedAt": "2026-08-15T00:00:00.000Z",
+  "projection": {
+    "id": "U3BvY2tXb3Jrc3BhY2VEYXNoYm9hcmQ",
+    "name": "SpockWorkspaceDashboard",
+    "markers": [".git", "openspec"],
+    "git": {
+      "availability": "available",
+      "branch": "agent/persisted-catalog-rollout",
+      "dirty": true,
+      "commit": "03f47bb"
+    },
+    "openspec": {
+      "availability": "available",
+      "checked": 24,
+      "unchecked": 63,
+      "changes": 4
+    },
+    "hermes": {
+      "availability": "not_configured",
+      "board": "spockworkspacedashboard",
+      "running": 0,
+      "blocked": 0,
+      "message": "No board mapping was captured in this baseline"
+    },
+    "status": "in_progress",
+    "observedAt": "2026-08-15T00:00:00.000Z",
+    "tasks": [
+      {
+        "id": "openspec:establish-project-control-plane:1.3",
+        "title": "Record current dashboard and orchestrator baselines",
+        "status": "todo",
+        "source": "openspec",
+        "change": "establish-project-control-plane",
+        "section": "Domain contract and baselines"
+      }
+    ]
+  },
+  "limitations": [
+    "This fixture captures a projection, not historical project state.",
+    "The dirty flag and task counters are observations and must not be imported as durable history."
+  ]
+}

@@ -2,7 +2,7 @@
 
 Veja `proposal.md` para a motivação. A aplicação Next.js 16.3 exige Node >=20.19, não possui `next.config`, Dockerfile ou Compose, e usa filesystem local e Git como evidência. Hermes Kanban depende de CLI opcional; chat depende de URL/chave server-side opcional. O runtime temporário de desenvolvimento não é um deployment e não será alterado.
 
-`graphify-out/graph.json` não existe neste root. A consulta Graphify permanece pendente e não há dados de grafo disponíveis para orientar ou validar este design.
+Graphify foi atualizado e consultado nesta raiz em 2026-08-15. O cruzamento confirmou os limites entre Docker, Tailscale, control plane, retenção, recovery e Hermes; a evidência e as limitações estão em `docs/graphify-evidence.md`.
 
 ## Goals / Non-Goals
 
@@ -108,4 +108,4 @@ Rollback: executar, como processos filhos e sem source ou mutação de opções 
 
 ## Open Questions
 
-- A consulta Graphify deverá ser refeita quando `graphify-out/graph.json` existir para este root; até lá, a tarefa permanece pendente e nenhum resultado é inventado.
+- Reexecutar a consulta Graphify quando mudanças posteriores alterarem a topologia; manter a evidência datada em `docs/graphify-evidence.md`.

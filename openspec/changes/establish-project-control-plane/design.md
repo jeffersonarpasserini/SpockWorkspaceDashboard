@@ -71,6 +71,75 @@ This hold does not block PostgreSQL foundations, project/catalog work, OpenSpec 
 stable task identity, team modeling, offline run schemas, usage/cost accounting, evidence, analytics,
 authentication or UI development.
 
+## Monorepo and portable deployment
+
+Create a new repository root that contains the Dashboard and `agent-architecture` as independently
+buildable workspaces. The target topology is `apps/dashboard`, `services/agent-architecture`,
+`packages/contracts`, `infra/deploy` and `scripts/operations`. Existing Git history should be retained
+when the source trees are imported. A lockfile, pinned toolchain versions and one root verification
+command make a checkout reproducible, while service-specific tests, images, environment schemas and
+migrations remain independently runnable.
+
+Source co-location does not merge runtime trust. Dashboard, worker and Agent Architecture keep
+separate processes, container images, PostgreSQL databases/users, migration locks, health checks and
+secret scopes. Shared code is limited to versioned wire contracts and generated types that have no
+runtime access to either service's private persistence. The integration hold remains in effect after
+the repository move.
+
+Deployment is described by an immutable release manifest containing source revision, image digests,
+schema versions, required configuration keys, supported backup format and compatibility range. A
+single operator entrypoint may deploy the complete topology locally or to a VPS, but it must expose a
+plan/verify phase, require explicit authority for mutations, use externally supplied secret references
+and retain the previous release for rollback. Builds happen once; a target server pulls verified
+artifacts rather than rebuilding mutable source during production deployment.
+
+The deployment inventory must treat Hermes as a runtime dependency graph, not as a single assumed
+container. The currently inspected baseline shows Hermes installed on Linux with per-profile gateway
+processes and auxiliary containers; the adjacent orchestrator calls the `hermes` CLI, reads profile
+state from SQLite files, connects to its own PostgreSQL database and documents Honcho API,
+PostgreSQL/pgvector and Redis as related services. This observation is provisional. Before composing
+the VPS topology, the inventory must correlate active containers, Compose projects, host services,
+gateway processes, profiles, ports, networks, volumes, health probes and restart policies and classify
+each as required, optional or externally managed.
+
+The deploy plan derives a dependency DAG and ordered health gates from that inventory. Database and
+memory dependencies become ready before Honcho/Hermes consumers; required Hermes gateways become
+ready before Agent Architecture; Spock remains usable in its documented degraded mode when live agent
+execution is disabled. Docker orchestration must not mount the Docker socket into application
+containers or expose PostgreSQL, Redis, Honcho or internal APIs publicly. Host-installed Hermes may
+remain external to Compose until an independently tested container contract proves equivalent profile,
+CLI, filesystem, authentication, scheduler and gateway behavior.
+
+## Workspace export, restore and VPS migration
+
+A workspace export is a versioned manifest plus checksummed components. It includes logical dumps for
+each owned PostgreSQL database, durable Dashboard workspace records, Agent Architecture durable state
+when that service contract supports export, registered Git/OpenSpec sources at exact revisions,
+non-secret deployment configuration, artifact/image references, schema versions and an inventory of
+required secret references. Filesystem sources may be embedded only through an explicit bounded option;
+otherwise the manifest records their authoritative remote and revision and restore fails if they cannot
+be resolved.
+
+The default bundle excludes plaintext credentials, provider tokens, private prompts, ephemeral run
+worktrees, caches, logs and raw telemetry. Secret values use a separate operator-authorized encrypted
+transfer or are reprovisioned on the VPS; a reference inventory makes omissions visible without leaking
+values. Every export is created in a private staging directory, validated for completeness, checksummed
+and only then published atomically.
+
+Hermes migration includes a sanitized profile/gateway manifest and a consistent export of required
+durable state. Live SQLite database, WAL and shared-memory files must never be copied independently;
+the export uses a supported online backup/checkpoint or a bounded quiesce procedure. Provider login
+material remains outside the default bundle and is either transferred separately under encryption or
+re-established and smoke-tested on the destination.
+
+Restore always targets fresh databases and directories first. It verifies format compatibility,
+checksums, release artifacts, migrations, row counts, source revisions, ownership and secret-reference
+availability before readiness can pass. A migration rehearsal runs without changing production DNS or
+the local server. Cutover requires an explicit maintenance/final-sync boundary to prevent split-brain
+writes, followed by health, readiness and smoke evidence. Rollback reactivates the prior server and
+release only when its write authority is unambiguous; exports are never treated as proof until a restore
+rehearsal succeeds.
+
 ## Team catalog and routing
 
 Agents are durable Spock records linked to external Hermes profile bindings and immutable profile

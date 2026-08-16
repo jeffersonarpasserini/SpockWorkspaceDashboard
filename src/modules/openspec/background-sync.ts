@@ -4,6 +4,7 @@ import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { databaseSchema, projectSources, syncRuns } from "@/modules/database/schema";
 import { listActiveOpenSpecChanges, type ActiveChangeCatalog } from "./change-catalog";
 import type { OpenSpecSyncService } from "./sync-service";
+import { OPEN_SPEC_MUTATION_POLICY } from "./mutation-policy";
 
 export interface OpenSpecSourceRegistration {
   ensure(projectId: string, externalProjectId: string, observedAt: Date): Promise<string>;
@@ -27,7 +28,7 @@ export class PostgresOpenSpecSourceRegistration implements OpenSpecSourceRegistr
       externalId: externalProjectId,
       syncStatus: "pending",
       lastAttemptedSyncAt: observedAt,
-      configuration: { mode: "read_only", mutations: false }
+      configuration: { mode: OPEN_SPEC_MUTATION_POLICY.mode, mutations: OPEN_SPEC_MUTATION_POLICY.enabled }
     });
     return id;
   }

@@ -21,4 +21,4 @@
 - [x] 4.2 Obter revisão Docker/DevOps, segurança e documentação; O’Brien, Tuvok e Uhura aprovaram commit/push e Spock revisou o diff integral. A aprovação de deployment permanece separada e pendente nos gates 4.3–4.4.
 - [ ] 4.3 No `bumblebee`, recriar com `DASHBOARD_BIND_ADDRESS=100.95.240.74`, executar `verify`/`status` e confirmar HTTP 200 local pelo IP Tailscale.
 - [ ] 4.4 Confirmar as ACLs/tags aplicáveis, acesso HTTP a partir de peer Tailscale autorizado e ausência de publicação no IPv4 LAN `192.168.10.74`; não inferir autorização apenas do teste local.
-- [ ] 4.5 Graphify permanece pendente até existir `graphify-out/graph.json`; não inventar resultados.
+- [x] 4.5 Atualizar Graphify e cruzar Tailscale, Docker, autorização e gates operacionais; registrar evidência e limitações em `docs/graphify-evidence.md`.

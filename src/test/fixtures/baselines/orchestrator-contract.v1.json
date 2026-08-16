@@ -1,0 +1,33 @@
+{
+  "fixtureVersion": "orchestrator-contract-v1",
+  "capturedAt": "2026-08-15T00:00:00.000Z",
+  "provisional": true,
+  "integrationHold": true,
+  "api": {
+    "contractVersion": "fixture-v1",
+    "transport": "fixture-only",
+    "liveEndpoint": null,
+    "operations": ["capabilities", "submit"]
+  },
+  "schema": {
+    "runtime": "Python 3.12 FastAPI/LangGraph",
+    "persistence": "pilot aggregates and reserve grants/costs",
+    "generalRunEventModel": false,
+    "postgresCheckpointer": false
+  },
+  "capabilities": [
+    { "name": "hermes-agent-graph", "state": "implemented", "contractVersion": "fixture-v1" },
+    { "name": "deepseek-technical-reserve", "state": "implemented", "contractVersion": "fixture-v1" },
+    { "name": "model-free-smoke-graph", "state": "implemented", "contractVersion": "fixture-v1" },
+    { "name": "hermes-correlation-session-usage", "state": "implemented", "contractVersion": "fixture-v1" },
+    { "name": "feature-team-graph", "state": "planned", "contractVersion": "fixture-v1" },
+    { "name": "bug-team-graph", "state": "planned", "contractVersion": "fixture-v1" },
+    { "name": "infrastructure-team-graph", "state": "planned", "contractVersion": "fixture-v1" },
+    { "name": "postgres-checkpointing", "state": "unavailable", "contractVersion": "fixture-v1" }
+  ],
+  "pilotObservation": {
+    "taskCount": 20,
+    "firstAttemptSuccessRate": 0.9,
+    "simulatedAndBilledCostsSeparated": true
+  }
+}

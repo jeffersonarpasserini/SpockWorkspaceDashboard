@@ -1,19 +1,19 @@
 ## 1. Domain contract and baselines
 
-- [ ] 1.1 RED: add executable tests for project, spec, task, assignment, workflow, run, evidence and cost invariants.
+- [x] 1.1 RED: add executable tests for project, spec, task, assignment, workflow, run, evidence and cost invariants.
 - [x] 1.2 Define the lifecycle vocabulary and prohibit collapsing run success, implementation, validation, acceptance and release.
-- [ ] 1.3 Record the current dashboard projection and current Agent Orchestrator API/schema/capability baseline as fixtures.
+- [x] 1.3 Record the current dashboard projection and current Agent Orchestrator API/schema/capability baseline as fixtures.
 - [x] 1.4 Add ADRs for source-of-truth boundaries, stable OpenSpec identity, TypeScript control plane, Python orchestrator integration and separate PostgreSQL databases.
 - [x] 1.5 Validate this change with `openspec validate establish-project-control-plane --strict`.
 
 ## 2. PostgreSQL foundation
 
-- [ ] 2.1 RED: add integration tests proving application, worker and migration roles have only their required privileges.
+- [x] 2.1 RED: add integration tests proving application, worker and migration roles have only their required privileges.
 - [x] 2.2 Add PostgreSQL development/test services, health checks and non-secret environment schema.
 - [x] 2.3 Add Drizzle and forward-only migrations for workspace, project, source, document and sync records.
-- [ ] 2.4 Add append-only domain/audit events, transactional jobs and outbox tables with retention policy.
-- [ ] 2.5 Add migration locking, schema-version readiness and backup/restore rehearsal without accessing the Agent Orchestrator or Honcho databases.
-- [ ] 2.6 Prove concurrent job claims with real PostgreSQL transactions and `SKIP LOCKED` or an equivalent atomic lease.
+- [x] 2.4 Add append-only domain/audit events, transactional jobs and outbox tables with retention policy.
+- [x] 2.5 Add migration locking, schema-version readiness and backup/restore rehearsal without accessing the Agent Orchestrator or Honcho databases.
+- [x] 2.6 Prove concurrent job claims with real PostgreSQL transactions and `SKIP LOCKED` or an equivalent atomic lease.
 
 ## 3. Persisted project catalog — vertical slice
 
@@ -21,8 +21,8 @@
 - [x] 3.2 Implement project, repository and source registration with canonical path containment.
 - [x] 3.3 Implement bounded background sync and persist source freshness, revision and sanitized failures.
 - [x] 3.4 Run old and persisted project summaries in shadow comparison and surface mismatches.
-- [ ] 3.5 Switch overview/detail reads behind a feature flag only after parity fixtures pass.
-- [ ] 3.6 Add project and system health metrics for sync duration, lag and failures.
+- [x] 3.5 Switch overview/detail reads behind a feature flag only after parity fixtures pass.
+- [x] 3.6 Add project and system health metrics for sync duration, lag and failures.
 
 ## 4. OpenSpec governance — vertical slice
 
@@ -32,16 +32,27 @@
 - [x] 4.4 Implement deterministic reconciliation with created, updated, checked, reopened, missing, conflicted and unstable results.
 - [x] 4.5 Preserve last-known-good projections when any bounded, descriptor-anchored source read fails.
 - [x] 4.6 Implement Specs, Requirements, Scenarios, Tasks and Documents views with source revision and traceability.
-- [ ] 4.7 Keep OpenSpec mutation disabled until an atomic revision-checked patch and strict-validation slice is separately approved.
+- [x] 4.7 Keep OpenSpec mutation disabled until an atomic revision-checked patch and strict-validation slice is separately approved.
+
+## 4A. Monorepo, portable deployment and workspace migration
+
+- [ ] 4.8 Inventory Dashboard and `agent-architecture` repositories, histories, build tools, runtime boundaries, databases, configuration and secret inputs; correlate Hermes host processes, profile gateways, auxiliary containers, Compose projects, Honcho, PostgreSQL/pgvector, Redis, networks, ports, volumes, health checks and restart policies before moving files.
+- [ ] 4.9 RED: add contract tests proving a monorepo build cannot collapse service database users, migration authorities, secret scopes or the Agent Orchestrator integration hold.
+- [ ] 4.10 Create the monorepo layout with history-preserving imports, pinned toolchains, one lockfile where compatible, shared contract packages and independent service build/test targets.
+- [ ] 4.11 Add immutable multi-service release manifests and a plan/verify/deploy/rollback entrypoint usable on the local server and a clean VPS without building source on the target; derive and verify the required/optional/external Hermes dependency DAG and ordered startup/readiness gates.
+- [ ] 4.12 RED: test workspace export completeness, checksum failure, incompatible schema/release versions, missing source revisions and exclusion of plaintext secrets/private prompts.
+- [ ] 4.13 Implement versioned workspace export with separate database dumps, Git/OpenSpec revision inventory, non-secret configuration, artifact digests, secret-reference inventory, consistent Hermes state backup and optional bounded source embedding; prohibit independent copying of live SQLite/WAL/SHM files.
+- [ ] 4.14 Implement restore into isolated databases/directories with checksum, migration, ownership, row-count, source-revision, secret-reference, readiness and smoke verification before cutover.
+- [ ] 4.15 Rehearse local-to-fresh-server migration, final-sync/write freeze, explicit cutover and rollback; retain sanitized evidence and document VPS prerequisites, DNS/TLS/Tailscale and recovery steps.
 
 ## 5. Team and agent catalog — vertical slice
 
-- [ ] 5.1 RED: test stable roles independently of mutable profile/model bindings.
-- [ ] 5.2 Add agents, immutable profile versions, team roles, project scopes and assignment intervals.
-- [ ] 5.3 Import the current approved profiles and roles without copying credentials or private prompt content.
-- [ ] 5.4 Register Spock, La Forge, B'Elanna, Barclay, Rutherford, Tuvok, Data and O'Brien as the initial engineering team.
-- [ ] 5.5 Expose specialist profiles only through explicit project/task policies; prohibit implicit `default` fallback.
-- [ ] 5.6 Add agent views for capability, model history, assignments, outcomes, tokens, costs and evidence.
+- [x] 5.1 RED: test stable roles independently of mutable profile/model bindings.
+- [x] 5.2 Add agents, immutable profile versions, team roles, project scopes and assignment intervals.
+- [x] 5.3 Import the current approved profiles and roles without copying credentials or private prompt content.
+- [x] 5.4 Register Spock, La Forge, B'Elanna, Barclay, Rutherford, Tuvok, Data and O'Brien as the initial engineering team.
+- [x] 5.5 Expose specialist profiles only through explicit project/task policies; prohibit implicit `default` fallback.
+- [x] 5.6 Add agent views for capability, current model binding and explicitly unavailable assignments, outcomes, tokens, costs and evidence until observed run integration exists.
 
 ## 6. Agent Orchestrator contract — observation slice
 
@@ -122,9 +133,9 @@
 
 - [ ] 14.1 Rehearse migration from a current-dashboard fixture and verify no history is invented.
 - [ ] 14.2 Add liveness, readiness, worker heartbeat, queue lag, reconciliation and dead-letter metrics.
-- [ ] 14.3 Add PostgreSQL backup/restore, migration and incident runbooks with exact database-role boundaries.
+- [x] 14.3 Add PostgreSQL backup/restore, migration and incident runbooks with exact database-role boundaries.
 - [ ] 14.4 Run unit, component, contract, PostgreSQL integration, concurrency, security, browser and crash-recovery suites.
-- [ ] 14.5 Run typecheck, lint, production build and strict validation on every capability spec in this change.
+- [x] 14.5 Run typecheck, lint, production build and strict validation on every capability spec in this change.
 - [ ] 14.6 Complete a shadow run, one supervised real task and a restart drill before enabling autonomous dispatch.
 - [ ] 14.7 Obtain independent review of domain semantics, accounting, orchestrator capability claims and security boundaries.
 - [ ] 14.8 Archive the old request-time aggregation path only after persisted parity and rollback evidence are approved.

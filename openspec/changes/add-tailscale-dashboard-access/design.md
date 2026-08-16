@@ -2,7 +2,7 @@
 
 O Compose publica hoje apenas em loopback. A aplicação não possui autenticação própria, portanto remover o host IP da sintaxe da porta publicaria em todas as interfaces e ampliaria indevidamente o limite de confiança. O host `bumblebee` possui o IPv4 Tailscale `100.95.240.74`.
 
-Graphify não pôde ser consultado: `/workspace/SpockWorkspaceDashboard/graphify-out/graph.json` está ausente. Este design usa somente evidência do repositório, OpenSpec e execução fornecida pelo operador.
+Graphify foi atualizado e consultado nesta raiz em 2026-08-15. O cruzamento confirmou que reachability Tailscale e liveness Docker não concedem autorização da aplicação nem liberam dispatch; a evidência e suas limitações estão em `docs/graphify-evidence.md`.
 
 ## Goals / Non-Goals
 

@@ -8,8 +8,8 @@ const discovered = [
 ];
 
 const persisted = [
-  { id: "alpha-db", name: "Alpha", slug: "alpha", sourceStatus: "available", lastSuccessfulSyncAt: new Date() },
-  { id: "beta-db", name: "Beta Project", slug: "beta-project", sourceStatus: "available", lastSuccessfulSyncAt: new Date() }
+  { id: "alpha-db", externalId: "alpha-local", name: "Alpha", slug: "alpha", markers: [".git"], sourceStatus: "available", lastSuccessfulSyncAt: new Date() },
+  { id: "beta-db", externalId: "beta-local", name: "Beta Project", slug: "beta-project", markers: ["openspec"], sourceStatus: "available", lastSuccessfulSyncAt: new Date() }
 ];
 
 describe("shadow project catalog", () => {
@@ -20,7 +20,7 @@ describe("shadow project catalog", () => {
   it("reports missing, unexpected and renamed projections deterministically", () => {
     expect(compareCatalog(discovered, [
       { ...persisted[0], name: "ALPHA" },
-      { id: "gamma", name: "Gamma", slug: "gamma", sourceStatus: "available", lastSuccessfulSyncAt: null }
+      { id: "gamma", externalId: "gamma-local", name: "Gamma", slug: "gamma", markers: [], sourceStatus: "available", lastSuccessfulSyncAt: null }
     ])).toEqual([
       { kind: "name_mismatch", slug: "alpha", observedName: "Alpha", persistedName: "ALPHA" },
       { kind: "missing_persisted", slug: "beta-project", observedName: "Beta Project" },

@@ -15,4 +15,4 @@ O dashboard está saudável no homelab, porém sua publicação Docker está res
 - Afeta `compose.yaml`, CLI/verificadores de deployment, testes e documentação operacional.
 - Recriará o contêiner para alterar o port binding, causando uma interrupção curta.
 - Não adiciona autenticação da aplicação, TLS, proxy, exposição direta à LAN/Internet, Homepage ou alteração de ACL Tailscale.
-- Graphify permanece pendente porque `graphify-out/graph.json` não existe neste root.
+- Graphify foi atualizado e o limite entre reachability Tailscale, autorização da aplicação e gates operacionais foi cruzado; a evidência está em `docs/graphify-evidence.md`.

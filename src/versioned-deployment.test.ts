@@ -26,6 +26,11 @@ function manifest(version = "1.2.3", image = `ghcr.io/jeffersonarpasserini/spock
   ].join("\n");
 }
 
+function writeReleaseManifest(contents = manifest()) {
+  writeFileSync(resolve(root, "releases/1.2.3.env"), contents, { mode: 0o600 });
+  chmodSync(resolve(root, "releases/1.2.3.env"), 0o600);
+}
+
 function run(args: string[], env: Record<string, string | undefined> = {}) {
   return spawnSync(deploy, args, {
     cwd: root,
@@ -74,7 +79,7 @@ function fixtureHarness(health = "healthy", bindAddress = "127.0.0.1") {
   for (const [name, target] of Object.entries({
     git: "/usr/bin/git", stat: "/usr/bin/stat", mktemp: "/usr/bin/mktemp",
     mkdir: "/usr/bin/mkdir", chmod: "/usr/bin/chmod", mv: "/usr/bin/mv",
-    rm: "/usr/bin/rm", python3: "/usr/local/bin/python3", timeout: "/usr/bin/timeout",
+    rm: "/usr/bin/rm", python3: "/usr/bin/python3", timeout: "/usr/bin/timeout",
   })) {
     writeFileSync(join(bin, name), `#!/usr/bin/env bash\nstate=EMPTY; [ -z "\${HERMES_API_KEY:-}" ] || state=SET\nalias_state=EMPTY; [ -z "\${RUNTIME_HERMES_API_KEY:-}" ] || alias_state=SET\nprintf 'env=%s ${name} %s alias=%s\\n' "$state" "$*" "$alias_state" >>"$MOCK_LOG"\nexec ${target} "$@"\n`);
     chmodSync(join(bin, name), 0o755);
@@ -144,7 +149,8 @@ describe("versioned deployment export", () => {
     }
 
     const missingCli = fixtureHarness("healthy", address);
-    rmSync(join(missingCli.dir, "bin", "tailscale"));
+    writeFileSync(join(missingCli.dir, "bin", "tailscale"), "#!/bin/sh\nexit 127\n");
+    chmodSync(join(missingCli.dir, "bin", "tailscale"), 0o755);
     const missingResult = run(["validate"], { ...missingCli.env, DASHBOARD_BIND_ADDRESS: address });
     expect(missingResult.status).not.toBe(0);
     expect(missingResult.stderr).toContain("Tailscale ownership");
@@ -154,7 +160,7 @@ describe("versioned deployment export", () => {
   it("accepts only stable numeric SemVer and the exact immutable publisher image", () => {
     const harness = fixtureHarness();
     mkdirSync(resolve(root, "releases"), { recursive: true });
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     expect(run(["validate", "1.2.3"], harness.env).status).toBe(0);
     for (const [name, image] of [
       ["mutable", "ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:1.2.3"],
@@ -162,12 +168,12 @@ describe("versioned deployment export", () => {
       ["foreign publisher", `ghcr.io/example/spock-workspace-dashboard:1.2.3@${digest}`],
       ["mismatch", `ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:9.9.9@${digest}`],
     ]) {
-      writeFileSync(resolve(root, "releases/1.2.3.env"), manifest("1.2.3", image));
+      writeReleaseManifest(manifest("1.2.3", image));
       const result = run(["validate", "1.2.3"], harness.env);
       expect(result.status, name).not.toBe(0);
       expect(result.stderr, name).toMatch(/^deploy: /);
     }
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
 
     for (const invalid of ["1.2.3-alpha", "1.2.3+build", "01.2.3", "1.02.3", "1.2.03", "v1.2.3", "1.2", "1.2.3.4"]) {
       const result = run(["validate", invalid], harness.env);
@@ -184,7 +190,7 @@ describe("versioned deployment export", () => {
     symlinkSync(target, resolve(root, "releases/1.2.3.env"));
     expect(run(["validate", "1.2.3"], harness.env).stderr).toContain("regular non-symlink");
     rmSync(resolve(root, "releases/1.2.3.env"));
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     chmodSync(resolve(root, "releases/1.2.3.env"), 0o666);
     expect(run(["validate", "1.2.3"], harness.env).stderr).toContain("must not be group/world writable");
     const cli = readFileSync(deploy, "utf8");
@@ -195,7 +201,7 @@ describe("versioned deployment export", () => {
   it("verifies authoritative tag/commit and OCI provenance before pulling", () => {
     const harness = fixtureHarness();
     mkdirSync(resolve(root, "releases"), { recursive: true });
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], harness.env);
     expect(result.status, result.stderr).toBe(0);
     const calls = readFileSync(harness.log, "utf8");
@@ -208,7 +214,7 @@ describe("versioned deployment export", () => {
   it("requires gh 2.68 or newer and probes every required attestation capability", () => {
     const harness = fixtureHarness();
     mkdirSync(resolve(root, "releases"), { recursive: true });
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const old = run(["1.2.3"], { ...harness.env, GH_VERSION: "2.67.9" });
     expect(old.status).not.toBe(0);
     expect(old.stderr).toContain("gh >= 2.68.0");
@@ -223,7 +229,7 @@ describe("versioned deployment export", () => {
   it("fails closed when attestation verification rejects the release", () => {
     const harness = fixtureHarness();
     mkdirSync(resolve(root, "releases"), { recursive: true });
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const failed = run(["1.2.3"], { ...harness.env, GH_ATTEST_RC: "1" });
     expect(failed.status).not.toBe(0);
     expect(failed.stderr).toContain("provenance verification failed");
@@ -273,7 +279,7 @@ describe("versioned deployment export", () => {
 
   it("pins Compose, strips inherited selectors, keeps secrets out of config and uses pull plus no-build", () => {
     const harness = fixtureHarness();
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], {
       ...harness.env, HERMES_API_KEY: "runtime-secret", RUNTIME_HERMES_API_KEY: "hostile-exported-alias", COMPOSE_FILE: "/tmp/evil.yaml",
       COMPOSE_PROJECT_NAME: "evil", COMPOSE_PROFILES: "evil",
@@ -308,7 +314,7 @@ describe("versioned deployment export", () => {
 
   it("rejects workspace replacement after declaration validation and never starts", () => {
     const harness = fixtureHarness();
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], { ...harness.env, MUTATE_WORKSPACE_AFTER_CONFIG: "1" });
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("workspace identity changed");
@@ -319,7 +325,7 @@ describe("versioned deployment export", () => {
 
   it("fails closed and removes the staged container if the workspace is swapped during the final up call", () => {
     const harness = fixtureHarness();
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], { ...harness.env, MUTATE_WORKSPACE_DURING_UP: "1" });
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("unhealthy");
@@ -393,7 +399,7 @@ describe("versioned deployment export", () => {
 
   it("fails boundedly on unhealthy Docker health without claiming success", () => {
     const harness = fixtureHarness("unhealthy");
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], harness.env);
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("unhealthy");
@@ -402,7 +408,7 @@ describe("versioned deployment export", () => {
 
   it("times out boundedly while Docker health remains starting and validates health controls", () => {
     const harness = fixtureHarness("starting");
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     const result = run(["1.2.3"], harness.env);
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("timeout waiting for Docker health");
@@ -415,7 +421,7 @@ describe("versioned deployment export", () => {
 
   it("records immutable deployed state only after a successful verified release", () => {
     const harness = fixtureHarness();
-    writeFileSync(resolve(root, "releases/1.2.3.env"), manifest());
+    writeReleaseManifest();
     expect(run(["1.2.3"], harness.env).status).toBe(0);
     const state = readFileSync(join(harness.dir, "state", "deployed-release.env"), "utf8");
     expect(state).toBe(`RELEASE=1.2.3\nDASHBOARD_IMAGE=ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:1.2.3@${digest}\n`);

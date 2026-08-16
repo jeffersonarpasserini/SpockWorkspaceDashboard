@@ -11,7 +11,7 @@ O dashboard já funciona como aplicação local, mas ainda não possui um artefa
 - Adiciona um endpoint de liveness mínimo, não autenticado e sem detalhes de integrações, exclusivo para healthcheck local.
 - Documenta configuração por ambiente/secret, limitações do Hermes Kanban no contêiner e conexão opcional à API Hermes.
 - Registra que qualquer exposição além do loopback exige proxy autenticado/Tailscale e uma nova mudança OpenSpec quando houver alteração de comportamento da aplicação.
-- Mantém explicitamente pendente a consulta Graphify: `graphify-out/graph.json` não existe neste root, portanto nenhum resultado é presumido.
+- Registra a consulta Graphify executada nesta raiz e preserva seus resultados e limitações em `docs/graphify-evidence.md`.
 
 ### Goals
 

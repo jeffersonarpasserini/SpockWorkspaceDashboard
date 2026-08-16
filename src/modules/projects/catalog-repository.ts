@@ -11,8 +11,10 @@ export interface WorkspaceRegistration {
 
 export interface PersistedProject {
   id: string;
+  externalId: string;
   name: string;
   slug: string;
+  markers: readonly string[];
   sourceStatus: string;
   lastSuccessfulSyncAt: Date | null;
 }
@@ -101,8 +103,10 @@ export class ProjectCatalogRepository implements ProjectCatalogStore {
   ): Promise<readonly PersistedProject[]> {
     return executor.select({
       id: projects.id,
+      externalId: projectSources.externalId,
       name: projects.name,
       slug: projects.slug,
+      configuration: projectSources.configuration,
       sourceStatus: projectSources.syncStatus,
       lastSuccessfulSyncAt: projectSources.lastSuccessfulSyncAt
     }).from(projects)
@@ -111,7 +115,24 @@ export class ProjectCatalogRepository implements ProjectCatalogStore {
         eq(projectSources.kind, "filesystem")
       ))
       .where(eq(projects.workspaceId, workspaceId))
-      .orderBy(asc(projects.name));
+      .orderBy(asc(projects.name)).then((rows) => rows.flatMap((row) => {
+        if (!row.externalId) return [];
+        const configuration = row.configuration && typeof row.configuration === "object" && !Array.isArray(row.configuration)
+          ? row.configuration as Record<string, unknown>
+          : {};
+        const markers = Array.isArray(configuration.markers)
+          ? configuration.markers.filter((marker): marker is string => typeof marker === "string")
+          : [];
+        return [{
+          id: row.id,
+          externalId: row.externalId,
+          name: row.name,
+          slug: row.slug,
+          markers,
+          sourceStatus: row.sourceStatus,
+          lastSuccessfulSyncAt: row.lastSuccessfulSyncAt
+        }];
+      }));
   }
 }
 
