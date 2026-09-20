@@ -452,6 +452,7 @@ describe("versioned deployment export", () => {
       "manifest unknown|name unknown|no such manifest|404",
       "tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4",
       "scripts/deploy-portainer.mjs", "PORTAINER_ACCESS_TOKEN", "TS_OAUTH_CLIENT_ID", "TS_OAUTH_SECRET",
+      "deployment-credentials", "missing deployment secret",
     ]) expect(workflow).toContain(required);
     for (const key of ["RELEASE", "GIT_TAG", "GIT_SHA", "BUILT_AT", "DASHBOARD_IMAGE"]) expect(workflow).toContain(`${key}=`);
     expect(workflow).not.toMatch(/git push[\s\S]*\|\|\s*(?:echo|true)/);

@@ -21,7 +21,23 @@ env:
   SOURCE_REPOSITORY: jeffersonarpasserini/SpockWorkspaceDashboard
 
 jobs:
+  deployment-credentials:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Validate deployment credentials
+        env:
+          TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
+          PORTAINER_ACCESS_TOKEN: ${{ secrets.PORTAINER_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          for name in TS_OAUTH_CLIENT_ID TS_OAUTH_SECRET PORTAINER_ACCESS_TOKEN; do
+            [ -n "${!name}" ] || { echo "missing deployment secret: $name" >&2; exit 1; }
+          done
+
   release:
+    needs: deployment-credentials
     outputs:
       image: ${{ steps.release.outputs.image }}
     runs-on: ubuntu-latest
