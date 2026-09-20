@@ -431,12 +431,12 @@ describe("versioned deployment export", () => {
     expect(status.stdout).not.toContain("secret");
   });
 
-  it("defines an approved build-once provenance release with fully pinned actions", () => {
+  it("defines a build-once provenance release with fully pinned actions", () => {
     const workflow = readFileSync(resolve(root, ".github/workflows/release.yml"), "utf8");
     expect(workflow).toMatch(/tags:\s*\[?['"]v\*['"]?\]?/);
     for (const required of [
       "environment: release", "fetch-depth: 0", "git merge-base --is-ancestor", "origin/main",
-      "cancel-in-progress: false", "release-${{ github.ref_name }}", "required_reviewers", "prevent_self_review", "gh api",
+      "cancel-in-progress: false", "release-${{ github.ref_name }}", "gh api",
       "attestations: write", "id-token: write", "push-to-registry: true",
       "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5",
       "docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3",
@@ -453,7 +453,6 @@ describe("versioned deployment export", () => {
       "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard",
       "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard/versions?per_page=100",
     ]) expect(workflow).toContain(required);
-    expect(workflow).toMatch(/\.protection_rules \| any\(\.type == "required_reviewers" and \(\.prevent_self_review == true\) and \(\(\.reviewers \/\/ \[\]\) \| length > 0\)\)/);
     expect(workflow).toContain("could not establish authenticated GHCR package-list visibility");
     expect(workflow).toContain("package collection and package endpoint disagree");
     for (const key of ["RELEASE", "GIT_TAG", "GIT_SHA", "BUILT_AT", "DASHBOARD_IMAGE"]) expect(workflow).toContain(`${key}=`);

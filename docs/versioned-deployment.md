@@ -4,24 +4,21 @@
 
 O contrato público aceita somente versões estáveis numéricas `MAJOR.MINOR.PATCH`, sem prefixo no CLI/manifest, e tags exatas `vMAJOR.MINOR.PATCH`. Prerelease (`-rc.1`), metadata (`+build`), zeros à esquerda e formatos parciais são rejeitados.
 
-## Gate externo obrigatório antes da primeira tag
+## Gates externos antes da primeira tag
 
 **Não crie a primeira tag enquanto todos os itens abaixo não estiverem ativos e verificados.** Este repositório não configura essas proteções por workflow.
 
-1. Em **Settings → Environments → release**, crie o environment `release`, adicione pelo menos um **Required reviewer** independente e desabilite self-review. O job usa `environment: release` e ainda consulta a API; se a proteção não puder ser comprovada, a release falha.
-2. Em **Settings → Rules → Rulesets**, crie um ruleset ativo com target **Tags**, inclusão `refs/tags/v*`, bloqueio de update/force-change e deletion, e criação restrita aos release managers aprovados. Não conceda bypass ao `GITHUB_TOKEN`. Esse gate torna tags de versão imutáveis.
-3. Mantenha `main` como default branch protegida, com merge/review/status gates. O workflow faz checkout com histórico completo e exige que `GITHUB_SHA` seja ancestral de `origin/main`; uma tag em feature commit falha.
-4. Garanta que GitHub Actions possa gravar Contents, Packages, ID token e Attestations, e que a API possa ler environment/ruleset/package/release. O job usa permissões somente para essas operações.
+1. Em **Settings → Rules → Rulesets**, crie um ruleset ativo com target **Tags**, inclusão `refs/tags/v*`, bloqueio de update/force-change e deletion, e criação restrita aos release managers aprovados. Não conceda bypass ao `GITHUB_TOKEN`. Esse gate torna tags de versão imutáveis.
+2. Mantenha `main` como default branch protegida, com merge/review/status gates. O workflow faz checkout com histórico completo e exige que `GITHUB_SHA` seja ancestral de `origin/main`; uma tag em feature commit falha.
+3. Garanta que GitHub Actions possa gravar Contents, Packages, ID token e Attestations, e que a API possa ler ruleset/package/release. O job usa permissões somente para essas operações.
 
-**Estado observado na revisão final:** no host Linux Docker `bumblebee`, `verify` e `status` retornaram rc 0 no commit `3908841`, incluindo o probe corrigido de isolamento, sobre o contêiner criado pelo fluxo anterior. O rerun completo de `deploy.sh local` no mesmo commit permanece pendente para fechar a evidência de build/criação/start. O environment `release` continua ausente, não há ruleset ativo e `main` permanece sem proteção; tag e release seguem bloqueadas.
+O environment `release` pode continuar a ser usado para identificar a execução, mas não exige reviewers nem bloqueia autoaprovação.
 
 Gate verificável (requer `gh` autenticado com acesso administrativo de leitura):
 
 ```bash
 repo=jeffersonarpasserini/SpockWorkspaceDashboard
 gh api "repos/$repo" --jq '.default_branch'                         # deve imprimir main
-gh api "repos/$repo/environments/release" \
-  --jq '[.protection_rules[] | select(.type=="required_reviewers") | {prevent_self_review, reviewers}]'
 gh api --paginate "repos/$repo/rulesets" \
   --jq '.[] | select(.target=="tag" and .enforcement=="active") | [.id,.name] | @tsv'
 # Para cada id retornado, confira conditions.ref_name.include contendo refs/tags/v*
@@ -29,7 +26,7 @@ gh api --paginate "repos/$repo/rulesets" \
 gh api "repos/$repo/rulesets/<ID>"
 ```
 
-Qualquer saída ausente, erro `403/404`, reviewer vazio, ruleset inativo, filtro divergente ou bypass não aprovado é **bloqueador de release**. A revisão desses gates deve ser registrada antes da tag; não há fallback nem bypass no workflow.
+Qualquer saída ausente, erro `403/404`, ruleset inativo, filtro divergente ou bypass não aprovado é **bloqueador de release**. A revisão desses gates deve ser registrada antes da tag; não há fallback nem bypass no workflow.
 
 ## Publicação imutável e proveniência
 
@@ -37,7 +34,7 @@ Qualquer saída ausente, erro `403/404`, reviewer vazio, ruleset inativo, filtro
 
 - serializa por versão (`release-${tag}`, sem cancelamento de execução em andamento);
 - aceita apenas tag estável exata e confirma tag/commit pela API autoritativa;
-- recusa commit fora de `origin/main` ou environment sem reviewer não vazio e `prevent_self_review=true` verificáveis;
+- recusa commit fora de `origin/main`;
 - falha antes do build em rerun e se já existir workflow artifact, GitHub Release/asset ou tag GHCR da versão; para GHCR, primeiro exige visibilidade autenticada da coleção do owner, compara coleção/endpoint do pacote e, se existente, enumera todas as versões; um `404` isolado nunca prova ausência;
 - publica somente `ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:<versão>` — nunca `latest`;
 - captura o digest, cria GitHub Artifact Attestation OCI e exporta `releases/<versão>.env` como artifact e asset;

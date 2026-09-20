@@ -1,8 +1,8 @@
 ## ADDED Requirements
 
-### Requirement: Release usa aprovação, ancestralidade e versão estável
+### Requirement: Release usa ancestralidade e versão estável
 
-Uma release MUST aceitar somente tag exata `vMAJOR.MINOR.PATCH` numérica estável, sem zeros à esquerda, prerelease ou metadata. O workflow MUST usar histórico completo, environment `release` com required reviewers não vazios e `prevent_self_review=true`, e MUST falhar se `GITHUB_SHA` não estiver contido em `origin/main` ou se a tag autoritativa não resolver para esse SHA. Environment/reviewer independente, proteção de `main` e ruleset imutável de tags `v*` MUST existir como gates externos antes da primeira tag.
+Uma release MUST aceitar somente tag exata `vMAJOR.MINOR.PATCH` numérica estável, sem zeros à esquerda, prerelease ou metadata. O workflow MUST usar histórico completo e MUST falhar se `GITHUB_SHA` não estiver contido em `origin/main` ou se a tag autoritativa não resolver para esse SHA. Proteção de `main` e ruleset imutável de tags `v*` MUST existir como gates externos antes da primeira tag.
 
 #### Scenario: Tag aponta para feature commit
 - **WHEN** a tag resolve para commit fora de `origin/main`

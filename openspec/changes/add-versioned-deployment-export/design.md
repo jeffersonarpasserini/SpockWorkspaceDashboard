@@ -4,7 +4,7 @@ A mudança prepara release build-once/deploy-many sem publicar ou implantar. Os 
 
 ## Goals / Non-Goals
 
-**Goals:** somente `MAJOR.MINOR.PATCH`; commit contido em `main`; environment aprovado; concorrência/preflight imutável; actions/base por digest; attestation; manifest publisher exato; verificação autoritativa antes do pull; CLI terminal-safe; estado restrito após health.
+**Goals:** somente `MAJOR.MINOR.PATCH`; commit contido em `main`; concorrência/preflight imutável; actions/base por digest; attestation; manifest publisher exato; verificação autoritativa antes do pull; CLI terminal-safe; estado restrito após health.
 
 **Non-Goals:** criar proteção/tag/release agora; executar Docker; publicar `latest`; alterar Homepage/proxy/Tailscale; persistir credenciais.
 
@@ -12,7 +12,7 @@ A mudança prepara release build-once/deploy-many sem publicar ou implantar. Os 
 
 ### Gates externos e fail-closed
 
-O job usa `environment: release`, fetch completo e ancestry contra `origin/main`. Consulta required reviewers não vazios, `prevent_self_review=true` e tag pela API. Required reviewer independente, proteção de main e ruleset ativo/imutável de `refs/tags/v*` são pré-requisitos documentados; incapacidade de comprová-los bloqueia release.
+O job usa `environment: release`, fetch completo e ancestry contra `origin/main`. Proteção de main e ruleset ativo/imutável de `refs/tags/v*` são pré-requisitos documentados; incapacidade de comprová-los bloqueia release.
 
 ### Build once por versão
 
