@@ -39,6 +39,7 @@ Qualquer saída ausente, erro `403/404`, ruleset inativo, filtro divergente ou b
 - publica somente `ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:<versão>` — nunca `latest`;
 - captura o digest, cria GitHub Artifact Attestation OCI e exporta `releases/<versão>.env` como artifact e asset;
 - usa actions fixadas por SHA completo revisado.
+- após publicar a release, entra na tailnet privada e atualiza o stack Portainer para o digest imutável, aguardando o container saudável.
 
 Uma execução parcialmente publicada (por exemplo, imagem enviada e release falha) **não pode ser repetida para a mesma versão**. Corrija a causa e use uma versão nova. Não force/mova tags e não apague assets para reutilizar número.
 
@@ -51,6 +52,12 @@ GIT_SHA=<sha-completo-minúsculo>
 BUILT_AT=<UTC-ISO-8601>
 DASHBOARD_IMAGE=ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:1.2.3@sha256:<digest>
 ```
+
+## Deploy automático no Portainer
+
+O job `deploy` usa `tailscale/github-action` efêmero com a tag `tag:ci`, atualiza somente o stack `6` do endpoint `4` e troca `SPOCK_DASHBOARD_IMAGE` pelo digest publicado. Na primeira execução ele migra a política desse stack de `pull_policy: never` para `always`; nas seguintes mantém a política. O job só conclui quando o único container `dashboard` do projeto `spock-dashboard-portainer` estiver rodando, saudável e configurado com o digest solicitado.
+
+Configure no environment GitHub `release` os secrets `TS_OAUTH_CLIENT_ID`, `TS_OAUTH_SECRET` e `PORTAINER_ACCESS_TOKEN`. O cliente OAuth da Tailscale precisa criar peers efêmeros com `tag:ci`; o token Portainer precisa administrar somente esse stack. Nenhum segredo de runtime do dashboard é copiado para GitHub.
 
 As três stages do `Dockerfile` usam `node:20.19.5-bookworm-slim` fixado no manifest-list digest aprovado `sha256:9e70124bd00f47dd023e349cd587132ae61892acc0e47ed641416c3e18f401c3`. Atualização de Node/base **exige mudança deliberada desse digest**, revisão do Dockerfile, testes, documentação e nova versão; nunca remova o pin para obter atualização automática.
 

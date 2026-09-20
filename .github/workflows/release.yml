@@ -22,6 +22,8 @@ env:
 
 jobs:
   release:
+    outputs:
+      image: ${{ steps.release.outputs.image }}
     runs-on: ubuntu-latest
     environment: release
     steps:
@@ -102,6 +104,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Capture immutable image
+        id: release
+        shell: bash
+        run: echo "image=${{ steps.version.outputs.image }}:${{ steps.version.outputs.version }}@${{ steps.build.outputs.digest }}" >>"$GITHUB_OUTPUT"
+
       - name: Attest OCI image provenance
         uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
         with:
@@ -122,7 +129,7 @@ jobs:
             echo "GIT_TAG=${GITHUB_REF_NAME}"
             echo "GIT_SHA=${GITHUB_SHA}"
             echo "BUILT_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo "DASHBOARD_IMAGE=${{ steps.version.outputs.image }}:${version}@${{ steps.build.outputs.digest }}"
+            echo "DASHBOARD_IMAGE=${{ steps.release.outputs.image }}"
           } >"$output"
 
       - name: Upload manifest workflow artifact
@@ -138,3 +145,28 @@ jobs:
           files: releases/${{ steps.version.outputs.version }}.env
           generate_release_notes: true
           fail_on_unmatched_files: true
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Check out deployment client
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Join the private deployment network
+        uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+          ping: bumblebee-transformers.tail54483c.ts.net
+
+      - name: Deploy the immutable image through Portainer
+        env:
+          PORTAINER_URL: https://bumblebee-transformers.tail54483c.ts.net:9443
+          PORTAINER_ACCESS_TOKEN: ${{ secrets.PORTAINER_ACCESS_TOKEN }}
+          SPOCK_DASHBOARD_IMAGE: ${{ needs.release.outputs.image }}
+        run: node scripts/deploy-portainer.mjs

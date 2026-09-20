@@ -431,7 +431,7 @@ describe("versioned deployment export", () => {
     expect(status.stdout).not.toContain("secret");
   });
 
-  it("defines a build-once provenance release with fully pinned actions", () => {
+  it("defines a build-once, automatically deployed provenance release with fully pinned actions", () => {
     const workflow = readFileSync(resolve(root, ".github/workflows/release.yml"), "utf8");
     expect(workflow).toMatch(/tags:\s*\[?['"]v\*['"]?\]?/);
     for (const required of [
@@ -450,6 +450,8 @@ describe("versioned deployment export", () => {
       "could not prove that the GHCR version image is absent", "GITHUB_RUN_ATTEMPT", "release-manifest-${version}",
       "workflow artifact already exists", "docker manifest inspect",
       "manifest unknown|name unknown|no such manifest|404",
+      "tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4",
+      "scripts/deploy-portainer.mjs", "PORTAINER_ACCESS_TOKEN", "TS_OAUTH_CLIENT_ID", "TS_OAUTH_SECRET",
     ]) expect(workflow).toContain(required);
     for (const key of ["RELEASE", "GIT_TAG", "GIT_SHA", "BUILT_AT", "DASHBOARD_IMAGE"]) expect(workflow).toContain(`${key}=`);
     expect(workflow).not.toMatch(/git push[\s\S]*\|\|\s*(?:echo|true)/);
