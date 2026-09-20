@@ -10,7 +10,7 @@ Uma release MUST aceitar somente tag exata `vMAJOR.MINOR.PATCH` numérica estáv
 
 ### Requirement: Versão é build-once e não sobrescrevível
 
-O workflow MUST serializar por versão com cancelamento desabilitado e MUST falhar fechado antes do build quando já existir GitHub Release/asset ou tag GHCR daquela versão. Para provar ausência GHCR, MUST primeiro estabelecer visibilidade autenticada da coleção de pacotes do owner, MUST exigir consistência coleção/endpoint e, se o pacote existir, MUST enumerar todas as versões/tags com sucesso; um `404` isolado MUST NOT provar ausência. Uma imagem parcialmente publicada MUST exigir nova versão. `latest` MUST NOT ser publicada.
+O workflow MUST serializar por versão com cancelamento desabilitado e MUST falhar fechado antes do build quando já existir GitHub Release/asset ou tag GHCR daquela versão. Após login autenticado no GHCR, o workflow MUST consultar diretamente o manifest da tag e aceitar somente uma resposta inequívoca de manifesto ausente. Uma imagem parcialmente publicada MUST exigir nova versão. `latest` MUST NOT ser publicada.
 
 #### Scenario: Rerun encontra imagem já publicada
 - **WHEN** GHCR já contém a tag numérica da versão

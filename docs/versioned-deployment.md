@@ -35,7 +35,7 @@ Qualquer saída ausente, erro `403/404`, ruleset inativo, filtro divergente ou b
 - serializa por versão (`release-${tag}`, sem cancelamento de execução em andamento);
 - aceita apenas tag estável exata e confirma tag/commit pela API autoritativa;
 - recusa commit fora de `origin/main`;
-- falha antes do build em rerun e se já existir workflow artifact, GitHub Release/asset ou tag GHCR da versão; para GHCR, primeiro exige visibilidade autenticada da coleção do owner, compara coleção/endpoint do pacote e, se existente, enumera todas as versões; um `404` isolado nunca prova ausência;
+- falha antes do build em rerun e se já existir workflow artifact, GitHub Release/asset ou tag GHCR da versão; após login no GHCR com o `GITHUB_TOKEN` do workflow, consulta diretamente o manifest daquela tag e só aceita erro inequívoco de manifesto ausente;
 - publica somente `ghcr.io/jeffersonarpasserini/spock-workspace-dashboard:<versão>` — nunca `latest`;
 - captura o digest, cria GitHub Artifact Attestation OCI e exporta `releases/<versão>.env` como artifact e asset;
 - usa actions fixadas por SHA completo revisado.

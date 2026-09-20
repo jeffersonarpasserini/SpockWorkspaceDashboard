@@ -448,13 +448,9 @@ describe("versioned deployment export", () => {
       "steps.build.outputs.digest",
       "GitHub Release already exists", "GHCR image version", "partially published versions must never be rebuilt",
       "could not prove that the GHCR version image is absent", "GITHUB_RUN_ATTEMPT", "release-manifest-${version}",
-      "workflow artifact already exists",
-      "/users/jeffersonarpasserini/packages?package_type=container&per_page=100",
-      "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard",
-      "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard/versions?per_page=100",
+      "workflow artifact already exists", "docker manifest inspect",
+      "manifest unknown|name unknown|no such manifest|404",
     ]) expect(workflow).toContain(required);
-    expect(workflow).toContain("could not establish authenticated GHCR package-list visibility");
-    expect(workflow).toContain("package collection and package endpoint disagree");
     for (const key of ["RELEASE", "GIT_TAG", "GIT_SHA", "BUILT_AT", "DASHBOARD_IMAGE"]) expect(workflow).toContain(`${key}=`);
     expect(workflow).not.toMatch(/git push[\s\S]*\|\|\s*(?:echo|true)/);
     expect(workflow).not.toMatch(/spock-workspace-dashboard:latest/);

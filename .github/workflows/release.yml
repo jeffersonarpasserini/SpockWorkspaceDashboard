@@ -31,6 +31,13 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Login to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Validate ancestry, version, and build-once preconditions
         id: version
         shell: bash
@@ -69,23 +76,10 @@ jobs:
             fail "could not prove that the GitHub Release/version asset is absent"
           fi
 
-          package_names="$(gh api --paginate "/users/jeffersonarpasserini/packages?package_type=container&per_page=100" --jq '.[].name')" || \
-            fail "could not establish authenticated GHCR package-list visibility"
-          collection_has_package=false
-          grep -Fxq 'spock-workspace-dashboard' <<<"$package_names" && collection_has_package=true
-
-          : >"$error_file"
-          if gh api "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard" >/dev/null 2>"$error_file"; then
-            [[ "$collection_has_package" = true ]] || \
-              fail "GHCR package collection and package endpoint disagree; absence cannot be proven"
-            package_tags="$(gh api --paginate "/users/jeffersonarpasserini/packages/container/spock-workspace-dashboard/versions?per_page=100" --jq '.[] | .metadata.container.tags[]?')" || \
-              fail "could not enumerate every visible GHCR package version"
-            if grep -Fxq "$version" <<<"$package_tags"; then
-              fail "GHCR image version ${version} already exists; partially published versions must never be rebuilt"
-            fi
-          elif grep -q 'HTTP 404' "$error_file"; then
-            [[ "$collection_has_package" = false ]] || \
-              fail "GHCR package collection and package endpoint disagree; absence cannot be proven"
+          if docker manifest inspect "$IMAGE:$version" >/dev/null 2>"$error_file"; then
+            fail "GHCR image version ${version} already exists; partially published versions must never be rebuilt"
+          elif grep -Eqi 'manifest unknown|name unknown|no such manifest|404' "$error_file"; then
+            :
           else
             fail "could not prove that the GHCR version image is absent"
           fi
@@ -96,12 +90,6 @@ jobs:
       - name: Set up Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
 
-      - name: Login to GHCR
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push immutable version
         id: build

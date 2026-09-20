@@ -16,7 +16,7 @@ O job usa `environment: release`, fetch completo e ancestry contra `origin/main`
 
 ### Build once por versão
 
-Concorrência usa a tag e `cancel-in-progress: false`. Preflight rejeita Release/asset ou tag GHCR existente e erros de API. Ausência GHCR exige primeiro visibilidade autenticada da coleção de pacotes, consistência com o endpoint do pacote e enumeração completa de versões quando ele existe; `404` isolado não prova ausência. Publicação parcial exige nova versão; não há latest, overwrite ou force-tag suportado.
+Concorrência usa a tag e `cancel-in-progress: false`. Preflight rejeita Release/asset ou tag GHCR existente e erros de API. Após login autenticado no GHCR, ele consulta diretamente o manifest da tag e só aceita resposta inequívoca de manifesto ausente. Publicação parcial exige nova versão; não há latest, overwrite ou force-tag suportado.
 
 ### Supply chain e proveniência
 
